@@ -9,7 +9,7 @@ namespace MLP.MachineLearning.Models
 
     public class DataSet
     {
-        string Name { get; set }
+        string Name { get; set; }
         public List<DataPoint> Data { get; set; }
     }
 }
