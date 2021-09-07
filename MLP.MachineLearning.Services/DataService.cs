@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using MLP.MachineLearning.Models;
 
 namespace MLP.MachineLearning.Services
 {
@@ -7,7 +9,9 @@ namespace MLP.MachineLearning.Services
     // Service class for manipulating data independent of any one ML model
     // @author zateutsch
 
-    public class DataService
+    public class DataService : IDataService
     {
+
+        
     }
 }
