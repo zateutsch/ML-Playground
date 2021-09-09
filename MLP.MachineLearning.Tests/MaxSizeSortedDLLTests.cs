@@ -17,7 +17,7 @@ namespace MLP.MachineLearning.Tests
 
             // Act
 
-            DLL.AddAndTrim(new Node(10));
+            DLL.AddAndTrim(new Node(10, 1));
 
             // Assert
 
@@ -27,24 +27,24 @@ namespace MLP.MachineLearning.Tests
         }
 
         [TestMethod]
-        public void Return_as_List()
+        public void Return_as_Dictionary()
         {
             // Arrange
             MaxSizeSortedDLL DLL = new MaxSizeSortedDLL(5);
-            DLL.AddAndTrim(new Node(10));
-            DLL.AddAndTrim(new Node(12));
-            DLL.AddAndTrim(new Node(15));
+            DLL.AddAndTrim(new Node(10, 1));
+            DLL.AddAndTrim(new Node(12, 3));
+            DLL.AddAndTrim(new Node(15, 5));
 
             // Act
 
-            List<double> dll_list = DLL.ReturnAsList();
+            Dictionary<int, double> dll_dictionary = DLL.ReturnAsDictionary();
     
 
             // Assert
 
-            Assert.AreEqual<double>(10, dll_list[2]);
-            Assert.AreEqual<double>(12, dll_list[1]);
-            Assert.AreEqual<double>(15, dll_list[0]);
+            Assert.AreEqual<double>(10, dll_dictionary[1]);
+            Assert.AreEqual<double>(12, dll_dictionary[3]);
+            Assert.AreEqual<double>(15, dll_dictionary[5]);
         }
 
 
@@ -53,20 +53,20 @@ namespace MLP.MachineLearning.Tests
         {
             // Arrange
             MaxSizeSortedDLL DLL = new MaxSizeSortedDLL(2);
-            DLL.AddAndTrim(new Node(10));
-            DLL.AddAndTrim(new Node(12));
+            DLL.AddAndTrim(new Node(10, 1));
+            DLL.AddAndTrim(new Node(12, 3));
 
 
             // Act
 
-            DLL.AddAndTrim(new Node(15));
-            List<double> dll_list = DLL.ReturnAsList();
+            DLL.AddAndTrim(new Node(15, 5));
+            Dictionary<int, double> dll_dictionary = DLL.ReturnAsDictionary();
 
             // Assert
 
-            Assert.AreEqual<int>(2, dll_list.Count);
-            Assert.AreEqual<double>(12, dll_list[1]);
-            Assert.AreEqual<double>(15, dll_list[0]);
+            Assert.AreEqual<int>(2, dll_dictionary.Count);
+            Assert.AreEqual<double>(12, dll_dictionary[3]);
+            Assert.AreEqual<double>(15, dll_dictionary[5]);
 
         }
     }

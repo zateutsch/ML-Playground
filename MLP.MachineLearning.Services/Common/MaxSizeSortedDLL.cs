@@ -27,19 +27,19 @@ namespace MLP.MachineLearning.Services
 
         }
 
-        public List<double> ReturnAsList()
+        public Dictionary<int, double> ReturnAsDictionary()
         {
-            List<double> listFormDLL = new List<double>(this.Size);
+            Dictionary<int, double> dictionaryFormDLL = new Dictionary<int, double>(this.Size);
 
             Node curr = this.Head;
 
             while(curr != null)
             {
-                listFormDLL.Add(curr.Data);
+                dictionaryFormDLL.Add(curr.Index, curr.Data);
                 curr = curr.Next;
             }
 
-            return listFormDLL;
+            return dictionaryFormDLL;
         }
 
         private void Add(Node node)
@@ -116,14 +116,16 @@ namespace MLP.MachineLearning.Services
     public class Node
     {
         
-        public Node(double data, Node prev = null, Node next = null)
+        public Node(double data, int idx, Node prev = null, Node next = null)
         {
             this.Data = data;
             this.Prev = prev;
             this.Next = next;
+            this.Index = idx;
         }
 
         public double Data { get; set; }
+        public int Index { get; set; }
         public Node Prev { get; set; }
         public Node Next { get; set; }
     } 
