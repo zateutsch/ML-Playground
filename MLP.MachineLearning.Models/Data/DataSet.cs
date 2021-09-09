@@ -10,13 +10,12 @@ namespace MLP.MachineLearning.Models
     public class DataSet
     {
         public string Name { get; set; }
-        public int Size
+        public int FeatureSize
         {
-            get { return this.ClassificationData.Count != 0 ? this.ClassificationData.Count : this.RegressionData.Count; }
+            get { return this.ClassificationData.Count + this.RegressionData.Count; }
         }
         public Dictionary<string, List<string>> ClassificationData { get; set; }
         public Dictionary<string, List<float>> RegressionData { get; set; }
-
 
     }
 }
