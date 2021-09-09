@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MLP.MachineLearning.Services.Common
+namespace MLP.MachineLearning.Services
 {
     public class MaxSizeSortedDLL
     {
@@ -25,6 +25,21 @@ namespace MLP.MachineLearning.Services.Common
             this.Add(node);
             return !this.Trim();
 
+        }
+
+        public List<double> ReturnAsList()
+        {
+            List<double> listFormDLL = new List<double>(this.Size);
+
+            Node curr = this.Head;
+
+            while(curr != null)
+            {
+                listFormDLL.Add(curr.Data);
+                curr = curr.Next;
+            }
+
+            return listFormDLL;
         }
 
         private void Add(Node node)
@@ -100,7 +115,15 @@ namespace MLP.MachineLearning.Services.Common
 
     public class Node
     {
-        public float Data { get; set; }
+        
+        public Node(double data, Node prev = null, Node next = null)
+        {
+            this.Data = data;
+            this.Prev = prev;
+            this.Next = next;
+        }
+
+        public double Data { get; set; }
         public Node Prev { get; set; }
         public Node Next { get; set; }
     } 
