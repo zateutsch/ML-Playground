@@ -55,7 +55,7 @@ namespace MLP.MachineLearning.Services
             }
 
             // greater than head condition
-            if (node.Data >= this.Head.Data)
+            if (node.Data <= this.Head.Data)
             {
                 node.Next = this.Head;
                 this.Head.Prev = node;
@@ -67,7 +67,7 @@ namespace MLP.MachineLearning.Services
             Node curr = this.Head;
             while(curr.Next != null)
             {
-                if(node.Data >= curr.Next.Data)
+                if(node.Data <= curr.Next.Data)
                 {
                     break;
                 }

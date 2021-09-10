@@ -66,7 +66,7 @@ namespace MLP.MachineLearning.Tests
 
             Assert.AreEqual<int>(2, dll_dictionary.Count);
             Assert.AreEqual<double>(12, dll_dictionary[3]);
-            Assert.AreEqual<double>(15, dll_dictionary[5]);
+            Assert.AreEqual<double>(10, dll_dictionary[1]);
 
         }
     }
