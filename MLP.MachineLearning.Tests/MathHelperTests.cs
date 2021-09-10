@@ -14,8 +14,8 @@ namespace MLP.MachineLearning.Tests
         {
             // Arrange
             MathHelper helper = new MathHelper();
-            List<double> l1 = new List<double>(new[] { 10.0, 5.0});
-            List<double> l2 = new List<double>(new[] { 10.0, 10.0 });
+            double[] l1 = new[] { 10.0, 5.0};
+            double[] l2 = new[] { 10.0, 10.0 };
 
             // Act
 

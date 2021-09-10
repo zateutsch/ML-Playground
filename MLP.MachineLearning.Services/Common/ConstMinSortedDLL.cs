@@ -4,14 +4,14 @@ using System.Text;
 
 namespace MLP.MachineLearning.Services
 {
-    public class MaxSizeSortedDLL
+    public class ConstMinSortedDLL
     {
         public int Size { get; set; }
         public int MaxSize { get; set; }
         public Node Head { get; set; }
         public Node Tail { get; set; }
 
-        public MaxSizeSortedDLL(int maxSize)
+        public ConstMinSortedDLL(int maxSize)
         {
             this.Head = null;
             this.Tail = null;

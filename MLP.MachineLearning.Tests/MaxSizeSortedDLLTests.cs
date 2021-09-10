@@ -13,7 +13,7 @@ namespace MLP.MachineLearning.Tests
         {
 
             // Arrange
-            MaxSizeSortedDLL DLL = new MaxSizeSortedDLL(5);
+            ConstMinSortedDLL DLL = new ConstMinSortedDLL(5);
 
             // Act
 
@@ -30,7 +30,7 @@ namespace MLP.MachineLearning.Tests
         public void Return_as_Dictionary()
         {
             // Arrange
-            MaxSizeSortedDLL DLL = new MaxSizeSortedDLL(5);
+            ConstMinSortedDLL DLL = new ConstMinSortedDLL(5);
             DLL.AddAndTrim(new Node(10, 1));
             DLL.AddAndTrim(new Node(12, 3));
             DLL.AddAndTrim(new Node(15, 5));
@@ -52,7 +52,7 @@ namespace MLP.MachineLearning.Tests
         public void Add_Over_Capacity()
         {
             // Arrange
-            MaxSizeSortedDLL DLL = new MaxSizeSortedDLL(2);
+            ConstMinSortedDLL DLL = new ConstMinSortedDLL(2);
             DLL.AddAndTrim(new Node(10, 1));
             DLL.AddAndTrim(new Node(12, 3));
 
@@ -68,6 +68,25 @@ namespace MLP.MachineLearning.Tests
             Assert.AreEqual<double>(12, dll_dictionary[3]);
             Assert.AreEqual<double>(10, dll_dictionary[1]);
 
+        }
+
+        [TestMethod]
+        public void DLL_with_Single_Node()
+        {
+            // Arrange
+            ConstMinSortedDLL DLL = new ConstMinSortedDLL(1);
+            DLL.AddAndTrim(new Node(10, 1));
+            DLL.AddAndTrim(new Node(12, 3));
+            DLL.AddAndTrim(new Node(15, 5));
+
+            // Act
+
+            DLL.AddAndTrim(new Node(3, 4));
+
+            // Assert
+
+            Assert.AreEqual<double>(3, DLL.Head.Data);
+            Assert.AreEqual<Node>(null, DLL.Head.Next);
         }
     }
 }

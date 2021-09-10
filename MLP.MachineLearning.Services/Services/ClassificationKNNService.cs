@@ -50,7 +50,7 @@ namespace MLP.MachineLearning.Services
             this.TargetFeature = targetFeature;
 
             this.CurrentDataX = _dataService.GetNumericFeatureSeries(this.Data, featureX);
-            this.CurrentDataX = _dataService.GetNumericFeatureSeries(this.Data, featureX);
+            this.CurrentDataY = _dataService.GetNumericFeatureSeries(this.Data, featureY);
             this.TargetData = _dataService.GetStringFeatureSeries(this.Data, targetFeature);
 
             this.DataSize = this.DataSize = this.TargetData.Count;
@@ -61,7 +61,7 @@ namespace MLP.MachineLearning.Services
         public string Classify(double x, double y)
         {
 
-            MaxSizeSortedDLL min_list = new MaxSizeSortedDLL(this.Kparam);
+            ConstMinSortedDLL min_list = new ConstMinSortedDLL(this.Kparam);
             double[] feature_arr = new[] { x, y };
 
             for(int i = 0; i < this.TargetData.Count; i++)
@@ -76,7 +76,7 @@ namespace MLP.MachineLearning.Services
             
         }
 
-        private List<string> GetLabelsFromDLL(MaxSizeSortedDLL min_list)
+        private List<string> GetLabelsFromDLL(ConstMinSortedDLL min_list)
         {
             List<int> keys = new List<int>(min_list.ReturnAsDictionary().Keys);
             List<string> labels = new List<string>(this.Kparam);
