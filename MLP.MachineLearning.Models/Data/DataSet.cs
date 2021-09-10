@@ -15,7 +15,7 @@ namespace MLP.MachineLearning.Models
             get { return this.ClassificationData.Count + this.RegressionData.Count; }
         }
         public Dictionary<string, List<string>> ClassificationData { get; set; }
-        public Dictionary<string, List<float>> RegressionData { get; set; }
+        public Dictionary<string, List<double>> RegressionData { get; set; }
 
     }
 }

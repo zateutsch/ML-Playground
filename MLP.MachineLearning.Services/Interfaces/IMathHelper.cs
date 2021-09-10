@@ -6,7 +6,7 @@ namespace MLP.MachineLearning.Services
 {
     public interface IMathHelper
     {
-        double EuclideanDistance(List<double> p1, List<double> p2);
+        double EuclideanDistance(double[] p1, double[] p2);
 
     }
 }

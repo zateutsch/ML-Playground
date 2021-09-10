@@ -19,9 +19,9 @@ namespace MLP.MachineLearning.Services
             return features;
         }
 
-        public List<float> GetNumericFeatureSeries(DataSet dataSet, string featureName)
+        public List<double> GetNumericFeatureSeries(DataSet dataSet, string featureName)
         {
-            return new List<float>(dataSet.RegressionData[featureName]);
+            return new List<double>(dataSet.RegressionData[featureName]);
         }
 
         public List<string> GetStringFeatureSeries(DataSet dataSet, string featureName)

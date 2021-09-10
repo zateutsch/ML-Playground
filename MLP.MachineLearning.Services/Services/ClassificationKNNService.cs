@@ -20,8 +20,8 @@ namespace MLP.MachineLearning.Services
         public string CurrentFeatureX { get; set; }
         public string CurrentFeatureY { get; set; }
         public string TargetFeature { get; set; }
-        public List<float> CurrentDataX { get; set; }
-        public List<float> CurrentDataY { get; set; }
+        public List<double> CurrentDataX { get; set; }
+        public List<double> CurrentDataY { get; set; }
         public List<string> TargetData { get; set; }
         public int DataSize { get; set; }
 
@@ -56,13 +56,66 @@ namespace MLP.MachineLearning.Services
             this.DataSize = this.DataSize = this.TargetData.Count;
 
         }
-        
 
-        public string Classify()
+
+        public string Classify(double x, double y)
         {
 
-            return "temp";
+            MaxSizeSortedDLL min_list = new MaxSizeSortedDLL(this.Kparam);
+            double[] feature_arr = new[] { x, y };
+
+            for(int i = 0; i < this.TargetData.Count; i++)
+            {
+                double distance = _mathHelper.EuclideanDistance(new[] { CurrentDataX[i], CurrentDataY[i] }, feature_arr);
+                min_list.AddAndTrim(new Node(distance, i));
+            }
+
+            List<string> close_labels = this.GetLabelsFromDLL(min_list);
+
+            return this.FindMostCommonLabel(close_labels);
+            
         }
 
+        private List<string> GetLabelsFromDLL(MaxSizeSortedDLL min_list)
+        {
+            List<int> keys = new List<int>(min_list.ReturnAsDictionary().Keys);
+            List<string> labels = new List<string>(this.Kparam);
+
+            foreach(int idx in keys)
+            {
+                labels.Add(this.TargetData[idx]);
+            }
+
+            return labels;
+        }
+
+        private string FindMostCommonLabel(List<string> close_labels)
+        {
+            Dictionary<string, int> counts = new Dictionary<string, int>();
+
+            int max_count = 0;
+            string max_label = "";
+
+            foreach(string label in close_labels)
+            {
+                if (!counts.ContainsKey(label))
+                {
+                    counts[label] = 1;
+                }
+                else
+                {
+                    counts[label] += 1;
+                }
+
+                if(counts[label] > max_count)
+                {
+                    max_count = counts[label];
+                    max_label = label;
+                }
+            }
+
+            return max_label;
+
+        }
     }
 }

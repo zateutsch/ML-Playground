@@ -8,7 +8,7 @@ namespace MLP.MachineLearning.Services
     public interface IDataService
     {
         List<string> GetFeatures(DataSet dataSet);
-        List<float> GetNumericFeatureSeries(DataSet dataSet, string featureName);
+        List<double> GetNumericFeatureSeries(DataSet dataSet, string featureName);
         List<string> GetStringFeatureSeries(DataSet dataSet, string featureName);
     }
 }
