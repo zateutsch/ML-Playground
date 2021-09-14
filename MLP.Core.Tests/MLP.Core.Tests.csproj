@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MLP.MachineLearning.Services\MLP.Core.csproj" />
+    <ProjectReference Include="..\MLP.Core\MLP.Core.csproj" />
   </ItemGroup>
 
 </Project>
