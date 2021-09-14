@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -14,8 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MLP.MachineLearning.Models\MLP.MachineLearning.Models.csproj" />
-    <ProjectReference Include="..\MLP.MachineLearning.Services\MLP.MachineLearning.Services.csproj" />
+    <ProjectReference Include="..\MLP.MachineLearning.Services\MLP.Core.csproj" />
   </ItemGroup>
 
 </Project>

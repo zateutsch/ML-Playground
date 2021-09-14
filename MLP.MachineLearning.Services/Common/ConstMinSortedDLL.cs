@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MLP.MachineLearning.Services
+namespace MLP.Core.Common
 {
     public class ConstMinSortedDLL
     {

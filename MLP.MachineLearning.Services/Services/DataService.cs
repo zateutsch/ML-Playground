@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using MLP.MachineLearning.Models;
+using MLP.Core.Interfaces;
+using MLP.Core.Models;
 
-namespace MLP.MachineLearning.Services
+namespace MLP.Core.Services
 {
 
     // DataService

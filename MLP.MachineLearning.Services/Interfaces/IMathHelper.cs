@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MLP.MachineLearning.Services
+namespace MLP.Core.Interfaces
 {
     public interface IMathHelper
     {

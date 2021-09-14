@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MLP.Core.Interfaces;
 
-namespace MLP.MachineLearning.Services
+namespace MLP.Core.Services
 {
     public class MathHelper : IMathHelper
     {

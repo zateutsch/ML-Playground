@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MLP.MachineLearning.Models;
 
-namespace MLP.MachineLearning.Services
+using MLP.Core.Models;
+
+namespace MLP.Core.Interfaces
 {
     public interface IDataService
     {

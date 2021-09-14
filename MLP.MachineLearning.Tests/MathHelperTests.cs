@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using MLP.MachineLearning.Services;
+using MLP.Core.Services;
 
-namespace MLP.MachineLearning.Tests
+namespace MLP.Core.Tests
 {
 
     [TestClass]

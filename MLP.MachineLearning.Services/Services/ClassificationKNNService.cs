@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MLP.MachineLearning.Models;
+using MLP.Core.Models;
+using MLP.Core.Common;
+using MLP.Core.Interfaces;
 
-namespace MLP.MachineLearning.Services
+namespace MLP.Core.Services
 {
     public class ClassificationKNNService
     {
