@@ -4,6 +4,10 @@ using System.Text;
 
 namespace MLP.Core.Common
 {
+    // Constant Size, Minimum Sorted DLL Class
+    // DLL has a maximum size set at construction
+    // Added nodes are added in descending order, and list is trimemd after to maintain constant size
+
     public class ConstMinSortedDLL
     {
         public int Size { get; set; }
@@ -19,6 +23,9 @@ namespace MLP.Core.Common
             this.MaxSize = maxSize;
         }
 
+
+        // Adds the node and them trims
+        // return whether or not node was added
         public bool AddAndTrim(Node node)
         {
 
@@ -27,6 +34,8 @@ namespace MLP.Core.Common
 
         }
 
+        // Returns the DLL as a dictionary
+        // Key => Index, Value => Data
         public Dictionary<int, double> ReturnAsDictionary()
         {
             Dictionary<int, double> dictionaryFormDLL = new Dictionary<int, double>(this.Size);
@@ -42,6 +51,8 @@ namespace MLP.Core.Common
             return dictionaryFormDLL;
         }
 
+
+        // Add a node regardless of size limitations
         private void Add(Node node)
         {
             this.Size += 1;
@@ -93,6 +104,8 @@ namespace MLP.Core.Common
 
         }
 
+        // Checks if DLL is over max size
+        // trims extra node if over size
         private bool Trim()
         {
             if(this.Size > this.MaxSize)
@@ -113,6 +126,9 @@ namespace MLP.Core.Common
         
     }
 
+
+    // Node class for DLL
+ 
     public class Node
     {
         
