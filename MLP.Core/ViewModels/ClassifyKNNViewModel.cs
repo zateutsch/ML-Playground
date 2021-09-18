@@ -18,6 +18,9 @@ namespace MLP.Core.ViewModels
         private int trainingDataIndex;
         private int testDataIndex;
         private int visualizationIndex;
+        private string trainingDataSeriesType;
+        private string testDataSeriesType;
+        private string visualizationDataSeriesType;
 
         // Primary Observable Collection - Core of KNN Graph Representation
 
@@ -53,6 +56,26 @@ namespace MLP.Core.ViewModels
         }
       
 
+        // Series type properties to indicate how series is visualized
+        // (eg. "ScatterPointSeries", "ScatterLineSeries", etc.)
+        public string TrainingDataSeriesType
+        {
+            get => trainingDataSeriesType;
+            set => SetProperty(ref trainingDataSeriesType, value);
+        }
+
+        public string TestDataSeriesType
+        {
+            get => testDataSeriesType;
+            set => SetProperty(ref testDataSeriesType, value);
+        }
+
+            public string VisualizationDataSeriesType
+        {
+            get => visualizationDataSeriesType;
+            set => SetProperty(ref visualizationDataSeriesType, value);
+        }
+        
 
         // Other Observable Properties
 
@@ -60,6 +83,9 @@ namespace MLP.Core.ViewModels
         public ClassifyKNNViewModel(IClassificationKNN knn)
         {
             this._knn_service = knn;
+            this.TrainingDataSeriesType = SeriesType.ScatterPoint;
+            this.TestDataSeriesType = SeriesType.ScatterPoint;
+            this.VisualizationDataSeriesType = SeriesType.ScatterLine;
         }
     }
 
