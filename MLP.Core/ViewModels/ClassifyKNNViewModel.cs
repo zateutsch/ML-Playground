@@ -14,20 +14,44 @@ namespace MLP.Core.ViewModels
         // Private Members
         private readonly IClassificationKNN _knn_service;
 
-        // Primary Observable Collections - Core of KNN Graph Representation
+        // Private Observable members to provide set property
+        private int trainingDataIndex;
+        private int testDataIndex;
+        private int visualizationIndex;
 
-        // Three observable collections of NestedSeries objects (see MLP.Core.Common.NestedSeries)
-        // Contains dynamical generated series of three different types
+        // Primary Observable Collection - Core of KNN Graph Representation
 
-        // 1. Training data separated by label
-        public ObservableCollection<NestedSeries<double>> TrainingData { get; set; }
-        // 2. Test data (potentially single point, tbd)
-        public ObservableCollection<NestedSeries<double>> TestData { get; set; }
+        // Observable collection of NestedSeries objects (see MLP.Core.Common.NestedSeries)
+        // Contains dynamical generated series of three different types, separated by index
 
-        // 3. KNN process visualization data
-        // This will take the form of series of two data points connected by line
-        // Test point <=> closest point #1 - #k
-        public ObservableCollection<NestedSeries<double>> VisualizationData { get; set; }
+        // Series data collection object
+        public ObservableCollection<NestedSeries<double>> GraphSeries { get; set; }
+
+        // Indexes designating where each type of data resides in GraphSeires
+
+        // original points in model for comparison
+        public int TrainingDataIndex 
+        {
+            get => trainingDataIndex;
+            set => SetProperty(ref trainingDataIndex, value); 
+        }
+
+        // test data to classify
+        public int TestDataIndex
+        {
+            get => testDataIndex;
+            set => SetProperty(ref testDataIndex, value);
+        }
+
+        // visualization data
+        // this data has no bearing on the actual model, but simplifies is used to visualize
+        // the connections between the test point and its k-nearest neighbors
+        public int VisualizationIndex
+        {
+            get => visualizationIndex;
+            set => SetProperty(ref visualizationIndex, value);
+        }
+      
 
 
         // Other Observable Properties
