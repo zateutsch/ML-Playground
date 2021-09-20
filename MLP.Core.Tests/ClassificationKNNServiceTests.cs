@@ -91,6 +91,18 @@ namespace MLP.Core.Tests
             Assert.AreEqual<string>("no", result);
         }
 
+        [TestMethod]
+        public void Get_Label_Specific_Series_From_Data()
+        {
+            // Arrange 
+
+            // Act
+
+            KNN.Train("temp", "cloudcover", "rain");
+
+            // Assert
+        }
+
 
 
     }

@@ -7,7 +7,7 @@ using MLP.Core.Interfaces;
 
 namespace MLP.Core.Services
 {
-    public class ClassificationKNNService
+    public class ClassificationKNNService : IClassificationKNN
     {
         // Services
         private readonly IDataService _dataService;
@@ -76,6 +76,30 @@ namespace MLP.Core.Services
 
             return this.FindMostCommonLabel(close_labels);
             
+        }
+
+        // Returns a dictionary where
+        // each key is a unique label that appears in current classification problem and
+        // each entry is a list of all data points that have that label
+
+        public Dictionary<string, List<DataPoint<double>>> GetLabeledSeries()
+        {
+            Dictionary<string, List<DataPoint<double>>> labeledSeries = new Dictionary<string, List<DataPoint<double>>>();
+
+            for(int i = 0; i < this.DataSize; i++)
+            {
+                string label = this.TargetData[i];
+
+                if (!labeledSeries.ContainsKey(label))
+                {
+                    labeledSeries[label] = new List<DataPoint<double>>();  
+                }
+
+                labeledSeries[label].Add(new DataPoint<double>(this.CurrentDataX[i], this.CurrentDataY[i]));
+
+            }
+
+            return labeledSeries;
         }
 
         private List<string> GetLabelsFromDLL(ConstMinSortedDLL min_list)

@@ -47,7 +47,7 @@ namespace MLP.Core.ViewModels
         }
 
         // visualization data
-        // this data has no bearing on the actual model, but simplifies is used to visualize
+        // this data has no bearing on the actual model, but is used to visualize
         // the connections between the test point and its k-nearest neighbors
         public int VisualizationIndex
         {

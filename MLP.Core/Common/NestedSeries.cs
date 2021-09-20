@@ -9,20 +9,6 @@ namespace MLP.Core.Common
     // Nested series class for creating Observable collections of Observable collections
     // For data-binding with Telerik Series Providers for Dynamic Series Generation
 
-    public class DataPoint<T>
-    {
-        public T X { set; get; }
-        public T Y { set; get; }
-
-        public string Label { get; set; }
-
-        public DataPoint(T x, T y, string label = null)
-        {
-            this.X = x;
-            this.Y = y;
-            this.Label = label;
-        }
-    }
     public class NestedSeries<T>
     {
         ObservableCollection<DataPoint<T>> Data { get; set; }
