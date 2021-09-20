@@ -5,10 +5,54 @@
     xmlns:local="using:MLP.UWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerikChart="using:Telerik.UI.Xaml.Controls.Chart"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <telerikChart:RadCartesianChart PaletteName="DefaultDarkSelected">
+            <telerikChart:RadCartesianChart.HorizontalAxis>
+                <telerikChart:LinearAxis/>
+            </telerikChart:RadCartesianChart.HorizontalAxis>
+            <telerikChart:RadCartesianChart.VerticalAxis>
+                <telerikChart:LinearAxis/>
+            </telerikChart:RadCartesianChart.VerticalAxis>
+            <telerikChart:RadCartesianChart.SeriesProvider >
+
+                <telerikChart:ChartSeriesProvider x:Name="provider" Source="{x:Bind ViewModel.GraphSeries}" >
+                    <telerikChart:ChartSeriesProvider.SeriesDescriptors>
+                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y">
+                            <telerikChart:ScatterSeriesDescriptor.Style>
+                                <Style TargetType="telerikChart:ScatterPointSeries"/>
+                            </telerikChart:ScatterSeriesDescriptor.Style>
+                        </telerikChart:ScatterSeriesDescriptor>
+                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="2">
+                            <telerikChart:ScatterSeriesDescriptor.Style>
+                                <Style TargetType="telerikChart:ScatterLineSeries"/>
+                            </telerikChart:ScatterSeriesDescriptor.Style>
+                        </telerikChart:ScatterSeriesDescriptor>
+                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="8">
+                            <telerikChart:ScatterSeriesDescriptor.Style>
+                                <Style TargetType="telerikChart:ScatterPointSeries"/>
+                            </telerikChart:ScatterSeriesDescriptor.Style>
+                        </telerikChart:ScatterSeriesDescriptor>
+                    </telerikChart:ChartSeriesProvider.SeriesDescriptors>
+                </telerikChart:ChartSeriesProvider>
+            </telerikChart:RadCartesianChart.SeriesProvider>
+
+        </telerikChart:RadCartesianChart>
+
+
+
+
+        <Button Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" >
+            Test
+        </Button>
 
     </Grid>
 </Page>

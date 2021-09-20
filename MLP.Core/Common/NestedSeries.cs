@@ -11,7 +11,7 @@ namespace MLP.Core.Common
 
     public class NestedSeries<T>
     {
-        ObservableCollection<DataPoint<T>> Data { get; set; }
+        public ObservableCollection<DataPoint<T>> Data { get; set; }
 
         public NestedSeries(T[] x_data, T[] y_data)
         {
@@ -21,6 +21,11 @@ namespace MLP.Core.Common
             {
                 this.Data.Add(new DataPoint<T>(x_data[i], y_data[i]));
             }
+        }
+
+        public NestedSeries(List<DataPoint<T>> fullSeries)
+        {
+            this.Data = new ObservableCollection<DataPoint<T>>(fullSeries);
         }
     }
 }

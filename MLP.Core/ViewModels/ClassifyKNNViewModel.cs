@@ -70,7 +70,7 @@ namespace MLP.Core.ViewModels
             set => SetProperty(ref testDataSeriesType, value);
         }
 
-            public string VisualizationDataSeriesType
+        public string VisualizationDataSeriesType
         {
             get => visualizationDataSeriesType;
             set => SetProperty(ref visualizationDataSeriesType, value);
@@ -86,6 +86,32 @@ namespace MLP.Core.ViewModels
             this.TrainingDataSeriesType = SeriesType.ScatterPoint;
             this.TestDataSeriesType = SeriesType.ScatterPoint;
             this.VisualizationDataSeriesType = SeriesType.ScatterLine;
+            this.GraphSeries = new ObservableCollection<NestedSeries<double>>();
+
+            this.TrainingDataIndex = 0;
+            this.TestDataIndex = 1;
+            this.VisualizationIndex = 2;
+
+            this.InitializeGraphData();
+        }
+
+
+        // Methods
+        public void AddTrainingDataSeries(string label, List<DataPoint<double>> series)
+        {
+            this.GraphSeries.Insert(this.TestDataIndex - 1, new NestedSeries<double>(series));
+            this.TestDataIndex += 1;
+            this.VisualizationIndex += 1;
+        }
+
+        public void InitializeGraphData()
+        {
+            Dictionary<string, List<DataPoint<double>>> seriesDict = _knn_service.GetLabeledSeries();
+
+            foreach (KeyValuePair<string, List<DataPoint<double>>> series in seriesDict)
+            {
+                this.AddTrainingDataSeries(series.Key, series.Value);
+            }
         }
     }
 

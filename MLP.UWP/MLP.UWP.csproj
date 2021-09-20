@@ -157,6 +157,12 @@
       <Version>1.0.2.8</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MLP.Core\MLP.Core.csproj">
+      <Project>{b4b77a03-30d7-4825-ab8c-bc04472f4245}</Project>
+      <Name>MLP.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
