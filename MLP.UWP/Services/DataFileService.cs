@@ -25,6 +25,23 @@ namespace MLP.UWP.Services
             }
         }
 
+        public async Task<DataSet> ReadJSONtoDataSet(string filename)
+        {
+            StorageFolder sourceFolder = await this.GetDataFolder();
+            StorageFile sourceFile = await sourceFolder.GetFileAsync(filename);
+            string dataSetText = await FileIO.ReadTextAsync(sourceFile);
+
+            return this.Deserialize(dataSetText);
+          
+        }
+
+        public async Task WriteDataSetToJSON(DataSet dataSet)
+        {
+            StorageFolder destinationFolder = await this.GetDataFolder();
+            StorageFile writeFile = await destinationFolder.CreateFileAsync(dataSet.Name + ".json", CreationCollisionOption.ReplaceExisting);
+
+            await FileIO.WriteTextAsync(writeFile, this.Serialize(dataSet));
+        }
 
         private async Task<StorageFolder> GetDataFolder()
         {
