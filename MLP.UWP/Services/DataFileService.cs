@@ -9,31 +9,59 @@ using Newtonsoft.Json;
 
 namespace MLP.UWP.Services
 {
-    public class DataFileService : IDataFileService
+    public class DataFileService
     {
         private readonly StorageFolder _appInstalledFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-        private readonly string _dataDirectory = "Resources/Data/";
+        private readonly StorageFolder _localFolder = ApplicationData.Current.LocalFolder;
+        private readonly string _assetsFolderName = "Assets";
+        private readonly string _dataFolderName = "Data";
 
-        public async Task<DataSet> ReadDataSetFromJSON(string filename)
+
+        public DataFileService()
         {
-            StorageFile targetFile = await _appInstalledFolder.GetFileAsync(this._dataDirectory + filename);
-            string textDataSet = await FileIO.ReadTextAsync(targetFile);
-
-            return this.Deserialize(textDataSet);
+            if (!this.IsAppDataInitialized().Result)
+            {
+                Task.Run(() => this.WriteFromInstallToAppData());
+            }
         }
 
-        public async Task WriteDataSetToJSON(DataSet dataSet)
-        {
-            StorageFile targetFile = await _appInstalledFolder.GetFileAsync(this.GetDataSetFilename(dataSet));
-            string textDataSet = this.Serialize(dataSet);
 
-            await FileIO.WriteTextAsync(targetFile, textDataSet);
+        private async Task<StorageFolder> GetDataFolder()
+        {
+            StorageFolder assets = await this._localFolder.GetFolderAsync(_assetsFolderName);
+            return await assets.GetFolderAsync(_dataFolderName);
+        }
+        private async Task<bool> IsAppDataInitialized()
+        {
+            return await this._localFolder.TryGetItemAsync(this._assetsFolderName) != null;
         }
 
-        public string GetDataSetFilename(DataSet dataSet)
+        private async Task WriteFromInstallToAppData()
         {
-            return this._dataDirectory + dataSet.Name + ".json";
+            await this.CreateAppDataDirectories();
+            await this.CopyFromInstallToAppData();
         }
+
+        private async Task CreateAppDataDirectories()
+        {
+            await this._localFolder.CreateFolderAsync(this._assetsFolderName);
+            StorageFolder resourcesFolder = await this._localFolder.GetFolderAsync(this._assetsFolderName);
+            await resourcesFolder.CreateFolderAsync(this._dataFolderName);
+        }
+
+        private async Task CopyFromInstallToAppData()
+        {
+            StorageFolder sourceAssets = await this._appInstalledFolder.GetFolderAsync(this._assetsFolderName);
+            StorageFolder source = await sourceAssets.GetFolderAsync(this._dataFolderName);
+
+            StorageFolder destination = await this.GetDataFolder();
+
+            foreach (StorageFile file in await source.GetFilesAsync())
+            {
+                await file.CopyAsync(destination, file.Name, NameCollisionOption.ReplaceExisting);
+            }
+        }
+
 
 
         // Wrapper functions for JsonConvert
