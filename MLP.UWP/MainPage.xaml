@@ -15,7 +15,7 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <telerikChart:RadCartesianChart PaletteName="DefaultDarkSelected">
+        <telerikChart:RadCartesianChart>
             <telerikChart:RadCartesianChart.HorizontalAxis>
                 <telerikChart:LinearAxis/>
             </telerikChart:RadCartesianChart.HorizontalAxis>
@@ -26,19 +26,22 @@
 
                 <telerikChart:ChartSeriesProvider x:Name="provider" Source="{x:Bind ViewModel.GraphSeries}" >
                     <telerikChart:ChartSeriesProvider.SeriesDescriptors>
-                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y">
+                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="0">
+                            <telerikChart:ScatterSeriesDescriptor.Style>
+                                <Style TargetType="telerikChart:ScatterPointSeries">
+                                </Style>
+                            </telerikChart:ScatterSeriesDescriptor.Style>
+                        </telerikChart:ScatterSeriesDescriptor>
+                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind ViewModel.TestDataIndex}">
                             <telerikChart:ScatterSeriesDescriptor.Style>
                                 <Style TargetType="telerikChart:ScatterPointSeries"/>
                             </telerikChart:ScatterSeriesDescriptor.Style>
                         </telerikChart:ScatterSeriesDescriptor>
-                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="2">
+                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind ViewModel.VisualizationIndex}">
                             <telerikChart:ScatterSeriesDescriptor.Style>
-                                <Style TargetType="telerikChart:ScatterLineSeries"/>
-                            </telerikChart:ScatterSeriesDescriptor.Style>
-                        </telerikChart:ScatterSeriesDescriptor>
-                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="8">
-                            <telerikChart:ScatterSeriesDescriptor.Style>
-                                <Style TargetType="telerikChart:ScatterPointSeries"/>
+                                <Style TargetType="telerikChart:ScatterSplineSeries">
+                                    <Setter Property="Stroke" Value="Black"/>
+                                </Style>
                             </telerikChart:ScatterSeriesDescriptor.Style>
                         </telerikChart:ScatterSeriesDescriptor>
                     </telerikChart:ChartSeriesProvider.SeriesDescriptors>
@@ -50,7 +53,7 @@
 
 
 
-        <Button Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" >
+        <Button Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Click="{x:Bind ViewModel.TestClickFunction}">
             Test
         </Button>
 

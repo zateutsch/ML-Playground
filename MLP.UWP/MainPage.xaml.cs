@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using MLP.Core.ViewModels;
 using MLP.Core.Services;
 using MLP.Core.Models;
+using MLP.UWP.Services;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -45,6 +46,10 @@ namespace MLP.UWP
 
             dataSet.RegressionData = regData;
             dataSet.ClassificationData = classData;
+            dataSet.Name = "Weather-Test-001";
+
+            DataFileService dataFileService = new DataFileService();
+
 
             ClassificationKNNService KNN = new ClassificationKNNService(dataSet, dataService, mathHelper);
             KNN.Train("cloudcover", "humidity", "rain");

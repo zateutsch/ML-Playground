@@ -13,6 +13,8 @@ namespace MLP.Core.ViewModels
     {
         // Private Members
         private readonly IClassificationKNN _knn_service;
+        private double _currentTestX;
+        private double _currentTestY;
 
         // Private Observable members to provide set property
         private int trainingDataIndex;
@@ -89,19 +91,33 @@ namespace MLP.Core.ViewModels
             this.GraphSeries = new ObservableCollection<NestedSeries<double>>();
 
             this.TrainingDataIndex = 0;
-            this.TestDataIndex = 1;
-            this.VisualizationIndex = 2;
+            this.TestDataIndex = 0;
+            this.VisualizationIndex = 0;
 
             this.InitializeGraphData();
+            this.AddTestDataSeries(50.0, 15.0);
         }
 
 
         // Methods
         public void AddTrainingDataSeries(string label, List<DataPoint<double>> series)
         {
-            this.GraphSeries.Insert(this.TestDataIndex - 1, new NestedSeries<double>(series));
+            this.GraphSeries.Insert(this.TrainingDataIndex, new NestedSeries<double>(series));
             this.TestDataIndex += 1;
             this.VisualizationIndex += 1;
+        }
+
+        public void AddTestDataSeries(double testX, double testY)
+        {
+            this.GraphSeries.Insert(this.TestDataIndex, new NestedSeries<double>(new[] { testX }, new[] { testY }));
+            this._currentTestX = testX;
+            this._currentTestY = testY;
+            this.VisualizationIndex += 1;
+        }
+
+        public void AddVisualizationSeries(double endX, double endY)
+        {
+            this.GraphSeries.Insert(this.VisualizationIndex, new NestedSeries<double>(new[] { this._currentTestX, endX }, new[] { this._currentTestY, endY }));
         }
 
         public void InitializeGraphData()
@@ -112,6 +128,14 @@ namespace MLP.Core.ViewModels
             {
                 this.AddTrainingDataSeries(series.Key, series.Value);
             }
+        }
+
+
+
+        public void TestClickFunction()
+        {
+           this.AddVisualizationSeries(45.0, 18.0);
+           this.AddVisualizationSeries(70.0, 20.0);
         }
     }
 
