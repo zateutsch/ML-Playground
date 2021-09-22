@@ -25,6 +25,20 @@ namespace MLP.UWP.Services
             }
         }
 
+        public async Task<Dictionary<string, DataSet>> ReadAllDataSets()
+        {
+            Dictionary<string, DataSet> dataSetDictionary = new Dictionary<string, DataSet>();
+            StorageFolder sourceFolder = await this.GetDataFolder();
+            foreach (StorageFile file in await sourceFolder.GetFilesAsync())
+            {
+                DataSet dataSet = await this.ReadJsonToDataSet(file);
+                dataSetDictionary.Add(dataSet.Name, dataSet);
+            }
+
+            return dataSetDictionary;
+        }
+
+
         public async Task<DataSet> ReadJsonToDataSet(string filename)
         {
             StorageFolder sourceFolder = await this.GetDataFolder();
@@ -33,6 +47,13 @@ namespace MLP.UWP.Services
 
             return this.Deserialize(dataSetText);
           
+        }
+
+        public async Task<DataSet> ReadJsonToDataSet(StorageFile sourceFile)
+        {
+            string dataSetText = await FileIO.ReadTextAsync(sourceFile);
+
+            return this.Deserialize(dataSetText);
         }
 
         public async Task WriteDataSetToJson(DataSet dataSet)
