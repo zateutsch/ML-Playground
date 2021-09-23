@@ -10,6 +10,10 @@ namespace MLP.Core.Models
     public class DataSet
     {
         public string Name { get; set; }
+        public string DefaultFeatureX { get; set; }
+        public string DefaultFeatureY { get; set; }
+        public string DefaultFeatureLabel { get; set; }
+
         public int FeatureSize
         {
             get { return this.ClassificationData.Count + this.RegressionData.Count; }

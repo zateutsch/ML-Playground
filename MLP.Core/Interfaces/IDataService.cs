@@ -8,8 +8,10 @@ namespace MLP.Core.Interfaces
 {
     public interface IDataService
     {
-        List<string> GetFeatures(DataSet dataSet);
-        List<double> GetNumericFeatureSeries(DataSet dataSet, string featureName);
-        List<string> GetStringFeatureSeries(DataSet dataSet, string featureName);
+        DataSet CurrentData { get; set; }
+        List<string> GetFeatures();
+        List<double> GetRegressionFeatureSeries(string featureName);
+        List<string> GetClassificationFeatureSeries(string featureName);
+
     }
 }

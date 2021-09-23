@@ -32,12 +32,11 @@ namespace MLP.UWP
         public MainPage()
         { 
             this.InitializeComponent();
-            DataService dataService = new DataService();
             MathHelper mathHelper = new MathHelper();
 
             DataFileService dataFileService = new DataFileService();
             DataSet dataSet = Task.Run(() => dataFileService.ReadJsonToDataSet("Weather-Test-001.json")).Result;
-
+            DataService dataService = new DataService(dataSet);
 
             ClassificationKNNService KNN = new ClassificationKNNService(dataSet, dataService, mathHelper);
             KNN.Train("cloudcover", "humidity", "rain");

@@ -41,7 +41,7 @@ namespace MLP.Core.Services
             this.Data = data;
             this.Kparam = k;
             
-            this.Features = this._dataService.GetFeatures(this.Data);
+            this.Features = this._dataService.GetFeatures();
 
         }
 
@@ -51,9 +51,9 @@ namespace MLP.Core.Services
             this.CurrentFeatureY = featureY;
             this.TargetFeature = targetFeature;
 
-            this.CurrentDataX = _dataService.GetNumericFeatureSeries(this.Data, featureX);
-            this.CurrentDataY = _dataService.GetNumericFeatureSeries(this.Data, featureY);
-            this.TargetData = _dataService.GetStringFeatureSeries(this.Data, targetFeature);
+            this.CurrentDataX = _dataService.GetRegressionFeatureSeries(featureX);
+            this.CurrentDataY = _dataService.GetRegressionFeatureSeries(featureY);
+            this.TargetData = _dataService.GetClassificationFeatureSeries(targetFeature);
 
             this.DataSize = this.DataSize = this.TargetData.Count;
 

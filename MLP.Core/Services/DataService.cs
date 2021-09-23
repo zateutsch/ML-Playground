@@ -12,22 +12,29 @@ namespace MLP.Core.Services
 
     public class DataService : IDataService
     {
-        public List<string> GetFeatures(DataSet dataSet)
+        public DataSet CurrentData { get; set; }
+        public DataService(DataSet dataSet)
         {
-            List<string> features = new List<string>(dataSet.RegressionData.Keys);
-            features.AddRange(new List<string>(dataSet.ClassificationData.Keys));
+            this.CurrentData = dataSet;
+        }
+
+        public List<string> GetFeatures()
+        {
+            List<string> features = new List<string>(this.CurrentData.RegressionData.Keys);
+            features.AddRange(new List<string>(this.CurrentData.ClassificationData.Keys));
 
             return features;
         }
 
-        public List<double> GetNumericFeatureSeries(DataSet dataSet, string featureName)
+        public List<double> GetRegressionFeatureSeries(string featureName)
         {
-            return new List<double>(dataSet.RegressionData[featureName]);
+            return new List<double>(this.CurrentData.RegressionData[featureName]);
         }
 
-        public List<string> GetStringFeatureSeries(DataSet dataSet, string featureName)
+        public List<string> GetClassificationFeatureSeries(string featureName)
         {
-            return new List<string>(dataSet.ClassificationData[featureName]);
+            return new List<string>(this.CurrentData.ClassificationData[featureName]);
         }
+       
     }
 }
