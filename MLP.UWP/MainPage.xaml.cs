@@ -36,7 +36,7 @@ namespace MLP.UWP
 
             DataFileService dataFileService = new DataFileService();
             DataSet dataSet = Task.Run(() => dataFileService.ReadJsonToDataSet("Weather-Test-001.json")).Result;
-            DataService dataService = new DataService(dataSet);
+            DataSetService dataService = new DataSetService(dataSet);
 
             ClassificationKNNService KNN = new ClassificationKNNService(dataSet, dataService, mathHelper);
             KNN.Train("cloudcover", "humidity", "rain");

@@ -10,7 +10,7 @@ namespace MLP.Core.Services
     public class ClassificationKNNService : IClassificationKNN
     {
         // Services
-        private readonly IDataService _dataService;
+        private readonly IDataSetService _dataService;
         private readonly IMathHelper _mathHelper;
 
         // Model parameters
@@ -30,7 +30,7 @@ namespace MLP.Core.Services
         // Primary constructor
         public ClassificationKNNService(
             DataSet data, 
-            IDataService dataService,
+            IDataSetService dataService,
             IMathHelper mathHelper,
             int k = 3)
         {

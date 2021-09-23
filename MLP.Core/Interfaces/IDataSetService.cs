@@ -6,7 +6,7 @@ using MLP.Core.Models;
 
 namespace MLP.Core.Interfaces
 {
-    public interface IDataService
+    public interface IDataSetService
     {
         DataSet CurrentData { get; set; }
         List<string> GetFeatures();
