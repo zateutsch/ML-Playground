@@ -117,10 +117,10 @@ namespace MLP.Core.ViewModels
             this.RegressionFeatureNames = new ObservableCollection<string>(this._knn_service.RegressionFeatureNames);
             this.CurrentFeatureX = this._knn_service.CurrentFeatureX;
             this.CurrentFeatureY = this._knn_service.CurrentFeatureY;
-            this.CurrentFeatureLabel = this.CurrentFeatureLabel;
+            this.CurrentFeatureLabel = this._knn_service.CurrentFeatureLabel;
 
             this.GraphSeries = new ObservableCollection<NestedSeries<double>>();
-            this.InitializeGraphData();
+            this.InitializeGraph();
         }
 
 
@@ -145,7 +145,7 @@ namespace MLP.Core.ViewModels
             this.GraphSeries.Insert(this.VisualizationIndex, new NestedSeries<double>(new[] { this._currentTestX, endX }, new[] { this._currentTestY, endY }));
         }
 
-        public void InitializeGraphData()
+        public void InitializeGraph()
         {
             Dictionary<string, List<DataPoint<double>>> seriesDict = _knn_service.GetLabeledSeries();
 
@@ -153,6 +153,25 @@ namespace MLP.Core.ViewModels
             {
                 this.AddTrainingDataSeries(series.Key, series.Value);
             }
+        }
+
+        public void ClearGraph()
+        {
+            while(this.GraphSeries.Count > 0)
+            {
+                this.GraphSeries.RemoveAt(0);
+            }
+
+            this.TrainingDataIndex = 0;
+            this.TestDataIndex = 0;
+            this.VisualizationIndex = 0;
+        }
+
+        public void UpdateGraph()
+        {
+            this.ClearGraph();
+            this._knn_service.Train(this.CurrentFeatureX, this.CurrentFeatureY, this.CurrentFeatureLabel);
+            this.InitializeGraph();
         }
 
     }
