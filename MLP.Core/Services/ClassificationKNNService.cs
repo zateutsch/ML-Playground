@@ -18,10 +18,10 @@ namespace MLP.Core.Services
 
         // Data handling and feature management properties
         public DataSet Data { get; set; }
-        public List<string> Features { get; set; }
+        public List<string> RegressionFeatureNames { get; set; }
         public string CurrentFeatureX { get; set; }
         public string CurrentFeatureY { get; set; }
-        public string TargetFeature { get; set; }
+        public string CurrentFeatureLabel { get; set; }
         public List<double> CurrentDataX { get; set; }
         public List<double> CurrentDataY { get; set; }
         public List<string> TargetData { get; set; }
@@ -30,18 +30,15 @@ namespace MLP.Core.Services
         // Primary constructor
         public ClassificationKNNService(IDataSetService dataService, IMathHelper mathHelper)
         {
-
             this._dataService = dataService;
             this._mathHelper = mathHelper;
-            
-            // this.Features = this._dataService.GetFeatures();
-
         }
 
         public void ConfigService(DataSet dataSet, int k = 3)
         {
             this.K = k;
             this._dataService.CurrentData = dataSet;
+            this.RegressionFeatureNames = this._dataService.GetRegressionFeatureNames();
             this.Train(dataSet.DefaultFeatureX, dataSet.DefaultFeatureY, dataSet.DefaultFeatureLabel);
         }
 
@@ -49,7 +46,7 @@ namespace MLP.Core.Services
         {
             this.CurrentFeatureX = featureX;
             this.CurrentFeatureY = featureY;
-            this.TargetFeature = targetFeature;
+            this.CurrentFeatureLabel = targetFeature;
 
             this.CurrentDataX = _dataService.GetRegressionFeatureSeries(featureX);
             this.CurrentDataY = _dataService.GetRegressionFeatureSeries(featureY);

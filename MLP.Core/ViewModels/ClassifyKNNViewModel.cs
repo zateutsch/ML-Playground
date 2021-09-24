@@ -18,12 +18,17 @@ namespace MLP.Core.ViewModels
         private double _currentTestY;
 
         // Private Observable members to provide set property
-        private int trainingDataIndex;
-        private int testDataIndex;
-        private int visualizationIndex;
-        private string trainingDataSeriesType;
-        private string testDataSeriesType;
-        private string visualizationDataSeriesType;
+        private int trainingDataIndex = 0;
+        private int testDataIndex = 0;
+        private int visualizationIndex = 0;
+        private string trainingDataSeriesType = SeriesType.ScatterPoint;
+        private string testDataSeriesType = SeriesType.ScatterPoint;
+        private string visualizationDataSeriesType = SeriesType.ScatterSpline;
+
+        private string currentFeatureX;
+        private string currentFeatureY;
+        private string currentFeatureLabel;
+
 
         // Primary Observable Collection - Core of KNN Graph Representation
 
@@ -33,6 +38,24 @@ namespace MLP.Core.ViewModels
         // Series data collection object
         public ObservableCollection<NestedSeries<double>> GraphSeries { get; set; }
 
+
+        public string CurrentFeatureX
+        {
+            get => currentFeatureX;
+            set => SetProperty(ref currentFeatureX, value);
+        }
+
+        public string CurrentFeatureY
+        {
+            get => currentFeatureY;
+            set => SetProperty(ref currentFeatureY, value);
+        }
+
+        public string CurrentFeatureLabel
+        {
+            get => currentFeatureLabel;
+            set => SetProperty(ref currentFeatureLabel, value);
+        }
         // Indexes designating where each type of data resides in GraphSeires
 
         // original points in model for comparison
@@ -78,7 +101,9 @@ namespace MLP.Core.ViewModels
             get => visualizationDataSeriesType;
             set => SetProperty(ref visualizationDataSeriesType, value);
         }
-        
+
+        // Feature Collection
+        public ObservableCollection<string> RegressionFeatureNames { get; set; }
 
         // Other Observable Properties
 
@@ -86,22 +111,16 @@ namespace MLP.Core.ViewModels
         public ClassifyKNNViewModel(IClassificationKNN knn, IDataManagerService dataManager)
         {
             this._data_manager_service = dataManager;
-
             this._knn_service = knn;
             this._knn_service.ConfigService(this._data_manager_service.FetchDataSet("Weather-Test-001"));
-            
 
-            this.TrainingDataSeriesType = SeriesType.ScatterPoint;
-            this.TestDataSeriesType = SeriesType.ScatterPoint;
-            this.VisualizationDataSeriesType = SeriesType.ScatterLine;
+            this.RegressionFeatureNames = new ObservableCollection<string>(this._knn_service.RegressionFeatureNames);
+            this.CurrentFeatureX = this._knn_service.CurrentFeatureX;
+            this.CurrentFeatureY = this._knn_service.CurrentFeatureY;
+            this.CurrentFeatureLabel = this.CurrentFeatureLabel;
+
             this.GraphSeries = new ObservableCollection<NestedSeries<double>>();
-
-            this.TrainingDataIndex = 0;
-            this.TestDataIndex = 0;
-            this.VisualizationIndex = 0;
-
             this.InitializeGraphData();
-            this.AddTestDataSeries(50.0, 15.0);
         }
 
 
@@ -136,13 +155,6 @@ namespace MLP.Core.ViewModels
             }
         }
 
-
-
-        public void TestClickFunction()
-        {
-           this.AddVisualizationSeries(45.0, 18.0);
-           this.AddVisualizationSeries(70.0, 20.0);
-        }
     }
 
 

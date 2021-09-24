@@ -31,6 +31,16 @@ namespace MLP.Core.Services
         {
             return new List<string>(this.CurrentData.ClassificationData[featureName]);
         }
-       
+
+        public List<string> GetRegressionFeatureNames()
+        {
+            return new List<string>(this.CurrentData.RegressionData.Keys);
+        }
+
+        public List<string> GetClassificationFeatureNames()
+        {
+            return new List<string>(this.CurrentData.ClassificationData.Keys);
+        }
+
     }
 }

@@ -12,6 +12,8 @@ namespace MLP.Core.Interfaces
         List<string> GetFeatures();
         List<double> GetRegressionFeatureSeries(string featureName);
         List<string> GetClassificationFeatureSeries(string featureName);
+        List<string> GetRegressionFeatureNames();
+        List<string> GetClassificationFeatureNames();
 
     }
 }
