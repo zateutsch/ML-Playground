@@ -13,10 +13,6 @@ namespace MLP.Core.Services
     public class DataSetService : IDataSetService
     {
         public DataSet CurrentData { get; set; }
-        public DataSetService(DataSet dataSet)
-        {
-            this.CurrentData = dataSet;
-        }
 
         public List<string> GetFeatures()
         {

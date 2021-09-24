@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MLP.Core.Models;
+using MLP.Core.Interfaces;
 
 namespace MLP.Core.Services
 {
@@ -9,7 +10,7 @@ namespace MLP.Core.Services
     // Fancy dictionary of data sets
     // singleton
     // TODO: managing datasets based on what models use them
-    public class DataManagerService
+    public class DataManagerService : IDataManagerService
     {
         public Dictionary<string, DataSet> DataSets { get; set; }
 

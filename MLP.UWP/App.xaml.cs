@@ -30,7 +30,7 @@ namespace MLP.UWP
     {
         private IServiceProvider _serviceProvider;
         private DataFileService _dataFileService;
-        private DataManagerService _dataManagerService;
+        private IDataManagerService _dataManagerService;
         public App()
         {
             this.InitializeComponent();
@@ -77,7 +77,7 @@ namespace MLP.UWP
                 _serviceProvider = CreateServiceProvider();
                 _dataFileService = Services.GetRequiredService<DataFileService>();
                 await _dataFileService.ConfigService();
-                _dataManagerService = Services.GetRequiredService<DataManagerService>();
+                _dataManagerService = Services.GetRequiredService<IDataManagerService>();
 
                 _dataManagerService.DataSets = await _dataFileService.ReadAllDataSets();
 
@@ -124,11 +124,11 @@ namespace MLP.UWP
         private static IServiceProvider CreateServiceProvider()
         {
             var provider = new ServiceCollection()
-                .AddSingleton<DataManagerService>()
+                .AddSingleton<IDataManagerService, DataManagerService>()
                 .AddTransient<ClassifyKNNViewModel>()
                 .AddSingleton<DataFileService>()
                 .AddTransient<IDataSetService, DataSetService>()
-                .AddTransient<ClassificationKNNService>()
+                .AddTransient<IClassificationKNN, ClassificationKNNService>()
                 .AddSingleton<IMathHelper, MathHelper>()
                 .BuildServiceProvider(true);
 
