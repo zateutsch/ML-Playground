@@ -136,8 +136,6 @@ namespace MLP.Core.ViewModels
             }
         }
 
-
-
         public void TestClickFunction()
         {
            this.AddVisualizationSeries(45.0, 18.0);
