@@ -29,19 +29,11 @@ namespace MLP.UWP
     {
 
         public ClassifyKNNViewModel ViewModel { get; set; }
+
         public MainPage()
         { 
             this.InitializeComponent();
-            MathHelper mathHelper = new MathHelper();
-
-            DataFileService dataFileService = new DataFileService();
-            DataSet dataSet = Task.Run(() => dataFileService.ReadJsonToDataSet("Weather-Test-001.json")).Result;
-            DataSetService dataService = new DataSetService(dataSet);
-
-            ClassificationKNNService KNN = new ClassificationKNNService(dataSet, dataService, mathHelper);
-            KNN.Train("cloudcover", "humidity", "rain");
-
-            this.ViewModel = new ClassifyKNNViewModel(KNN);
+            
 
         }
     }

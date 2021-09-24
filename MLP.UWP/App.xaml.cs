@@ -19,6 +19,7 @@ using MLP.UWP.Services;
 using MLP.Core.Services;
 using MLP.Core.ViewModels;
 using MLP.Core.Interfaces;
+using System.Threading.Tasks;
 
 namespace MLP.UWP
 {
@@ -29,6 +30,7 @@ namespace MLP.UWP
     {
         private IServiceProvider _serviceProvider;
         private DataFileService _dataFileService;
+        private DataManagerService _dataManagerService;
         public App()
         {
             this.InitializeComponent();
@@ -50,7 +52,7 @@ namespace MLP.UWP
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -74,6 +76,11 @@ namespace MLP.UWP
                 //Config services
                 _serviceProvider = CreateServiceProvider();
                 _dataFileService = Services.GetRequiredService<DataFileService>();
+                await _dataFileService.ConfigService();
+                _dataManagerService = Services.GetRequiredService<DataManagerService>();
+
+                _dataManagerService.DataSets = await _dataFileService.ReadAllDataSets();
+
             }
 
             if (e.PrelaunchActivated == false)
@@ -117,6 +124,7 @@ namespace MLP.UWP
         private static IServiceProvider CreateServiceProvider()
         {
             var provider = new ServiceCollection()
+                .AddSingleton<DataManagerService>()
                 .AddTransient<ClassifyKNNViewModel>()
                 .AddSingleton<DataFileService>()
                 .AddTransient<IDataSetService, DataSetService>()

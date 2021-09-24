@@ -19,14 +19,15 @@ namespace MLP.UWP.Services
         private readonly string _dataFolderName = "Data";
 
 
-        // Constructor
+        // ConfigService
         // Checks if AppData has been initialized
         // if not, write Install data to App Data
-        public DataFileService()
+
+        public async Task ConfigService()
         {
-            if (!this.IsAppDataInitialized().Result)
+            if (!(await this.IsAppDataInitialized()))
             {
-                Task.Run(() => this.WriteFromInstallToAppData());
+                await this.WriteFromInstallToAppData();
             }
         }
 
