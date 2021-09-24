@@ -13,6 +13,7 @@ namespace MLP.Core.ViewModels
     {
         // Private Members
         private readonly IClassificationKNN _knn_service;
+        private readonly IDataManagerService _data_manager_service;
         private double _currentTestX;
         private double _currentTestY;
 
@@ -82,9 +83,14 @@ namespace MLP.Core.ViewModels
         // Other Observable Properties
 
         // Constructor
-        public ClassifyKNNViewModel(IClassificationKNN knn)
+        public ClassifyKNNViewModel(IClassificationKNN knn, IDataManagerService dataManager)
         {
+            this._data_manager_service = dataManager;
+
             this._knn_service = knn;
+            this._knn_service.ConfigService(this._data_manager_service.FetchDataSet("Weather-Test-001"));
+            
+
             this.TrainingDataSeriesType = SeriesType.ScatterPoint;
             this.TestDataSeriesType = SeriesType.ScatterPoint;
             this.VisualizationDataSeriesType = SeriesType.ScatterLine;

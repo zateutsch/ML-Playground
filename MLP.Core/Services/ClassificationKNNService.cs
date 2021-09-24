@@ -10,11 +10,11 @@ namespace MLP.Core.Services
     public class ClassificationKNNService : IClassificationKNN
     {
         // Services
-        private readonly IDataService _dataService;
+        private readonly IDataSetService _dataService;
         private readonly IMathHelper _mathHelper;
 
         // Model parameters
-        public int Kparam { get; set; }
+        public int K { get; set; }
 
         // Data handling and feature management properties
         public DataSet Data { get; set; }
@@ -28,21 +28,21 @@ namespace MLP.Core.Services
         public int DataSize { get; set; }
 
         // Primary constructor
-        public ClassificationKNNService(
-            DataSet data, 
-            IDataService dataService,
-            IMathHelper mathHelper,
-            int k = 3)
+        public ClassificationKNNService(IDataSetService dataService, IMathHelper mathHelper)
         {
 
             this._dataService = dataService;
             this._mathHelper = mathHelper;
-
-            this.Data = data;
-            this.Kparam = k;
             
-            this.Features = this._dataService.GetFeatures();
+            // this.Features = this._dataService.GetFeatures();
 
+        }
+
+        public void ConfigService(DataSet dataSet, int k = 3)
+        {
+            this.K = k;
+            this._dataService.CurrentData = dataSet;
+            this.Train(dataSet.DefaultFeatureX, dataSet.DefaultFeatureY, dataSet.DefaultFeatureLabel);
         }
 
         public void Train(string featureX, string featureY, string targetFeature)
@@ -63,7 +63,7 @@ namespace MLP.Core.Services
         public string Classify(double x, double y)
         {
 
-            ConstMinSortedDLL min_list = new ConstMinSortedDLL(this.Kparam);
+            ConstMinSortedDLL min_list = new ConstMinSortedDLL(this.K);
             double[] feature_arr = new[] { x, y };
 
             for(int i = 0; i < this.TargetData.Count; i++)
@@ -105,7 +105,7 @@ namespace MLP.Core.Services
         private List<string> GetLabelsFromDLL(ConstMinSortedDLL min_list)
         {
             List<int> keys = new List<int>(min_list.ReturnAsDictionary().Keys);
-            List<string> labels = new List<string>(this.Kparam);
+            List<string> labels = new List<string>(this.K);
 
             foreach(int idx in keys)
             {

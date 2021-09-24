@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Extensions.DependencyInjection;
 using MLP.Core.ViewModels;
 using MLP.Core.Services;
 using MLP.Core.Models;
@@ -28,20 +29,12 @@ namespace MLP.UWP
     public sealed partial class MainPage : Page
     {
 
-        public ClassifyKNNViewModel ViewModel { get; set; }
+        public ClassifyKNNViewModel ViewModel => (ClassifyKNNViewModel)this.DataContext;
+
         public MainPage()
         { 
             this.InitializeComponent();
-            MathHelper mathHelper = new MathHelper();
-
-            DataFileService dataFileService = new DataFileService();
-            DataSet dataSet = Task.Run(() => dataFileService.ReadJsonToDataSet("Weather-Test-001.json")).Result;
-            DataService dataService = new DataService(dataSet);
-
-            ClassificationKNNService KNN = new ClassificationKNNService(dataSet, dataService, mathHelper);
-            KNN.Train("cloudcover", "humidity", "rain");
-
-            this.ViewModel = new ClassifyKNNViewModel(KNN);
+            this.DataContext = App.Services.GetRequiredService<ClassifyKNNViewModel>();
 
         }
     }

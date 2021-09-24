@@ -10,13 +10,9 @@ namespace MLP.Core.Services
     // Service class for manipulating DataSet objects independent of ML model
     // @author zateutsch
 
-    public class DataService : IDataService
+    public class DataSetService : IDataSetService
     {
         public DataSet CurrentData { get; set; }
-        public DataService(DataSet dataSet)
-        {
-            this.CurrentData = dataSet;
-        }
 
         public List<string> GetFeatures()
         {

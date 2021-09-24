@@ -14,6 +14,12 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Extensions.DependencyInjection;
+using MLP.UWP.Services;
+using MLP.Core.Services;
+using MLP.Core.ViewModels;
+using MLP.Core.Interfaces;
+using System.Threading.Tasks;
 
 namespace MLP.UWP
 {
@@ -22,14 +28,23 @@ namespace MLP.UWP
     /// </summary>
     sealed partial class App : Application
     {
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
+        private IServiceProvider _serviceProvider;
+        private DataFileService _dataFileService;
+        private IDataManagerService _dataManagerService;
         public App()
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+        }
+
+        public static IServiceProvider Services
+        {
+            get
+            {
+                IServiceProvider serviceProvider = ((App)Current)._serviceProvider;
+                return serviceProvider;
+            }
+     
         }
 
         /// <summary>
@@ -37,7 +52,7 @@ namespace MLP.UWP
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -57,13 +72,22 @@ namespace MLP.UWP
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
+
+                //Config services
+                _serviceProvider = CreateServiceProvider();
+                _dataFileService = Services.GetRequiredService<DataFileService>();
+                await _dataFileService.ConfigService();
+                _dataManagerService = Services.GetRequiredService<IDataManagerService>();
+
+                _dataManagerService.DataSets = await _dataFileService.ReadAllDataSets();
+
             }
 
             if (e.PrelaunchActivated == false)
             {
                 if (rootFrame.Content == null)
                 {
-                    // When the navigation stack isn't restored navigate to the first page,
+                    // When the navigation stack isn't restored navigate to the first page, 
                     // configuring the new page by passing required information as a navigation
                     // parameter
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
@@ -95,6 +119,20 @@ namespace MLP.UWP
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        private static IServiceProvider CreateServiceProvider()
+        {
+            var provider = new ServiceCollection()
+                .AddSingleton<IDataManagerService, DataManagerService>()
+                .AddTransient<ClassifyKNNViewModel>()
+                .AddSingleton<DataFileService>()
+                .AddTransient<IDataSetService, DataSetService>()
+                .AddTransient<IClassificationKNN, ClassificationKNNService>()
+                .AddSingleton<IMathHelper, MathHelper>()
+                .BuildServiceProvider(true);
+
+            return provider;
         }
     }
 }
