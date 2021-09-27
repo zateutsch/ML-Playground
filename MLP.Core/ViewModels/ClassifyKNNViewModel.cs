@@ -16,6 +16,7 @@ namespace MLP.Core.ViewModels
         private readonly IDataManagerService _data_manager_service;
         private double _currentTestX;
         private double _currentTestY;
+        private bool _isTesting = false;
 
         // Private Observable members to provide set property
         private int trainingDataIndex = 0;
@@ -29,6 +30,10 @@ namespace MLP.Core.ViewModels
         private string currentFeatureY;
         private string currentFeatureLabel;
 
+        private double userTestX;
+        private double userTestY;
+
+        private int k;
 
         // Primary Observable Collection - Core of KNN Graph Representation
 
@@ -37,6 +42,27 @@ namespace MLP.Core.ViewModels
 
         // Series data collection object
         public ObservableCollection<NestedSeries<double>> GraphSeries { get; set; }
+
+        public int K
+        {
+            get => k;
+            set 
+            { 
+                SetProperty(ref k, value);
+                this.KUpdated();
+            }
+        }
+        public double UserTestX
+        {
+            get => userTestX;
+            set => SetProperty(ref userTestX, value);
+        }
+
+        public double UserTestY
+        {
+            get => userTestY;
+            set => SetProperty(ref userTestY, value);
+        }
 
 
         public string CurrentFeatureX
@@ -77,7 +103,7 @@ namespace MLP.Core.ViewModels
         // the connections between the test point and its k-nearest neighbors
         public int VisualizationIndex
         {
-            get => visualizationIndex;
+            get => this.testDataIndex + 1;
             set => SetProperty(ref visualizationIndex, value);
         }
       
@@ -118,6 +144,7 @@ namespace MLP.Core.ViewModels
             this.CurrentFeatureX = this._knn_service.CurrentFeatureX;
             this.CurrentFeatureY = this._knn_service.CurrentFeatureY;
             this.CurrentFeatureLabel = this._knn_service.CurrentFeatureLabel;
+            this.K = this._knn_service.K;
 
             this.GraphSeries = new ObservableCollection<NestedSeries<double>>();
             this.InitializeGraph();
@@ -164,7 +191,6 @@ namespace MLP.Core.ViewModels
 
             this.TrainingDataIndex = 0;
             this.TestDataIndex = 0;
-            this.VisualizationIndex = 0;
         }
 
         public void UpdateGraph()
@@ -174,6 +200,41 @@ namespace MLP.Core.ViewModels
             this.InitializeGraph();
         }
 
+        public void TestPoint()
+        {
+            if (this._isTesting)
+            {
+                this.RemoveCurrentTest();
+            }
+
+            this._isTesting = true;
+            this.AddTestDataSeries(this.UserTestX, this.UserTestY);
+            Tuple<string, Dictionary<int, double>> result = this._knn_service.RobustClassify(this.UserTestX, UserTestY);
+            foreach (int idx in result.Item2.Keys)
+            {
+                this.AddVisualizationSeries(this._knn_service.CurrentDataX[idx], this._knn_service.CurrentDataY[idx]);
+            }
+        }
+
+        public void RemoveCurrentTest()
+        {
+            while(this.GraphSeries.Count > this.TestDataIndex)
+            {
+                this.GraphSeries.RemoveAt(this.GraphSeries.Count - 1);
+            }
+
+            this._isTesting = false;
+        }
+
+        public void KUpdated()
+        {
+            this._knn_service.K = this.K;
+            if (this._isTesting)
+            {
+                this.TestPoint();
+            }
+
+        }
     }
 
 

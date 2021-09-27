@@ -12,11 +12,15 @@ namespace MLP.Core.Interfaces
     public interface IClassificationKNN
     {
         List<string> RegressionFeatureNames { get; set; }
+        int K { get; set; }
         string CurrentFeatureY { get; set; }
         string CurrentFeatureX { get; set; }
         string CurrentFeatureLabel { get; set; }
+        List<double> CurrentDataX { get; set; }
+        List<double> CurrentDataY { get; set; }
         void Train(string x_feature, string y_feature, string target_feature);
         string Classify(double x_data, double y_data);
+        Tuple<string, Dictionary<int, double>> RobustClassify(double x, double y);
         void ConfigService(DataSet dataSet, int k = 3);
         Dictionary<string, List<DataPoint<double>>> GetLabeledSeries();
 

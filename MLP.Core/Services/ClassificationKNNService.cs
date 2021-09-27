@@ -75,6 +75,22 @@ namespace MLP.Core.Services
             
         }
 
+        public Tuple<string, Dictionary<int, double>> RobustClassify(double x, double y)
+        {
+            ConstMinSortedDLL min_list = new ConstMinSortedDLL(this.K);
+            double[] feature_arr = new[] { x, y };
+
+            for (int i = 0; i < this.TargetData.Count; i++)
+            {
+                double distance = _mathHelper.EuclideanDistance(new[] { CurrentDataX[i], CurrentDataY[i] }, feature_arr);
+                min_list.AddAndTrim(new Node(distance, i));
+            }
+
+            List<string> close_labels = this.GetLabelsFromDLL(min_list);
+
+            return new Tuple<string, Dictionary<int, double>>(this.FindMostCommonLabel(close_labels), min_list.ReturnAsDictionary());
+        }
+
         // Returns a dictionary where
         // each key is a unique label that appears in current classification problem and
         // each entry is a list of all data points that have that label

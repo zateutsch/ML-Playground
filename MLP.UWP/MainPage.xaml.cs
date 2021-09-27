@@ -33,8 +33,9 @@ namespace MLP.UWP
 
         public MainPage()
         { 
-            this.InitializeComponent();
+            
             this.DataContext = App.Services.GetRequiredService<ClassifyKNNViewModel>();
+            this.InitializeComponent();
 
         }
     }
