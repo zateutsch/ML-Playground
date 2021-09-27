@@ -17,6 +17,7 @@ namespace MLP.Core.ViewModels
         private double _currentTestX;
         private double _currentTestY;
         private bool _isTesting = false;
+        private string _testResult;
 
         // Private Observable members to provide set property
         private int trainingDataIndex = 0;
@@ -33,6 +34,8 @@ namespace MLP.Core.ViewModels
         private double userTestX;
         private double userTestY;
 
+        private string predictedLabelText;
+
         private int k;
 
         // Primary Observable Collection - Core of KNN Graph Representation
@@ -42,6 +45,12 @@ namespace MLP.Core.ViewModels
 
         // Series data collection object
         public ObservableCollection<NestedSeries<double>> GraphSeries { get; set; }
+
+        public string PredictedLabelText
+        {
+            get => predictedLabelText;
+            set => SetProperty(ref predictedLabelText, value);
+        }
 
         public int K
         {
@@ -147,6 +156,7 @@ namespace MLP.Core.ViewModels
             this.K = this._knn_service.K;
 
             this.GraphSeries = new ObservableCollection<NestedSeries<double>>();
+            this.PredictedLabelText = this.GetPredictedLabelText();
             this.InitializeGraph();
         }
 
@@ -196,6 +206,7 @@ namespace MLP.Core.ViewModels
         public void UpdateGraph()
         {
             this.ClearGraph();
+            this._isTesting = false;
             this._knn_service.Train(this.CurrentFeatureX, this.CurrentFeatureY, this.CurrentFeatureLabel);
             this.InitializeGraph();
         }
@@ -214,6 +225,9 @@ namespace MLP.Core.ViewModels
             {
                 this.AddVisualizationSeries(this._knn_service.CurrentDataX[idx], this._knn_service.CurrentDataY[idx]);
             }
+
+            this._testResult = result.Item1;
+            this.PredictedLabelText = this.GetPredictedLabelText();
         }
 
         public void RemoveCurrentTest()
@@ -224,6 +238,7 @@ namespace MLP.Core.ViewModels
             }
 
             this._isTesting = false;
+            this.PredictedLabelText = this.GetPredictedLabelText();
         }
 
         public void KUpdated()
@@ -234,6 +249,17 @@ namespace MLP.Core.ViewModels
                 this.TestPoint();
             }
 
+        }
+
+        public string GetPredictedLabelText()
+        {
+            string result = "The predicted label for " + this.CurrentFeatureLabel + ": ";
+            if (_isTesting)
+            {
+                result += this._testResult;
+            }
+
+            return result;
         }
     }
 

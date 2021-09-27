@@ -129,12 +129,21 @@
                          PlaceholderText="Enter an Y feature value here."
                          Text="{x:Bind ViewModel.UserTestY, Mode=TwoWay}"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="10,10,10,10" HorizontalAlignment="Center">
-                <Button Click="{x:Bind ViewModel.TestPoint}">Test New Data Point</Button>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="0,0,10,0" HorizontalAlignment="Center">
+                <Button Click="{x:Bind ViewModel.TestPoint}" Margin="10,10,10,10">Test Data</Button>
                 <Button Click="{x:Bind ViewModel.RemoveCurrentTest}">Clear Test</Button>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+                <TextBlock Text="{x:Bind ViewModel.PredictedLabelText, Mode=TwoWay}" 
+                           Foreground="Black"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Margin="10,10,10,10"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                
+            </StackPanel>
+            
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical">
