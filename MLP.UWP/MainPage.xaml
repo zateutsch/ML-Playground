@@ -10,7 +10,27 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Page.Resources>
+        <telerikChart:ChartPalette x:Key="GraphPalete">
+            <telerikChart:ChartPalette.FillEntries>
+                <telerikChart:PaletteEntryCollection SeriesFamily="ScatterSpline">
+                    <SolidColorBrush Color="Gold"></SolidColorBrush>
+                    <SolidColorBrush Color="CornflowerBlue"></SolidColorBrush>
+                    <SolidColorBrush Color="Red"></SolidColorBrush>
+                    <SolidColorBrush Color="PaleGreen"></SolidColorBrush>
+                    <SolidColorBrush Color="PaleGreen"></SolidColorBrush>
+                    <SolidColorBrush Color="PaleGreen"></SolidColorBrush>
+                    <SolidColorBrush Color="PaleGreen"></SolidColorBrush>
+                    <SolidColorBrush Color="PaleGreen"></SolidColorBrush>
+                    <SolidColorBrush Color="PaleGreen"></SolidColorBrush>
+                    <SolidColorBrush Color="PaleGreen"></SolidColorBrush>
+                </telerikChart:PaletteEntryCollection>
+                
+            </telerikChart:ChartPalette.FillEntries>
+            
+        </telerikChart:ChartPalette>
+    </Page.Resources>
+    <Grid Background="LightGray">
         <Grid.RowDefinitions>
             <RowDefinition Height="7*"/>
             <RowDefinition Height="2*"/>
@@ -19,10 +39,10 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="1*"/>
-            
+
         </Grid.ColumnDefinitions>
 
-        <telerikChart:RadCartesianChart Grid.ColumnSpan="3" PaletteName="DefaultLight" Margin="10,10,10,10">
+        <telerikChart:RadCartesianChart Grid.ColumnSpan="3" Palette="{StaticResource GraphPalete}" Margin="10,10,10,10" Background="White">
             <telerikChart:RadCartesianChart.Behaviors>
                 <telerikChart:ChartTooltipBehavior SnapToClosestPoint="True" />
             </telerikChart:RadCartesianChart.Behaviors>
@@ -38,8 +58,7 @@
                     <telerikChart:ChartSeriesProvider.SeriesDescriptors>
                         <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="0">
                             <telerikChart:ScatterSeriesDescriptor.Style>
-                                <Style TargetType="telerikChart:ScatterPointSeries">
-                                </Style>
+                                <Style TargetType="telerikChart:ScatterPointSeries"/>
                             </telerikChart:ScatterSeriesDescriptor.Style>
                         </telerikChart:ScatterSeriesDescriptor>
                         <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind ViewModel.TestDataIndex}">
@@ -49,9 +68,7 @@
                         </telerikChart:ScatterSeriesDescriptor>
                         <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind ViewModel.VisualizationIndex}">
                             <telerikChart:ScatterSeriesDescriptor.Style>
-                                <Style TargetType="telerikChart:ScatterSplineSeries">
-                                    <Setter Property="Stroke" Value="Black"/>
-                                </Style>
+                                <Style TargetType="telerikChart:ScatterSplineSeries"/>
                             </telerikChart:ScatterSeriesDescriptor.Style>
                         </telerikChart:ScatterSeriesDescriptor>
                     </telerikChart:ChartSeriesProvider.SeriesDescriptors>
@@ -60,13 +77,12 @@
 
         </telerikChart:RadCartesianChart>
 
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Background="LightSlateGray"></StackPanel>
         <StackPanel Orientation="Vertical" Grid.Row="1">
             <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
                 <TextBlock Margin="10,10,10,10"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Foreground="White"> X Feature Select:</TextBlock>
+                        Foreground="Black"> X Feature Select:</TextBlock>
                 <ComboBox 
                 ItemsSource="{x:Bind ViewModel.RegressionFeatureNames}"
                 SelectedItem="{x:Bind ViewModel.CurrentFeatureX, Mode=TwoWay}"
@@ -78,7 +94,7 @@
                 <TextBlock Margin="10,10,10,10"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Foreground="White">Y Feature Select:</TextBlock>
+                        Foreground="Black">Y Feature Select:</TextBlock>
                 <ComboBox 
                 ItemsSource="{x:Bind ViewModel.RegressionFeatureNames}"
                 SelectedItem="{x:Bind ViewModel.CurrentFeatureY, Mode=TwoWay}"
@@ -91,22 +107,22 @@
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
             <StackPanel Orientation="Horizontal" Margin="10,10,10,10" HorizontalAlignment="Center">
                 <TextBlock Text="{x:Bind ViewModel.CurrentFeatureX, Mode=TwoWay}" 
-                           Foreground="White"
+                           Foreground="Black"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            Margin="10,10,10,10"/>
-                <TextBox Foreground="White"
+                <TextBox Foreground="Black"
                          HorizontalAlignment="Center"
                          VerticalAlignment="Center"
                          Margin="10,10,10,10"
                          PlaceholderText="Enter an X feature value here."
                          Text="{x:Bind ViewModel.UserTestX, Mode=TwoWay}"/>
                 <TextBlock Text="{x:Bind ViewModel.CurrentFeatureY, Mode=TwoWay}" 
-                           Foreground="White"
+                           Foreground="Black"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            Margin="10,10,10,10"/>
-                <TextBox Foreground="White"
+                <TextBox Foreground="Black"
                          HorizontalAlignment="Center"
                          VerticalAlignment="Center"
                          Margin="10,10,10,10"
@@ -123,7 +139,7 @@
 
         <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical">
             <StackPanel Orientation="Horizontal" Margin="10,10,10,10" HorizontalAlignment="Center">
-                <TextBlock Margin="10,10,10,10" Foreground="White">Change K Value</TextBlock>
+                <TextBlock Margin="10,10,10,10" Foreground="Black">Change K Value</TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Slider Minimum="1"
