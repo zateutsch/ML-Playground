@@ -12,6 +12,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using MLP.Core.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -22,9 +24,12 @@ namespace MLP.UWP
     /// </summary>
     public sealed partial class ModelsPage : Page
     {
+        public ModelsPageViewModel ViewModel => (ModelsPageViewModel)this.DataContext;
         public ModelsPage()
         {
+            this.DataContext = App.Services.GetRequiredService<ModelsPageViewModel>();
             this.InitializeComponent();
+
         }
     }
 }

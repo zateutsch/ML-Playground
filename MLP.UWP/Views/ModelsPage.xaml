@@ -3,13 +3,35 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MLP.UWP"
+    xmlns:models="using:MLP.Core.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <GridView>
+    <Page.Resources>
+        <DataTemplate x:Key="ModelPreviewTemplate" x:DataType="models:ModelPreview">
+            <Grid>
+                <Image Stretch="UniformToFill" Source="{x:Bind ImagePath}" Width="250" Height="300"/>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Height="75" Background="LightGray" Opacity=".8">
+                    <TextBlock
+                        Text="{x:Bind ModelName}"
+                        FontSize="20"
+                        FontWeight="Black"
+                        Margin="10,10,10,10"
+                        HorizontalAlignment="Center"/>
 
-    </GridView>
+                </StackPanel>
+            </Grid>
+            
+        </DataTemplate>
+    </Page.Resources>
+
+    <GridView
+        x:Name="ModelsGridView"
+        ItemsSource="{x:Bind ViewModel.ModelPreviews}"
+        ItemTemplate="{StaticResource ModelPreviewTemplate}"
+        Margin="10,10,10,10"/>
+
 </Page>
