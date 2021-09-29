@@ -26,5 +26,10 @@ namespace MLP.UWP
         {
             this.InitializeComponent();
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            this.ContentFrame.Navigate(typeof(ModelsPage));
+        }
     }
 }

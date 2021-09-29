@@ -7,31 +7,46 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+    xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
+        <media:AttachedCardShadow x:Key="CommonShadow" Offset="1"/>
+        
         <DataTemplate x:Key="ModelPreviewTemplate" x:DataType="models:ModelPreview">
-            <Grid>
+
+            <Grid >
                 <Image Stretch="UniformToFill" Source="{x:Bind ImagePath}" Width="250" Height="300"/>
-                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Height="75" Background="LightGray" Opacity=".8">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Height="75">
                     <TextBlock
-                        Text="{x:Bind ModelName}"
-                        FontSize="20"
-                        FontWeight="Black"
-                        Margin="10,10,10,10"
-                        HorizontalAlignment="Center"/>
+                    Text="{x:Bind ModelName}"
+                    FontSize="20"
+                    FontWeight="Black"
+                    Margin="10,10,10,10"
+                    HorizontalAlignment="Center"/>
 
                 </StackPanel>
             </Grid>
-            
+
         </DataTemplate>
+        
+        <AcrylicBrush x:Key="CustomAcrylicBrush" TintColor="LightGray" Opacity=".1" BackgroundSource="Backdrop"/>
+
+        <Style TargetType="GridViewItem" BasedOn="{StaticResource GridViewItemExpanded}">
+            <Setter Property="ui:Effects.Shadow" Value="{StaticResource CommonShadow}"/>
+        </Style>
     </Page.Resources>
 
     <GridView
         x:Name="ModelsGridView"
         ItemsSource="{x:Bind ViewModel.ModelPreviews}"
         ItemTemplate="{StaticResource ModelPreviewTemplate}"
-        Margin="10,10,10,10"/>
+        Background="{ThemeResource CustomAcrylicBrush}"
+        Padding="10,10,10,10"
+        CanReorderItems="True">
+    </GridView>
 
 </Page>
