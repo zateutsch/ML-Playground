@@ -46,6 +46,7 @@ namespace MLP.Core.ViewModels
         // Series data collection object
         public ObservableCollection<NestedSeries<double>> GraphSeries { get; set; }
 
+        // Observable Props
         public string PredictedLabelText
         {
             get => predictedLabelText;

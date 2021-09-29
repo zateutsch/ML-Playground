@@ -12,31 +12,19 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.Extensions.DependencyInjection;
-using MLP.Core.ViewModels;
-using MLP.Core.Services;
-using MLP.Core.Models;
-using MLP.UWP.Services;
-using System.Threading.Tasks;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace MLP.UWP
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class ModelsPage : Page
     {
-
-        public ClassifyKNNViewModel ViewModel => (ClassifyKNNViewModel)this.DataContext;
-
-        public MainPage()
-        { 
-            
-            this.DataContext = App.Services.GetRequiredService<ClassifyKNNViewModel>();
+        public ModelsPage()
+        {
             this.InitializeComponent();
-
         }
     }
 }
