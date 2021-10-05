@@ -31,5 +31,10 @@ namespace MLP.UWP
             this.InitializeComponent();
 
         }
+
+        private void ModelsGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            this.Frame.Navigate(typeof(KNNPage));
+        }
     }
 }

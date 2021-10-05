@@ -30,142 +30,62 @@
             
         </telerikChart:ChartPalette>
     </Page.Resources>
-    <Grid Background="LightGray">
+    <Grid Background="Gainsboro" >
         <Grid.RowDefinitions>
             <RowDefinition Height="7*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="1*"/>
 
         </Grid.ColumnDefinitions>
+        <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="2" Margin="10,10,10,10" CornerRadius="5" Background="White">
+            <telerikChart:RadCartesianChart Margin="10,10,10,10" Palette="{StaticResource GraphPalete}"  Background="White">
+                <telerikChart:RadCartesianChart.Behaviors>
+                    <telerikChart:ChartTooltipBehavior SnapToClosestPoint="True" />
+                </telerikChart:RadCartesianChart.Behaviors>
+                <telerikChart:RadCartesianChart.HorizontalAxis>
+                    <telerikChart:LinearAxis Title="Test"/>
+                </telerikChart:RadCartesianChart.HorizontalAxis>
+                <telerikChart:RadCartesianChart.VerticalAxis>
+                    <telerikChart:LinearAxis Title="Test"/>
+                </telerikChart:RadCartesianChart.VerticalAxis>
+                <telerikChart:RadCartesianChart.SeriesProvider >
 
-        <telerikChart:RadCartesianChart Grid.ColumnSpan="3" Palette="{StaticResource GraphPalete}" Margin="10,10,10,10" Background="White">
-            <telerikChart:RadCartesianChart.Behaviors>
-                <telerikChart:ChartTooltipBehavior SnapToClosestPoint="True" />
-            </telerikChart:RadCartesianChart.Behaviors>
-            <telerikChart:RadCartesianChart.HorizontalAxis>
-                <telerikChart:LinearAxis/>
-            </telerikChart:RadCartesianChart.HorizontalAxis>
-            <telerikChart:RadCartesianChart.VerticalAxis>
-                <telerikChart:LinearAxis/>
-            </telerikChart:RadCartesianChart.VerticalAxis>
-            <telerikChart:RadCartesianChart.SeriesProvider >
+                    <telerikChart:ChartSeriesProvider x:Name="provider" Source="{x:Bind ViewModel.GraphSeries}" >
+                        <telerikChart:ChartSeriesProvider.SeriesDescriptors>
+                            <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="0">
+                                <telerikChart:ScatterSeriesDescriptor.Style>
+                                    <Style TargetType="telerikChart:ScatterPointSeries"/>
+                                </telerikChart:ScatterSeriesDescriptor.Style>
+                            </telerikChart:ScatterSeriesDescriptor>
+                            <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind ViewModel.TestDataIndex}">
+                                <telerikChart:ScatterSeriesDescriptor.Style>
+                                    <Style TargetType="telerikChart:ScatterPointSeries"/>
+                                </telerikChart:ScatterSeriesDescriptor.Style>
+                            </telerikChart:ScatterSeriesDescriptor>
+                            <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind ViewModel.VisualizationIndex}">
+                                <telerikChart:ScatterSeriesDescriptor.Style>
+                                    <Style TargetType="telerikChart:ScatterSplineSeries"/>
+                                </telerikChart:ScatterSeriesDescriptor.Style>
+                            </telerikChart:ScatterSeriesDescriptor>
+                        </telerikChart:ChartSeriesProvider.SeriesDescriptors>
+                    </telerikChart:ChartSeriesProvider>
+                </telerikChart:RadCartesianChart.SeriesProvider>
 
-                <telerikChart:ChartSeriesProvider x:Name="provider" Source="{x:Bind ViewModel.GraphSeries}" >
-                    <telerikChart:ChartSeriesProvider.SeriesDescriptors>
-                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="0">
-                            <telerikChart:ScatterSeriesDescriptor.Style>
-                                <Style TargetType="telerikChart:ScatterPointSeries"/>
-                            </telerikChart:ScatterSeriesDescriptor.Style>
-                        </telerikChart:ScatterSeriesDescriptor>
-                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind ViewModel.TestDataIndex}">
-                            <telerikChart:ScatterSeriesDescriptor.Style>
-                                <Style TargetType="telerikChart:ScatterPointSeries"/>
-                            </telerikChart:ScatterSeriesDescriptor.Style>
-                        </telerikChart:ScatterSeriesDescriptor>
-                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind ViewModel.VisualizationIndex}">
-                            <telerikChart:ScatterSeriesDescriptor.Style>
-                                <Style TargetType="telerikChart:ScatterSplineSeries"/>
-                            </telerikChart:ScatterSeriesDescriptor.Style>
-                        </telerikChart:ScatterSeriesDescriptor>
-                    </telerikChart:ChartSeriesProvider.SeriesDescriptors>
-                </telerikChart:ChartSeriesProvider>
-            </telerikChart:RadCartesianChart.SeriesProvider>
+            </telerikChart:RadCartesianChart>
+        </Border>
 
-        </telerikChart:RadCartesianChart>
 
-        <StackPanel Orientation="Vertical" Grid.Row="1">
-            <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
-                <TextBlock Margin="10,10,10,10"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Foreground="Black"> X Feature Select:</TextBlock>
-                <ComboBox 
-                ItemsSource="{x:Bind ViewModel.RegressionFeatureNames}"
-                SelectedItem="{x:Bind ViewModel.CurrentFeatureX, Mode=TwoWay}"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                SelectionChanged="{x:Bind ViewModel.UpdateGraph}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
-                <TextBlock Margin="10,10,10,10"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Foreground="Black">Y Feature Select:</TextBlock>
-                <ComboBox 
-                ItemsSource="{x:Bind ViewModel.RegressionFeatureNames}"
-                SelectedItem="{x:Bind ViewModel.CurrentFeatureY, Mode=TwoWay}"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                SelectionChanged="{x:Bind ViewModel.UpdateGraph}"/>
-            </StackPanel>
-        </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
-            <StackPanel Orientation="Horizontal" Margin="10,10,10,10" HorizontalAlignment="Center">
-                <TextBlock Text="{x:Bind ViewModel.CurrentFeatureX, Mode=TwoWay}" 
-                           Foreground="Black"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Margin="10,10,10,10"/>
-                <TextBox Foreground="Black"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         Margin="10,10,10,10"
-                         PlaceholderText="Enter an X feature value here."
-                         Text="{x:Bind ViewModel.UserTestX, Mode=TwoWay}"/>
-                <TextBlock Text="{x:Bind ViewModel.CurrentFeatureY, Mode=TwoWay}" 
-                           Foreground="Black"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Margin="10,10,10,10"/>
-                <TextBox Foreground="Black"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         Margin="10,10,10,10"
-                         PlaceholderText="Enter an Y feature value here."
-                         Text="{x:Bind ViewModel.UserTestY, Mode=TwoWay}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,10,0" HorizontalAlignment="Center">
-                <Button Click="{x:Bind ViewModel.TestPoint}" Margin="10,10,10,10">Test Data</Button>
-                <Button Click="{x:Bind ViewModel.RemoveCurrentTest}">Clear Test</Button>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
-                <TextBlock Text="{x:Bind ViewModel.PredictedLabelText, Mode=TwoWay}" 
-                           Foreground="Black"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Margin="10,10,10,10"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                
-            </StackPanel>
-            
-        </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical">
-            <StackPanel Orientation="Horizontal" Margin="10,10,10,10" HorizontalAlignment="Center">
-                <TextBlock Margin="10,10,10,10" Foreground="Black">Change K Value</TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Slider Minimum="1"
-                        Maximum="5" 
-                        TickFrequency="1" 
-                        TickPlacement="Inline" 
-                        Width="200"
-                        Value="{x:Bind ViewModel.K, Mode=TwoWay}"
-                        />
-            </StackPanel>
-            
-        </StackPanel>
 
-       
-        
 
-      
+
+
+
 
 
 

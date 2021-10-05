@@ -14,17 +14,17 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-        <media:AttachedCardShadow x:Key="CommonShadow" Offset="1"/>
+        <media:AttachedCardShadow x:Key="CommonShadow" Offset="1,2"/>
         
         <DataTemplate x:Key="ModelPreviewTemplate" x:DataType="models:ModelPreview">
-
-            <Grid >
+        
+            <Grid>
                 <Image Stretch="UniformToFill" Source="{x:Bind ImagePath}" Width="250" Height="300"/>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Height="75">
                     <TextBlock
                     Text="{x:Bind ModelName}"
                     FontSize="20"
-                    FontWeight="Black"
+                    FontWeight="ExtraLight"
                     Margin="10,10,10,10"
                     HorizontalAlignment="Center"/>
 
@@ -37,6 +37,7 @@
 
         <Style TargetType="GridViewItem" BasedOn="{StaticResource GridViewItemExpanded}">
             <Setter Property="ui:Effects.Shadow" Value="{StaticResource CommonShadow}"/>
+            <Setter Property="Margin" Value="10,10,10,10"/>
         </Style>
     </Page.Resources>
 
@@ -45,8 +46,9 @@
         ItemsSource="{x:Bind ViewModel.ModelPreviews}"
         ItemTemplate="{StaticResource ModelPreviewTemplate}"
         Background="{ThemeResource CustomAcrylicBrush}"
-        Padding="10,10,10,10"
-        CanReorderItems="True">
+        CanReorderItems="True"
+        ItemClick="ModelsGridView_ItemClick"
+        IsItemClickEnabled="True">
     </GridView>
 
 </Page>
