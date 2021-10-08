@@ -124,10 +124,11 @@ namespace MLP.UWP
         private static IServiceProvider CreateServiceProvider()
         {
             var provider = new ServiceCollection()
-                .AddSingleton<IDataManagerService, DataManagerService>()
                 .AddTransient<ClassifyKNNViewModel>()
                 .AddTransient<ModelsPageViewModel>()
+                .AddTransient<InfoPaneViewModel>()
                 .AddSingleton<DataFileService>()
+                .AddSingleton<IDataManagerService, DataManagerService>()
                 .AddTransient<IDataSetService, DataSetService>()
                 .AddTransient<IClassificationKNN, ClassificationKNNService>()
                 .AddSingleton<IMathHelper, MathHelper>()

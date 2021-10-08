@@ -29,14 +29,14 @@ namespace MLP.UWP
     public sealed partial class KNNPage : Page
     {
 
-        public ClassifyKNNViewModel ViewModel => (ClassifyKNNViewModel)this.DataContext;
+        public ClassifyKNNViewModel KNNViewModel;
+        public InfoPaneViewModel InfoViewModel;
 
         public KNNPage()
         { 
-            
-            this.DataContext = App.Services.GetRequiredService<ClassifyKNNViewModel>();
+            this.KNNViewModel = App.Services.GetRequiredService<ClassifyKNNViewModel>();
+            this.InfoViewModel = App.Services.GetRequiredService<InfoPaneViewModel>();
             this.InitializeComponent();
-
         }
     }
 }
