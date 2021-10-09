@@ -25,73 +25,143 @@
                     <SolidColorBrush Color="PaleGreen"></SolidColorBrush>
                     <SolidColorBrush Color="PaleGreen"></SolidColorBrush>
                 </telerikChart:PaletteEntryCollection>
-                
+
             </telerikChart:ChartPalette.FillEntries>
-            
+
         </telerikChart:ChartPalette>
+
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="25*"/>
         </Grid.RowDefinitions>
+
+        <CommandBar Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" DefaultLabelPosition="Right" HorizontalAlignment="Left" >
+            <AppBarButton Label="Test">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe707;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarSeparator/>
+            <AppBarButton Label="Update Features" AllowFocusOnInteraction="True">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe9f9;"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <ListBox ItemsSource="{x:Bind KNNViewModel.RegressionFeatureNames}" SelectedItem="{x:Bind KNNViewModel.CurrentFeatureX, Mode=TwoWay}" SelectionChanged="{x:Bind KNNViewModel.UpdateGraph}"/>
+                                <ListBox ItemsSource="{x:Bind KNNViewModel.RegressionFeatureNames}" SelectedItem="{x:Bind KNNViewModel.CurrentFeatureY, Mode=TwoWay}" SelectionChanged="{x:Bind KNNViewModel.UpdateGraph}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarSeparator/>
+            <AppBarButton Label="Switch Data">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe809;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+        </CommandBar>
+        
+        <!--
         <CommandBar Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" DefaultLabelPosition="Right" HorizontalAlignment="Right">
             <AppBarButton Icon="Help"  HorizontalAlignment="Right" Click="{x:Bind InfoViewModel.TogglePaneOpen}"/>
         </CommandBar>
-        <CommandBar Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" DefaultLabelPosition="Right" HorizontalAlignment="Left">
-            <AppBarButton Icon="Home" Label="Test" HorizontalAlignment="Right"/>
-        </CommandBar>
-
-
+        
+        -->
         <SplitView IsPaneOpen="{x:Bind InfoViewModel.IsPaneOpen, Mode=TwoWay}" DisplayMode="Inline" PanePlacement="Right" Grid.Row="1" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
             <SplitView.Pane>
-                <Border BorderBrush="LightGray" BorderThickness="2" Margin="10,10,10,10" CornerRadius="5" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"/>
+                <Border BorderBrush="LightGray" BorderThickness="2" Margin="10,10,10,10" CornerRadius="5" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+                    <Border Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="2" CornerRadius="5" Background="White">
+                        
+                    </Border>
+                </Border>
             </SplitView.Pane>
             <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="5*"/>
                     <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" Grid.ColumnSpan="3" BorderBrush="LightGray" BorderThickness="2" Margin="10,10,10,10" CornerRadius="5" Background="White">
-                    <telerikChart:RadCartesianChart Margin="10,10,10,10" Palette="{StaticResource GraphPalete}"  Background="White">
+                <Border Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="2" Margin="10,10,10,10" CornerRadius="5" Background="White">
+                    <Border Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="2" CornerRadius="5" Background="White">
+                        <telerikChart:RadCartesianChart Margin="10,10,10,10" Palette="{StaticResource GraphPalete}"  Background="White">
+                            <!--
                         <telerikChart:RadCartesianChart.Behaviors>
                             <telerikChart:ChartTooltipBehavior SnapToClosestPoint="True" />
                         </telerikChart:RadCartesianChart.Behaviors>
-                        <telerikChart:RadCartesianChart.HorizontalAxis>
-                            <telerikChart:LinearAxis Title="Test"/>
-                        </telerikChart:RadCartesianChart.HorizontalAxis>
-                        <telerikChart:RadCartesianChart.VerticalAxis>
-                            <telerikChart:LinearAxis Title="Test"/>
-                        </telerikChart:RadCartesianChart.VerticalAxis>
-                        <telerikChart:RadCartesianChart.SeriesProvider >
+                        -->
+                            <telerikChart:RadCartesianChart.HorizontalAxis>
+                                <telerikChart:LinearAxis Title="Test"/>
+                            </telerikChart:RadCartesianChart.HorizontalAxis>
+                            <telerikChart:RadCartesianChart.VerticalAxis>
+                                <telerikChart:LinearAxis Title="Test"/>
+                            </telerikChart:RadCartesianChart.VerticalAxis>
+                            <telerikChart:RadCartesianChart.SeriesProvider >
+                                <telerikChart:ChartSeriesProvider x:Name="provider" Source="{x:Bind KNNViewModel.GraphSeries}" >
+                                    <telerikChart:ChartSeriesProvider.SeriesDescriptors>
+                                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="0">
+                                            <telerikChart:ScatterSeriesDescriptor.Style>
+                                                <Style TargetType="telerikChart:ScatterPointSeries"/>
+                                            </telerikChart:ScatterSeriesDescriptor.Style>
+                                        </telerikChart:ScatterSeriesDescriptor>
+                                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind KNNViewModel.TestDataIndex}">
+                                            <telerikChart:ScatterSeriesDescriptor.Style>
+                                                <Style TargetType="telerikChart:ScatterPointSeries"/>
+                                            </telerikChart:ScatterSeriesDescriptor.Style>
+                                        </telerikChart:ScatterSeriesDescriptor>
+                                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind KNNViewModel.VisualizationIndex}">
+                                            <telerikChart:ScatterSeriesDescriptor.Style>
+                                                <Style TargetType="telerikChart:ScatterSplineSeries"/>
+                                            </telerikChart:ScatterSeriesDescriptor.Style>
+                                        </telerikChart:ScatterSeriesDescriptor>
+                                    </telerikChart:ChartSeriesProvider.SeriesDescriptors>
+                                </telerikChart:ChartSeriesProvider>
+                            </telerikChart:RadCartesianChart.SeriesProvider>
 
-                            <telerikChart:ChartSeriesProvider x:Name="provider" Source="{x:Bind KNNViewModel.GraphSeries}" >
-                                <telerikChart:ChartSeriesProvider.SeriesDescriptors>
-                                    <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="0">
-                                        <telerikChart:ScatterSeriesDescriptor.Style>
-                                            <Style TargetType="telerikChart:ScatterPointSeries"/>
-                                        </telerikChart:ScatterSeriesDescriptor.Style>
-                                    </telerikChart:ScatterSeriesDescriptor>
-                                    <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind KNNViewModel.TestDataIndex}">
-                                        <telerikChart:ScatterSeriesDescriptor.Style>
-                                            <Style TargetType="telerikChart:ScatterPointSeries"/>
-                                        </telerikChart:ScatterSeriesDescriptor.Style>
-                                    </telerikChart:ScatterSeriesDescriptor>
-                                    <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind KNNViewModel.VisualizationIndex}">
-                                        <telerikChart:ScatterSeriesDescriptor.Style>
-                                            <Style TargetType="telerikChart:ScatterSplineSeries"/>
-                                        </telerikChart:ScatterSeriesDescriptor.Style>
-                                    </telerikChart:ScatterSeriesDescriptor>
-                                </telerikChart:ChartSeriesProvider.SeriesDescriptors>
-                            </telerikChart:ChartSeriesProvider>
-                        </telerikChart:RadCartesianChart.SeriesProvider>
+                        </telerikChart:RadCartesianChart>
+                    </Border>
+                </Border>
 
-                    </telerikChart:RadCartesianChart>
+                <Border Grid.Row="1" Grid.ColumnSpan="1" BorderBrush="LightGray" BorderThickness="2" Margin="10,0,0,15" CornerRadius="5" Background="White">
+                    <Button>
+                        <Button.Flyout>
+                            <Flyout>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <ListBox ItemsSource="{x:Bind KNNViewModel.RegressionFeatureNames}" SelectedItem="{x:Bind KNNViewModel.CurrentFeatureX, Mode=TwoWay}" SelectionChanged="{x:Bind KNNViewModel.UpdateGraph}"/>
+                                        <ListBox ItemsSource="{x:Bind KNNViewModel.RegressionFeatureNames}" SelectedItem="{x:Bind KNNViewModel.CurrentFeatureY, Mode=TwoWay}" SelectionChanged="{x:Bind KNNViewModel.UpdateGraph}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="LightGray" BorderThickness="2" Margin="10,0,10,15" CornerRadius="5" Background="White">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Row="1" Grid.Column="1" BorderBrush="LightGray" BorderThickness="2" CornerRadius="5" Background="White">
+                            <ListBox ItemsSource="{x:Bind KNNViewModel.RegressionFeatureNames}" SelectedItem="{x:Bind KNNViewModel.CurrentFeatureY, Mode=TwoWay}" SelectionChanged="{x:Bind KNNViewModel.UpdateGraph}"/>
+                        </Border>
+                        <Border Grid.Row="0" Grid.Column="1" BorderBrush="LightGray" BorderThickness="2" CornerRadius="5" Background="White"/>
+                        <Border Grid.Row="1" Grid.Column="0" BorderBrush="LightGray" BorderThickness="2" CornerRadius="5" Background="White"/>
+                        <Border Grid.Row="0" Grid.Column="0" BorderBrush="LightGray" BorderThickness="2" CornerRadius="5" Background="White"/>
+                    </Grid>
                 </Border>
             </Grid>
         </SplitView>
