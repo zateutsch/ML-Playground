@@ -37,11 +37,30 @@
             <RowDefinition Height="25*"/>
         </Grid.RowDefinitions>
 
-        <CommandBar Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" DefaultLabelPosition="Right" HorizontalAlignment="Left" >
-            <AppBarButton Label="Test">
+        <CommandBar Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" DefaultLabelPosition="Right" HorizontalAlignment="Center" >
+            <AppBarButton Label="Test" AllowFocusOnInteraction="True">
                 <AppBarButton.Icon>
                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe707;"/>
                 </AppBarButton.Icon>
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <StackPanel>
+                            <TextBlock HorizontalAlignment="Center" Margin="10,10,10,10">Enter a test data point:</TextBlock>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <StackPanel Margin="0,0,30,0">
+                                    <TextBox Text="{x:Bind KNNViewModel.UserTestX, Mode=TwoWay}"/>
+                                    <TextBlock Text="{x:Bind KNNViewModel.CurrentFeatureX, Mode=TwoWay}"/>
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBox Text="{x:Bind KNNViewModel.UserTestY, Mode=TwoWay}"/>
+                                    <TextBlock Text="{x:Bind KNNViewModel.CurrentFeatureY, Mode=TwoWay}"/>
+                                </StackPanel>
+                                
+                            </StackPanel>
+                            <Button HorizontalAlignment="Center" Margin="0,20,0,0" Click="{x:Bind KNNViewModel.TestPoint}">Test!</Button>
+                        </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
             </AppBarButton>
             <AppBarSeparator/>
             <AppBarButton Label="Update Features" AllowFocusOnInteraction="True">
