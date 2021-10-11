@@ -8,7 +8,7 @@ namespace MLP.Core.ViewModels
     // ViewModel for InfoPanes for each model
     public class InfoPaneViewModel : ObservableObject
     {
-        private bool _isPaneOpen = true;
+        private bool _isPaneOpen = false;
         public bool IsPaneOpen
         {
            get => _isPaneOpen;
