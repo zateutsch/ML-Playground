@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <muxc:NavigationView PaneDisplayMode="Left">
+    <muxc:NavigationView PaneDisplayMode="Left" IsPaneOpen="False">
         
         <muxc:NavigationView.MenuItems>
             

@@ -5,6 +5,7 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using MLP.Core.Interfaces;
 using MLP.Core.Common;
+using MLP.Core.Models;
 
 namespace MLP.Core.ViewModels
 {
@@ -19,7 +20,8 @@ namespace MLP.Core.ViewModels
         private bool _isTesting = false;
         private string _testResult;
 
-        // Private Observable members to provide set property
+        // Private Observable Members
+
         private int trainingDataIndex = 0;
         private int testDataIndex = 0;
         private int visualizationIndex = 0;
@@ -36,6 +38,14 @@ namespace MLP.Core.ViewModels
 
         private string predictedLabelText;
 
+        private string firstSeriesColor = "Gold";
+        private string secondSeriesColor = "CornflowerBlue";
+        private string testSeriesColor = "Red";
+        private string visualizationColor = "PaleGreen";
+
+        private string firstSeriesLabel = "";
+        private string secondSeriesLabel= "";
+
         private int k;
 
         // Primary Observable Collection - Core of KNN Graph Representation
@@ -46,12 +56,72 @@ namespace MLP.Core.ViewModels
         // Series data collection object
         public ObservableCollection<NestedSeries<double>> GraphSeries { get; set; }
 
-        // Observable Props
+        // Test History collection
+
+        public ObservableCollection<KNNTest> TestHistory { get; set; }
+
+        /// Observable Properties ///
+
+        // Pallette Properties //
+
+        public string FirstSeriesColor
+        {
+            get => firstSeriesColor;
+            set => SetProperty(ref firstSeriesColor, value);
+        }
+
+        public string SecondSeriesColor
+        {
+            get => secondSeriesColor;
+            set => SetProperty(ref secondSeriesColor, value);
+        }
+
+        public string TestSeriesColor
+        {
+            get => testSeriesColor;
+            set => SetProperty(ref testSeriesColor, value);
+        }
+
+        public string VisualizationColor
+        {
+            get => visualizationColor;
+            set => SetProperty(ref visualizationColor, value);
+        }
+        
+        // Series Order Properties for Color Management //
+
+        public string FirstSeriesLabel
+        {
+            get => firstSeriesLabel;
+            set => SetProperty(ref firstSeriesLabel, value);
+        }
+
+        public string SecondSeriesLabel
+        {
+            get => secondSeriesLabel;
+            set => SetProperty(ref secondSeriesLabel, value);
+        }
+
+        public string TestSeriesLabel
+        {
+            get => "test";
+        }
+
+        // Display Text Properties //
+
         public string PredictedLabelText
         {
             get => predictedLabelText;
             set => SetProperty(ref predictedLabelText, value);
         }
+
+        public string KeyHeaderText
+        {
+            get => "Labels for feature \"" + this.CurrentFeatureLabel + "\":";
+        }
+
+
+        // Model Interaction Properties //
 
         public int K
         {
@@ -92,6 +162,9 @@ namespace MLP.Core.ViewModels
             get => currentFeatureLabel;
             set => SetProperty(ref currentFeatureLabel, value);
         }
+
+        // Indexing Properties //
+
         // Indexes designating where each type of data resides in GraphSeires
 
         // original points in model for comparison
@@ -118,6 +191,8 @@ namespace MLP.Core.ViewModels
         }
       
 
+        // Series Type Properties //
+
         // Series type properties to indicate how series is visualized
         // (eg. "ScatterPointSeries", "ScatterLineSeries", etc.)
         public string TrainingDataSeriesType
@@ -141,7 +216,6 @@ namespace MLP.Core.ViewModels
         // Feature Collection
         public ObservableCollection<string> RegressionFeatureNames { get; set; }
 
-        // Other Observable Properties
 
         // Constructor
         public ClassifyKNNViewModel(IClassificationKNN knn, IDataManagerService dataManager)
@@ -157,6 +231,7 @@ namespace MLP.Core.ViewModels
             this.K = this._knn_service.K;
 
             this.GraphSeries = new ObservableCollection<NestedSeries<double>>();
+            this.TestHistory = new ObservableCollection<KNNTest>();
             this.PredictedLabelText = this.GetPredictedLabelText();
             this.InitializeGraph();
         }
@@ -190,6 +265,14 @@ namespace MLP.Core.ViewModels
             foreach (KeyValuePair<string, List<DataPoint<double>>> series in seriesDict)
             {
                 this.AddTrainingDataSeries(series.Key, series.Value);
+                if(this.firstSeriesLabel == "")
+                {
+                    this.firstSeriesLabel = series.Key;
+                }
+                else
+                {
+                    this.secondSeriesLabel = series.Key;
+                }
             }
         }
 
@@ -202,6 +285,8 @@ namespace MLP.Core.ViewModels
 
             this.TrainingDataIndex = 0;
             this.TestDataIndex = 0;
+            this.firstSeriesLabel = "";
+            this.secondSeriesLabel = "";
         }
 
         public void UpdateGraph()
@@ -228,6 +313,7 @@ namespace MLP.Core.ViewModels
             }
 
             this._testResult = result.Item1;
+            this.TestHistory.Add(new KNNTest(this.CurrentFeatureX, this.CurrentFeatureY, this.CurrentFeatureLabel, this.K, this.UserTestX, this.UserTestY));
             this.PredictedLabelText = this.GetPredictedLabelText();
         }
 

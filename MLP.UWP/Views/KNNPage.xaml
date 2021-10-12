@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MLP.UWP"
     xmlns:common="using:MLP.UWP.Common"
+    xmlns:model="using:MLP.Core.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerikChart="using:Telerik.UI.Xaml.Controls.Chart"
@@ -12,24 +13,29 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-        <telerikChart:ChartPalette x:Key="GraphPalete">
+
+        <!-- KNN Graph Pallette
+        TODO: Hopefully figure out how to automate-->
+        <telerikChart:ChartPalette x:Key="GraphPalete" >
             <telerikChart:ChartPalette.FillEntries>
                 <telerikChart:PaletteEntryCollection SeriesFamily="ScatterSpline">
-                    <SolidColorBrush Color="Gold"></SolidColorBrush>
-                    <SolidColorBrush Color="CornflowerBlue"></SolidColorBrush>
-                    <SolidColorBrush Color="Red"></SolidColorBrush>
-                    <SolidColorBrush Color="PaleGreen"></SolidColorBrush>
-                    <SolidColorBrush Color="PaleGreen"></SolidColorBrush>
-                    <SolidColorBrush Color="PaleGreen"></SolidColorBrush>
-                    <SolidColorBrush Color="PaleGreen"></SolidColorBrush>
-                    <SolidColorBrush Color="PaleGreen"></SolidColorBrush>
-                    <SolidColorBrush Color="PaleGreen"></SolidColorBrush>
-                    <SolidColorBrush Color="PaleGreen"></SolidColorBrush>
+                    <SolidColorBrush Color="{x:Bind KNNViewModel.FirstSeriesColor, Mode=TwoWay}"></SolidColorBrush>
+                    <SolidColorBrush Color="{x:Bind KNNViewModel.SecondSeriesColor, Mode=TwoWay}"></SolidColorBrush>
+                    <SolidColorBrush Color="{x:Bind KNNViewModel.TestSeriesColor, Mode=TwoWay}"></SolidColorBrush>
+                    <SolidColorBrush Color="{x:Bind KNNViewModel.VisualizationColor, Mode=TwoWay}"></SolidColorBrush>
+                    <SolidColorBrush Color="{x:Bind KNNViewModel.VisualizationColor, Mode=TwoWay}"></SolidColorBrush>
+                    <SolidColorBrush Color="{x:Bind KNNViewModel.VisualizationColor, Mode=TwoWay}"></SolidColorBrush>
+                    <SolidColorBrush Color="{x:Bind KNNViewModel.VisualizationColor, Mode=TwoWay}"></SolidColorBrush>
+                    <SolidColorBrush Color="{x:Bind KNNViewModel.VisualizationColor, Mode=TwoWay}"></SolidColorBrush>
+                    <SolidColorBrush Color="{x:Bind KNNViewModel.VisualizationColor, Mode=TwoWay}"></SolidColorBrush>
+                    <SolidColorBrush Color="{x:Bind KNNViewModel.VisualizationColor, Mode=TwoWay}"></SolidColorBrush>
                 </telerikChart:PaletteEntryCollection>
             </telerikChart:ChartPalette.FillEntries>
         </telerikChart:ChartPalette>
 
+        <!-- reference to double input validation class in MLP.UWP.Common -->
         <common:DoubleConverter x:Key="DoubleConverter"/>
+
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -91,7 +97,7 @@
                 <AppBarButton.Flyout>
                     <Flyout>
                         <StackPanel>
-                            <TextBlock> Update K parameter: </TextBlock>
+                            <TextBlock> Update K parameter:</TextBlock>
                             <Slider Minimum="1" Maximum="7" Value="{x:Bind KNNViewModel.K, Mode=TwoWay}" TickFrequency="1" TickPlacement="Inline" Width="150"/>
                         </StackPanel>
                     </Flyout>
@@ -111,76 +117,71 @@
 
         <SplitView IsPaneOpen="{x:Bind InfoViewModel.IsPaneOpen, Mode=TwoWay}" DisplayMode="Inline" PanePlacement="Right" Grid.Row="1" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
             <SplitView.Pane>
-                <Border BorderBrush="LightGray" BorderThickness="2" Margin="10,0,10,10" CornerRadius="5" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
-                    <Border Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="2" CornerRadius="5" Background="White">
+                <Border Background="White" BorderBrush="LightGray" BorderThickness="1" Margin="10,0,10,10" CornerRadius="5" >
 
-                    </Border>
                 </Border>
             </SplitView.Pane>
             <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="13*"/>
+                    <RowDefinition Height="1*"/>
                     <RowDefinition Height="5*"/>
-                    <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" Grid.ColumnSpan="3" BorderBrush="LightGray" BorderThickness="2" Margin="10,0,10,10" CornerRadius="5" Background="White">
-                    <Border BorderBrush="LightGray" BorderThickness="2" CornerRadius="5" Background="White">
-                        <telerikChart:RadCartesianChart Margin="10,10,10,10" Palette="{StaticResource GraphPalete}"  Background="White">
-                            <telerikChart:RadCartesianChart.Behaviors>
-                                <telerikChart:ChartTooltipBehavior SnapToClosestPoint="True" />
-                            </telerikChart:RadCartesianChart.Behaviors>
-                            <telerikChart:RadCartesianChart.HorizontalAxis>
-                                <telerikChart:LinearAxis Title="{x:Bind KNNViewModel.CurrentFeatureX, Mode=TwoWay}"/>
-                            </telerikChart:RadCartesianChart.HorizontalAxis>
-                            <telerikChart:RadCartesianChart.VerticalAxis>
-                                <telerikChart:LinearAxis Title="{x:Bind KNNViewModel.CurrentFeatureY, Mode=TwoWay}"/>
-                            </telerikChart:RadCartesianChart.VerticalAxis>
-                            <telerikChart:RadCartesianChart.SeriesProvider >
-                                <telerikChart:ChartSeriesProvider x:Name="provider" Source="{x:Bind KNNViewModel.GraphSeries}" >
-                                    <telerikChart:ChartSeriesProvider.SeriesDescriptors>
-                                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="0">
-                                            <telerikChart:ScatterSeriesDescriptor.Style>
-                                                <Style TargetType="telerikChart:ScatterPointSeries"/>
-                                            </telerikChart:ScatterSeriesDescriptor.Style>
-                                        </telerikChart:ScatterSeriesDescriptor>
-                                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind KNNViewModel.TestDataIndex}">
-                                            <telerikChart:ScatterSeriesDescriptor.Style>
-                                                <Style TargetType="telerikChart:ScatterPointSeries"/>
-                                            </telerikChart:ScatterSeriesDescriptor.Style>
-                                        </telerikChart:ScatterSeriesDescriptor>
-                                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind KNNViewModel.VisualizationIndex}">
-                                            <telerikChart:ScatterSeriesDescriptor.Style>
-                                                <Style TargetType="telerikChart:ScatterSplineSeries"/>
-                                            </telerikChart:ScatterSeriesDescriptor.Style>
-                                        </telerikChart:ScatterSeriesDescriptor>
-                                    </telerikChart:ChartSeriesProvider.SeriesDescriptors>
-                                </telerikChart:ChartSeriesProvider>
-                            </telerikChart:RadCartesianChart.SeriesProvider>
 
-                        </telerikChart:RadCartesianChart>
-                    </Border>
-                </Border>
+                <Border Grid.RowSpan="2" Background="White" BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Margin="5,0,5,0"/>
+                <telerikChart:RadCartesianChart Margin="10,10,10,0" Palette="{StaticResource GraphPalete}"  Background="White" Grid.Row="0" >
+                    <telerikChart:RadCartesianChart.Behaviors>
+                        <telerikChart:ChartTooltipBehavior SnapToClosestPoint="True" />
+                    </telerikChart:RadCartesianChart.Behaviors>
+                    <telerikChart:RadCartesianChart.HorizontalAxis>
+                        <telerikChart:LinearAxis Title="{x:Bind KNNViewModel.CurrentFeatureX, Mode=TwoWay}"/>
+                    </telerikChart:RadCartesianChart.HorizontalAxis>
+                    <telerikChart:RadCartesianChart.VerticalAxis>
+                        <telerikChart:LinearAxis Title="{x:Bind KNNViewModel.CurrentFeatureY, Mode=TwoWay}"/>
+                    </telerikChart:RadCartesianChart.VerticalAxis>
+                    <telerikChart:RadCartesianChart.SeriesProvider >
+                        <telerikChart:ChartSeriesProvider x:Name="provider" Source="{x:Bind KNNViewModel.GraphSeries}" >
+                            <telerikChart:ChartSeriesProvider.SeriesDescriptors>
+                                <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="0">
+                                    <telerikChart:ScatterSeriesDescriptor.Style>
+                                        <Style TargetType="telerikChart:ScatterPointSeries"/>
+                                    </telerikChart:ScatterSeriesDescriptor.Style>
+                                </telerikChart:ScatterSeriesDescriptor>
+                                <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind KNNViewModel.TestDataIndex}">
+                                    <telerikChart:ScatterSeriesDescriptor.Style>
+                                        <Style TargetType="telerikChart:ScatterPointSeries"/>
+                                    </telerikChart:ScatterSeriesDescriptor.Style>
+                                </telerikChart:ScatterSeriesDescriptor>
+                                <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind KNNViewModel.VisualizationIndex}">
+                                    <telerikChart:ScatterSeriesDescriptor.Style>
+                                        <Style TargetType="telerikChart:ScatterSplineSeries"/>
+                                    </telerikChart:ScatterSeriesDescriptor.Style>
+                                </telerikChart:ScatterSeriesDescriptor>
+                            </telerikChart:ChartSeriesProvider.SeriesDescriptors>
+                        </telerikChart:ChartSeriesProvider>
+                    </telerikChart:RadCartesianChart.SeriesProvider>
 
-                <Border Grid.Row="1" Grid.Column="0" BorderBrush="LightGray" BorderThickness="2" Margin="10,0,10,15" CornerRadius="5" Background="White">
-                    <Border BorderBrush="LightGray" BorderThickness="2" CornerRadius="5" Background="White">
+                </telerikChart:RadCartesianChart>
 
-                    </Border>
-                </Border>
 
-                <Border Grid.Row="1" Grid.Column="1" BorderBrush="LightGray" BorderThickness="2" Margin="10,0,10,15" CornerRadius="5" Background="White">
-                    <Border BorderBrush="LightGray" BorderThickness="2" CornerRadius="5" Background="White">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Background="White">
+                    <TextBlock Text="{x:Bind KNNViewModel.KeyHeaderText}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.FirstSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
+                    <TextBlock Text="{x:Bind KNNViewModel.FirstSeriesLabel}" Margin="5,0,10,0"/>
+                    <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.SecondSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
+                    <TextBlock Text="{x:Bind KNNViewModel.SecondSeriesLabel}" Margin="5,0,10,0"/>
+                    <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.TestSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
+                    <TextBlock Text="{x:Bind KNNViewModel.TestSeriesLabel}" Margin="5,0,10,0"/>
+                </StackPanel>
 
-                    </Border>
-                </Border>
+                
 
-                <Border Grid.Row="1" Grid.Column="2" BorderBrush="LightGray" BorderThickness="2" Margin="10,0,10,15" CornerRadius="5" Background="White">
-                    <Border BorderBrush="LightGray" BorderThickness="2" CornerRadius="5" Background="White">
 
-                    </Border>
+
+                <Border Grid.Row="2" Margin="10,10,10,10" CornerRadius="5" Background="White" Width="750" BorderBrush="LightGray" BorderThickness="1">
+                    
+                   
+
                 </Border>
             </Grid>
         </SplitView>
