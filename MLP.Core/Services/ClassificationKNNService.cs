@@ -25,6 +25,7 @@ namespace MLP.Core.Services
         public List<double> CurrentDataX { get; set; }
         public List<double> CurrentDataY { get; set; }
         public List<string> TargetData { get; set; }
+        public Dictionary<string, int> Counts { get; set; }
         public int DataSize { get; set; }
 
         // Primary constructor
@@ -153,6 +154,7 @@ namespace MLP.Core.Services
                 }
             }
 
+            this.Counts = counts;
             return max_label;
 
         }

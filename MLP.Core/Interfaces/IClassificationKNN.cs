@@ -22,7 +22,7 @@ namespace MLP.Core.Interfaces
         string Classify(double x_data, double y_data);
         Tuple<string, Dictionary<int, double>> RobustClassify(double x, double y);
         void ConfigService(DataSet dataSet, int k = 3);
+        Dictionary<string, int> Counts { get; set; }
         Dictionary<string, List<DataPoint<double>>> GetLabeledSeries();
-
     }
 }

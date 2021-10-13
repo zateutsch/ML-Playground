@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerikChart="using:Telerik.UI.Xaml.Controls.Chart"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -36,6 +37,10 @@
         <!-- reference to double input validation class in MLP.UWP.Common -->
         <common:DoubleConverter x:Key="DoubleConverter"/>
 
+        <Style TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Light"/>
+        </Style>
+        
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -51,19 +56,21 @@
                 <AppBarButton.Flyout>
                     <Flyout>
                         <StackPanel>
-                            <TextBlock HorizontalAlignment="Center" Margin="10,10,10,10">Enter a test data point:</TextBlock>
+                            <TextBlock HorizontalAlignment="Center" Margin="10,0,10,10" FontWeight="Light">Enter a test data point:</TextBlock>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <StackPanel Margin="0,0,30,0">
                                     <TextBox Text="{x:Bind KNNViewModel.UserTestX, Mode=TwoWay, Converter={StaticResource DoubleConverter}}" InputScope="Number"/>
-                                    <TextBlock Text="{x:Bind KNNViewModel.CurrentFeatureX, Mode=TwoWay}"/>
+                                    <TextBlock Text="{x:Bind KNNViewModel.CurrentFeatureX, Mode=TwoWay}" FontWeight="Light"/>
                                 </StackPanel>
                                 <StackPanel>
                                     <TextBox Text="{x:Bind KNNViewModel.UserTestY, Mode=TwoWay, Converter={StaticResource DoubleConverter}}" InputScope="Number"/>
-                                    <TextBlock Text="{x:Bind KNNViewModel.CurrentFeatureY, Mode=TwoWay}"/>
+                                    <TextBlock Text="{x:Bind KNNViewModel.CurrentFeatureY, Mode=TwoWay}" FontWeight="Light"/>
                                 </StackPanel>
-
                             </StackPanel>
-                            <Button HorizontalAlignment="Center" Margin="0,20,0,0" Click="{x:Bind KNNViewModel.TestPoint}">Test!</Button>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                                <Button Margin="0,0,10,0" Click="{x:Bind KNNViewModel.TestPoint}">Test</Button>
+                                <Button Margin="0,0,0,0" Click="{x:Bind KNNViewModel.UpdateGraph}">Clear</Button>
+                            </StackPanel>
                         </StackPanel>
                     </Flyout>
                 </AppBarButton.Flyout>
@@ -77,11 +84,11 @@
                     <Flyout>
                         <StackPanel Orientation="Horizontal">
                             <StackPanel>
-                                <TextBlock HorizontalAlignment="Center" FontWeight="Black">X</TextBlock>
+                                <TextBlock HorizontalAlignment="Center" FontWeight="Light">X</TextBlock>
                                 <ListBox ItemsSource="{x:Bind KNNViewModel.RegressionFeatureNames}" SelectedItem="{x:Bind KNNViewModel.CurrentFeatureX, Mode=TwoWay}" SelectionChanged="{x:Bind KNNViewModel.UpdateGraph}" Margin="2,2,2,2"/>
                             </StackPanel>
                             <StackPanel>
-                                <TextBlock HorizontalAlignment="Center" FontWeight="Black">Y</TextBlock>
+                                <TextBlock HorizontalAlignment="Center" FontWeight="Light">Y</TextBlock>
                                 <ListBox ItemsSource="{x:Bind KNNViewModel.RegressionFeatureNames}" SelectedItem="{x:Bind KNNViewModel.CurrentFeatureY, Mode=TwoWay}" SelectionChanged="{x:Bind KNNViewModel.UpdateGraph}" Margin="2,2,2,2"/>
                             </StackPanel>
 
@@ -97,7 +104,7 @@
                 <AppBarButton.Flyout>
                     <Flyout>
                         <StackPanel>
-                            <TextBlock> Update K parameter:</TextBlock>
+                            <TextBlock HorizontalAlignment="Center" FontWeight="Light"> Update K parameter:</TextBlock>
                             <Slider Minimum="1" Maximum="7" Value="{x:Bind KNNViewModel.K, Mode=TwoWay}" TickFrequency="1" TickPlacement="Inline" Width="150"/>
                         </StackPanel>
                     </Flyout>
@@ -123,16 +130,13 @@
             </SplitView.Pane>
             <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="13*"/>
+                    <RowDefinition Height="16*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
 
                 <Border Grid.RowSpan="2" Background="White" BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Margin="5,0,5,0"/>
                 <telerikChart:RadCartesianChart Margin="10,10,10,0" Palette="{StaticResource GraphPalete}"  Background="White" Grid.Row="0" >
-                    <telerikChart:RadCartesianChart.Behaviors>
-                        <telerikChart:ChartTooltipBehavior SnapToClosestPoint="True" />
-                    </telerikChart:RadCartesianChart.Behaviors>
                     <telerikChart:RadCartesianChart.HorizontalAxis>
                         <telerikChart:LinearAxis Title="{x:Bind KNNViewModel.CurrentFeatureX, Mode=TwoWay}"/>
                     </telerikChart:RadCartesianChart.HorizontalAxis>
@@ -165,26 +169,48 @@
 
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Background="White">
-                    <TextBlock Text="{x:Bind KNNViewModel.KeyHeaderText}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBlock Text="{x:Bind KNNViewModel.KeyHeaderText}" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,10,0"/>
                     <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.FirstSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
-                    <TextBlock Text="{x:Bind KNNViewModel.FirstSeriesLabel}" Margin="5,0,10,0"/>
+                    <TextBlock Text="{x:Bind KNNViewModel.FirstSeriesLabel}" FontWeight="Light" Margin="5,0,10,0"/>
                     <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.SecondSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
-                    <TextBlock Text="{x:Bind KNNViewModel.SecondSeriesLabel}" Margin="5,0,10,0"/>
+                    <TextBlock Text="{x:Bind KNNViewModel.SecondSeriesLabel}" FontWeight="Light" Margin="5,0,10,0"/>
                     <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.TestSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
-                    <TextBlock Text="{x:Bind KNNViewModel.TestSeriesLabel}" Margin="5,0,10,0"/>
+                    <TextBlock Text="{x:Bind KNNViewModel.TestSeriesLabel}" FontWeight="Light" Margin="5,0,10,0"/>
                 </StackPanel>
-
-                
-
 
 
                 <Border Grid.Row="2" Margin="10,10,10,10" CornerRadius="5" Background="White" Width="750" BorderBrush="LightGray" BorderThickness="1">
-                    
-                   
+                    <Grid HorizontalAlignment="Center" Margin="10,10,10,10">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="5*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock FontSize="18" FontWeight="Light" HorizontalAlignment="Center" > Results</TextBlock>
+                        <Border Width="100" BorderThickness="1" BorderBrush="LightGray" VerticalAlignment="Bottom"/>
+                        <ScrollViewer Grid.Row="1" VerticalAlignment="Center">
+                            <toolkit:SwitchPresenter  Value="{x:Bind KNNViewModel.IsTesting, Mode=TwoWay}" >
+                                <toolkit:Case Value="True">
+                                    <StackPanel HorizontalAlignment="Center" >
+                                        <TextBlock HorizontalAlignment="Center" > Classification result for feature "Rain":</TextBlock>
+                                        <TextBlock HorizontalAlignment="Center" FontSize="36" FontWeight="SemiLight" Margin="0,0,0,5" Foreground="SlateGray" Text="{x:Bind KNNViewModel.PredictedLabelText, Mode=OneWay}"/>
+                                        <TextBlock HorizontalAlignment="Center" FontWeight="Light" TextWrapping="Wrap" TextAlignment="Center" Text="{x:Bind KNNViewModel.ResultExplanationText, Mode=OneWay}"/>
+                                    </StackPanel>
+                                </toolkit:Case>
+                                <toolkit:Case Value="False">
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock FontWeight="Light"> No test data is currently being visualized. Click the "Test" tab in the tool bar to test a point.</TextBlock>
+                                    </StackPanel>
+
+                                </toolkit:Case>
+                            </toolkit:SwitchPresenter>
+                        </ScrollViewer>
+                        
+                    </Grid>
+
 
                 </Border>
             </Grid>
         </SplitView>
     </Grid>
-
 </Page>

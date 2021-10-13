@@ -36,7 +36,8 @@ namespace MLP.Core.ViewModels
         private double userTestX;
         private double userTestY;
 
-        private string predictedLabelText;
+        private string predictedLabelText = "";
+        private string resultExplanationText = "";
 
         private string firstSeriesColor = "Gold";
         private string secondSeriesColor = "CornflowerBlue";
@@ -46,6 +47,7 @@ namespace MLP.Core.ViewModels
         private string firstSeriesLabel = "";
         private string secondSeriesLabel= "";
 
+        private string isTesting = "false";
         private int k;
 
         // Primary Observable Collection - Core of KNN Graph Representation
@@ -120,6 +122,11 @@ namespace MLP.Core.ViewModels
             get => "Labels for feature \"" + this.CurrentFeatureLabel + "\":";
         }
 
+        public string ResultExplanationText
+        {
+            get => resultExplanationText;
+            set => SetProperty(ref resultExplanationText, value);
+        }
 
         // Model Interaction Properties //
 
@@ -161,6 +168,12 @@ namespace MLP.Core.ViewModels
         {
             get => currentFeatureLabel;
             set => SetProperty(ref currentFeatureLabel, value);
+        }
+
+        public string IsTesting
+        {
+            get => isTesting;
+            set => SetProperty(ref isTesting, value);
         }
 
         // Indexing Properties //
@@ -265,13 +278,13 @@ namespace MLP.Core.ViewModels
             foreach (KeyValuePair<string, List<DataPoint<double>>> series in seriesDict)
             {
                 this.AddTrainingDataSeries(series.Key, series.Value);
-                if(this.firstSeriesLabel == "")
+                if(this.secondSeriesLabel == "")
                 {
-                    this.firstSeriesLabel = series.Key;
+                    this.secondSeriesLabel = series.Key;
                 }
                 else
                 {
-                    this.secondSeriesLabel = series.Key;
+                    this.firstSeriesLabel = series.Key;
                 }
             }
         }
@@ -293,6 +306,7 @@ namespace MLP.Core.ViewModels
         {
             this.ClearGraph();
             this._isTesting = false;
+            this.IsTesting = "False";
             this._knn_service.Train(this.CurrentFeatureX, this.CurrentFeatureY, this.CurrentFeatureLabel);
             this.InitializeGraph();
         }
@@ -305,6 +319,7 @@ namespace MLP.Core.ViewModels
             }
 
             this._isTesting = true;
+            this.IsTesting = "True";
             this.AddTestDataSeries(this.UserTestX, this.UserTestY);
             Tuple<string, Dictionary<int, double>> result = this._knn_service.RobustClassify(this.UserTestX, UserTestY);
             foreach (int idx in result.Item2.Keys)
@@ -314,7 +329,8 @@ namespace MLP.Core.ViewModels
 
             this._testResult = result.Item1;
             this.TestHistory.Add(new KNNTest(this.CurrentFeatureX, this.CurrentFeatureY, this.CurrentFeatureLabel, this.K, this.UserTestX, this.UserTestY));
-            this.PredictedLabelText = this.GetPredictedLabelText();
+            this.PredictedLabelText = _testResult;
+            this.ResultExplanationText = this.GetResultExplanationText();
         }
 
         public void RemoveCurrentTest()
@@ -347,6 +363,21 @@ namespace MLP.Core.ViewModels
             }
 
             return result;
+        }
+
+        public string GetResultExplanationText()
+        {
+            string winningLabel = this._testResult;
+            string losingLabel = winningLabel != this.FirstSeriesLabel ? this.FirstSeriesLabel : this.SecondSeriesLabel;
+            int winningCount = this._knn_service.Counts[winningLabel];
+            int losingCount = this._knn_service.Counts.ContainsKey(losingLabel) ? this._knn_service.Counts[losingLabel] : 0;
+
+            if (winningCount == losingCount)
+            {
+                return string.Format("The model evaluated the {0} nearest points, and found that both \"{1}\" and \"{2}\" had counts of {3} for feature {4}. Because the closest point to our test datahad label \"{1}\", this label is selected as the tiebreaker.", this.K, winningLabel, losingLabel, winningCount, this.CurrentFeatureLabel);
+            }
+
+            return string.Format("The model evaluated the {0} closest points, and found that {1} points were labeled \"{2}\" for feature {3}, while only {4} points were labeled \"{5}\" for feature {3}.", this.K, winningCount, winningLabel, this.CurrentFeatureLabel, losingCount, losingLabel);
         }
     }
 
