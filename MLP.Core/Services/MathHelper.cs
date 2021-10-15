@@ -42,5 +42,53 @@ namespace MLP.Core.Services
         {
             return this.RandomFactory.NextDouble();
         }
+        public double Max(List<double> series)
+        {
+            double max = series[0];
+            foreach (double num in series)
+            {
+                if(num > max)
+                {
+                    max = num;
+                }
+            }
+            return max;
+        }
+        public int Max(List<int> series)
+        {
+            int max = series[0];
+            foreach (int num in series)
+            {
+                if (num > max)
+                {
+                    max = num;
+                }
+            }
+            return max;
+        }
+        public double Min(List<double> series)
+        {
+            double min = series[0];
+            foreach (double num in series)
+            {
+                if (num < min)
+                {
+                    min = num;
+                }
+            }
+            return min;
+        }
+        public int Min(List<int> series)
+        {
+            int min = series[0];
+            foreach (int num in series)
+            {
+                if (num < min)
+                {
+                    min = num;
+                }
+            }
+            return min;
+        }
     }
 }

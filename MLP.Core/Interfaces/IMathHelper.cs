@@ -12,6 +12,9 @@ namespace MLP.Core.Interfaces
         int RandomInt(int end);
         int RandomInt(int start, int end);
         double RandomDouble();
-        
+        double Max(List<double> series);
+        int Max(List<int> series);
+        double Min(List<double> series);
+        int Min(List<int> series);
     }
 }

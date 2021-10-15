@@ -26,10 +26,14 @@ namespace MLP.Core.Services
         public List<double> CurrentDataY { get; set; }
         public int DataSize { get; set; }
 
-        // Centroids and Clusters (K Means Specific //
+        // Centroids, Clusters, and Max/Mins (K Means Specific) //
         public List<Tuple<double, double>> Centroids { get; set; }
         public List<List<double>> ClustersX { get; set; }
         public List<List<double>> ClustersY { get; set; }
+        public double MaxX { get; set; } // Mins/Maxes for centroid randomization
+        public double MaxY { get; set; }
+        public double MinX { get; set; }
+        public double MinY { get; set; }
 
         // Constructor //
         public KMeansClusterService(IDataSetService dataSetService, IMathHelper mathHelper)
@@ -53,9 +57,26 @@ namespace MLP.Core.Services
 
             this.CurrentDataX = _dataSetService.GetRegressionFeatureSeries(featureX);
             this.CurrentDataY = _dataSetService.GetRegressionFeatureSeries(featureY);
+            this.MaxX = _mathHelper.Max(CurrentDataX);
+            this.MaxY = _mathHelper.Max(CurrentDataY);
+            this.MinX = _mathHelper.Min(CurrentDataX);
+            this.MinY = _mathHelper.Min(CurrentDataY);
+
+            this.Centroids = new List<Tuple<double, double>>();
 
             this.DataSize = this.CurrentDataX.Count;
 
+        }
+
+        public void RandomizeCentroids()
+        {
+            for(int i = 0; i < this.K; i++)
+            {
+                double centroidX = (this._mathHelper.RandomDouble() * this.MaxX) + this.MinX;
+                double centroidY = (this._mathHelper.RandomDouble() * this.MaxY) + this.MinY;
+
+                this.Centroids.Add(new Tuple<double, double>(centroidX, centroidY));
+            }
         }
     }
 }
