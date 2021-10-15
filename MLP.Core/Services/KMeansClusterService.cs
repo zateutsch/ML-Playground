@@ -26,6 +26,11 @@ namespace MLP.Core.Services
         public List<double> CurrentDataY { get; set; }
         public int DataSize { get; set; }
 
+        // Centroids and Clusters (K Means Specific //
+        public List<Tuple<double, double>> Centroids { get; set; }
+        public List<List<double>> ClustersX { get; set; }
+        public List<List<double>> ClustersY { get; set; }
+
         // Constructor //
         public KMeansClusterService(IDataSetService dataSetService, IMathHelper mathHelper)
         {

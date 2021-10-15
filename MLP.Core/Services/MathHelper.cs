@@ -7,6 +7,13 @@ namespace MLP.Core.Services
 {
     public class MathHelper : IMathHelper
     {
+        public Random RandomFactory { get; set; }
+
+        public MathHelper()
+        {
+            this.RandomFactory = new Random();
+        }
+
         public double EuclideanDistance(double[] p1, double[] p2)
         {
             double squared_differences = 0;
@@ -17,6 +24,23 @@ namespace MLP.Core.Services
             }
 
             return Math.Sqrt(squared_differences);
+        }
+
+        public int RandomInt()
+        {
+            return this.RandomFactory.Next();
+        }
+        public int RandomInt(int end)
+        {
+            return this.RandomFactory.Next(end);
+        }
+        public int RandomInt(int start, int end)
+        {
+            return this.RandomFactory.Next(start, end);
+        }
+        public double RandomDouble()
+        {
+            return this.RandomFactory.NextDouble();
         }
     }
 }
