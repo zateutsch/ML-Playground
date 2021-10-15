@@ -7,10 +7,10 @@ using MLP.Core.Interfaces;
 
 namespace MLP.Core.Services
 {
-    public class ClassificationKNNService : IClassificationKNN
+    public class KNearestNeighborsService : IClassificationKNN
     {
         // Services
-        private readonly IDataSetService _dataService;
+        private readonly IDataSetService _dataSetService;
         private readonly IMathHelper _mathHelper;
 
         // Model parameters
@@ -29,17 +29,17 @@ namespace MLP.Core.Services
         public int DataSize { get; set; }
 
         // Primary constructor
-        public ClassificationKNNService(IDataSetService dataService, IMathHelper mathHelper)
+        public KNearestNeighborsService(IDataSetService dataSetService, IMathHelper mathHelper)
         {
-            this._dataService = dataService;
+            this._dataSetService = dataSetService;
             this._mathHelper = mathHelper;
         }
 
         public void ConfigService(DataSet dataSet, int k = 3)
         {
             this.K = k;
-            this._dataService.CurrentData = dataSet;
-            this.RegressionFeatureNames = this._dataService.GetRegressionFeatureNames();
+            this._dataSetService.CurrentData = dataSet;
+            this.RegressionFeatureNames = this._dataSetService.GetRegressionFeatureNames();
             this.Train(dataSet.DefaultFeatureX, dataSet.DefaultFeatureY, dataSet.DefaultFeatureLabel);
         }
 
@@ -49,11 +49,11 @@ namespace MLP.Core.Services
             this.CurrentFeatureY = featureY;
             this.CurrentFeatureLabel = targetFeature;
 
-            this.CurrentDataX = _dataService.GetRegressionFeatureSeries(featureX);
-            this.CurrentDataY = _dataService.GetRegressionFeatureSeries(featureY);
-            this.TargetData = _dataService.GetClassificationFeatureSeries(targetFeature);
+            this.CurrentDataX = _dataSetService.GetRegressionFeatureSeries(featureX);
+            this.CurrentDataY = _dataSetService.GetRegressionFeatureSeries(featureY);
+            this.TargetData = _dataSetService.GetClassificationFeatureSeries(targetFeature);
 
-            this.DataSize = this.DataSize = this.TargetData.Count;
+            this.DataSize = this.TargetData.Count;
 
         }
 

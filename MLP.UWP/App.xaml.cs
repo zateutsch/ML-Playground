@@ -130,7 +130,7 @@ namespace MLP.UWP
                 .AddSingleton<DataFileService>()
                 .AddSingleton<IDataManagerService, DataManagerService>()
                 .AddTransient<IDataSetService, DataSetService>()
-                .AddTransient<IClassificationKNN, ClassificationKNNService>()
+                .AddTransient<IClassificationKNN, KNearestNeighborsService>()
                 .AddSingleton<IMathHelper, MathHelper>()
                 .BuildServiceProvider(true);
 

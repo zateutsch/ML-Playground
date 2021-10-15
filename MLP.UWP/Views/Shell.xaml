@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <muxc:NavigationView PaneDisplayMode="Left" IsPaneOpen="False" BackRequested="NavigationView_BackRequested" IsBackEnabled="True" IsBackButtonVisible="Collapsed">
+    <muxc:NavigationView PaneDisplayMode="Top" IsPaneOpen="False" BackRequested="NavigationView_BackRequested" IsBackEnabled="True" IsBackButtonVisible="Collapsed">
         
         <muxc:NavigationView.MenuItems>
             
