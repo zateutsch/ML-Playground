@@ -90,5 +90,18 @@ namespace MLP.Core.Services
             }
             return min;
         }
+
+        public double Mean(List<double> series)
+        {
+            double sum = 0;
+            int count = series.Count;
+
+            foreach(double num in series)
+            {
+                sum += num;
+            }
+
+            return (sum / count);
+        }
     }
 }

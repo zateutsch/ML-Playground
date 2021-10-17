@@ -16,5 +16,6 @@ namespace MLP.Core.Interfaces
         int Max(List<int> series);
         double Min(List<double> series);
         int Min(List<int> series);
+        double Mean(List<double> series);
     }
 }
