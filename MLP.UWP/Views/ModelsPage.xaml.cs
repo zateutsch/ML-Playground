@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using MLP.Core.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using MLP.Core.Models;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -24,17 +25,29 @@ namespace MLP.UWP
     /// </summary>
     public sealed partial class ModelsPage : Page
     {
+
+        private Dictionary<string, Type> modelPageDictionary;
         public ModelsPageViewModel ViewModel => (ModelsPageViewModel)this.DataContext;
         public ModelsPage()
         {
             this.DataContext = App.Services.GetRequiredService<ModelsPageViewModel>();
+            this.InitModelDictionary();
             this.InitializeComponent();
 
         }
 
         private void ModelsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            this.Frame.Navigate(typeof(KNNPage));
+            ModelPreview model = e.ClickedItem as ModelPreview;
+            this.Frame.Navigate(this.modelPageDictionary[model.Key]);
+        }
+
+        private void InitModelDictionary()
+        {
+            this.modelPageDictionary = new Dictionary<string, Type>();
+
+            this.modelPageDictionary.Add("knn", typeof(KNNPage));
+            this.modelPageDictionary.Add("kmeans", typeof(KMeansPage));
         }
     }
 }

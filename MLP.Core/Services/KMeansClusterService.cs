@@ -8,7 +8,7 @@ using MLP.Core.Interfaces;
 
 namespace MLP.Core.Services
 {
-    public class KMeansClusterService
+    public class KMeansClusterService : IKMeans
     {
         // Services //
         private readonly IDataSetService _dataSetService;
@@ -24,7 +24,7 @@ namespace MLP.Core.Services
         public string CurrentFeatureY { get; set; }
         public List<double> CurrentDataX { get; set; }
         public List<double> CurrentDataY { get; set; }
-        public int DataSize { get; set; }
+        public int DataSize { get; set; } = 0;
 
         // Centroids, Clusters, and Max/Mins (K Means Specific) //
         public List<Tuple<double, double>> Centroids { get; set; }
@@ -72,7 +72,6 @@ namespace MLP.Core.Services
 
         public void RandomizeCentroids()
         {
-
             for (int i = 0; i < this.K; i++)
             {
                 double centroidX = (this._mathHelper.RandomDouble() * this.MaxX) + this.MinX;
@@ -160,13 +159,15 @@ namespace MLP.Core.Services
             {
                 this.Iteration++;
                 this.RandomizeCentroids();
+                this.AssignToCluster();
                 return false;
             }
             else
             {
                 this.Iteration++;
+                this.RecalculateCentroids();
                 this.AssignToCluster();
-                return !this.RecalculateCentroids();
+                return false;
             }
             
         }
@@ -181,6 +182,34 @@ namespace MLP.Core.Services
                 }
             }
             return false;
+        }
+
+        public List<DataPoint<double>> GetBaseSeries()
+        {
+            List<DataPoint<double>> baseSeries = new List<DataPoint<double>>();
+            for(int i = 0; i < this.DataSize; i++)
+            {
+                baseSeries.Add(new DataPoint<double>(this.CurrentDataX[i], this.CurrentDataY[i]));
+            }
+
+            return baseSeries;
+        }
+
+        public List<List<DataPoint<double>>> GetClusterSeries()
+        {
+            List<List<DataPoint<double>>> clusters = new List<List<DataPoint<double>>>();
+            foreach (Tuple<double, double> centroid in this.Centroids)
+            {
+                List<DataPoint<double>> cluster = new List<DataPoint<double>>();
+                for (int i = 0; i < this.ClustersX[centroid].Count; i++)
+                {
+                    cluster.Add(new DataPoint<double>(this.ClustersX[centroid][i], this.ClustersY[centroid][i]));
+                }
+
+                clusters.Add(cluster);
+            }
+
+            return clusters;
         }
     }
 }

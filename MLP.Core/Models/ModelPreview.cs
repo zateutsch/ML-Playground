@@ -9,5 +9,6 @@ namespace MLP.Core.Models
         public string ModelName { set; get; }
         public string ImagePath { set; get; }
         public string InfoText { get; set; }
+        public string Key { get; set; }
     }
 }

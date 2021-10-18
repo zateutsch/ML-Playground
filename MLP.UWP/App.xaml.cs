@@ -125,12 +125,14 @@ namespace MLP.UWP
         {
             var provider = new ServiceCollection()
                 .AddTransient<ClassifyKNNViewModel>()
+                .AddTransient<KMeansViewModel>()
                 .AddTransient<ModelsPageViewModel>()
                 .AddTransient<InfoPaneViewModel>()
                 .AddSingleton<DataFileService>()
                 .AddSingleton<IDataManagerService, DataManagerService>()
                 .AddTransient<IDataSetService, DataSetService>()
                 .AddTransient<IClassificationKNN, KNearestNeighborsService>()
+                .AddTransient<IKMeans, KMeansClusterService>()
                 .AddSingleton<IMathHelper, MathHelper>()
                 .BuildServiceProvider(true);
 

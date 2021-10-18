@@ -57,178 +57,10 @@ namespace MLP.Core.ViewModels
 
         // Series data collection object
         public ObservableCollection<NestedSeries<double>> GraphSeries { get; set; }
-
         // Test History collection
-
         public ObservableCollection<KNNTest> TestHistory { get; set; }
-
-        /// Observable Properties ///
-
-        // Pallette Properties //
-
-        public string FirstSeriesColor
-        {
-            get => firstSeriesColor;
-            set => SetProperty(ref firstSeriesColor, value);
-        }
-
-        public string SecondSeriesColor
-        {
-            get => secondSeriesColor;
-            set => SetProperty(ref secondSeriesColor, value);
-        }
-
-        public string TestSeriesColor
-        {
-            get => testSeriesColor;
-            set => SetProperty(ref testSeriesColor, value);
-        }
-
-        public string VisualizationColor
-        {
-            get => visualizationColor;
-            set => SetProperty(ref visualizationColor, value);
-        }
-        
-        // Series Order Properties for Color Management //
-
-        public string FirstSeriesLabel
-        {
-            get => firstSeriesLabel;
-            set => SetProperty(ref firstSeriesLabel, value);
-        }
-
-        public string SecondSeriesLabel
-        {
-            get => secondSeriesLabel;
-            set => SetProperty(ref secondSeriesLabel, value);
-        }
-
-        public string TestSeriesLabel
-        {
-            get => "test";
-        }
-
-        // Display Text Properties //
-
-        public string PredictedLabelText
-        {
-            get => predictedLabelText;
-            set => SetProperty(ref predictedLabelText, value);
-        }
-
-        public string KeyHeaderText
-        {
-            get => "Labels for feature \"" + this.CurrentFeatureLabel + "\":";
-        }
-
-        public string ResultExplanationText
-        {
-            get => resultExplanationText;
-            set => SetProperty(ref resultExplanationText, value);
-        }
-
-        // Model Interaction Properties //
-
-        public int K
-        {
-            get => k;
-            set 
-            { 
-                SetProperty(ref k, value);
-                this.KUpdated();
-            }
-        }
-        public double UserTestX
-        {
-            get => userTestX;
-            set => SetProperty(ref userTestX, value);
-        }
-
-        public double UserTestY
-        {
-            get => userTestY;
-            set => SetProperty(ref userTestY, value);
-        }
-
-
-        public string CurrentFeatureX
-        {
-            get => currentFeatureX;
-            set => SetProperty(ref currentFeatureX, value);
-        }
-
-        public string CurrentFeatureY
-        {
-            get => currentFeatureY;
-            set => SetProperty(ref currentFeatureY, value);
-        }
-
-        public string CurrentFeatureLabel
-        {
-            get => currentFeatureLabel;
-            set => SetProperty(ref currentFeatureLabel, value);
-        }
-
-        public string IsTesting
-        {
-            get => isTesting;
-            set => SetProperty(ref isTesting, value);
-        }
-
-        // Indexing Properties //
-
-        // Indexes designating where each type of data resides in GraphSeires
-
-        // original points in model for comparison
-        public int TrainingDataIndex 
-        {
-            get => trainingDataIndex;
-            set => SetProperty(ref trainingDataIndex, value); 
-        }
-
-        // test data to classify
-        public int TestDataIndex
-        {
-            get => testDataIndex;
-            set => SetProperty(ref testDataIndex, value);
-        }
-
-        // visualization data
-        // this data has no bearing on the actual model, but is used to visualize
-        // the connections between the test point and its k-nearest neighbors
-        public int VisualizationIndex
-        {
-            get => this.testDataIndex + 1;
-            set => SetProperty(ref visualizationIndex, value);
-        }
-      
-
-        // Series Type Properties //
-
-        // Series type properties to indicate how series is visualized
-        // (eg. "ScatterPointSeries", "ScatterLineSeries", etc.)
-        public string TrainingDataSeriesType
-        {
-            get => trainingDataSeriesType;
-            set => SetProperty(ref trainingDataSeriesType, value);
-        }
-
-        public string TestDataSeriesType
-        {
-            get => testDataSeriesType;
-            set => SetProperty(ref testDataSeriesType, value);
-        }
-
-        public string VisualizationDataSeriesType
-        {
-            get => visualizationDataSeriesType;
-            set => SetProperty(ref visualizationDataSeriesType, value);
-        }
-
         // Feature Collection
         public ObservableCollection<string> RegressionFeatureNames { get; set; }
-
 
         // Constructor
         public ClassifyKNNViewModel(IClassificationKNN knn, IDataManagerService dataManager)
@@ -248,7 +80,6 @@ namespace MLP.Core.ViewModels
             this.PredictedLabelText = this.GetPredictedLabelText();
             this.InitializeGraph();
         }
-
 
         // Methods
         public void AddTrainingDataSeries(string label, List<DataPoint<double>> series)
@@ -379,7 +210,169 @@ namespace MLP.Core.ViewModels
 
             return string.Format("The model evaluated the {0} closest points, and found that {1} points were labeled \"{2}\" for feature {3}, while only {4} points were labeled \"{5}\" for feature {3}.", this.K, winningCount, winningLabel, this.CurrentFeatureLabel, losingCount, losingLabel);
         }
+
+        /// Observable Properties ///
+
+        // Pallette Properties //
+
+        public string FirstSeriesColor
+        {
+            get => firstSeriesColor;
+            set => SetProperty(ref firstSeriesColor, value);
+        }
+
+        public string SecondSeriesColor
+        {
+            get => secondSeriesColor;
+            set => SetProperty(ref secondSeriesColor, value);
+        }
+
+        public string TestSeriesColor
+        {
+            get => testSeriesColor;
+            set => SetProperty(ref testSeriesColor, value);
+        }
+
+        public string VisualizationColor
+        {
+            get => visualizationColor;
+            set => SetProperty(ref visualizationColor, value);
+        }
+
+        // Series Order Properties for Color Management //
+
+        public string FirstSeriesLabel
+        {
+            get => firstSeriesLabel;
+            set => SetProperty(ref firstSeriesLabel, value);
+        }
+
+        public string SecondSeriesLabel
+        {
+            get => secondSeriesLabel;
+            set => SetProperty(ref secondSeriesLabel, value);
+        }
+
+        public string TestSeriesLabel
+        {
+            get => "test";
+        }
+
+        // Display Text Properties //
+
+        public string PredictedLabelText
+        {
+            get => predictedLabelText;
+            set => SetProperty(ref predictedLabelText, value);
+        }
+
+        public string KeyHeaderText
+        {
+            get => "Labels for feature \"" + this.CurrentFeatureLabel + "\":";
+        }
+
+        public string ResultExplanationText
+        {
+            get => resultExplanationText;
+            set => SetProperty(ref resultExplanationText, value);
+        }
+
+        // Model Interaction Properties //
+
+        public int K
+        {
+            get => k;
+            set
+            {
+                SetProperty(ref k, value);
+                this.KUpdated();
+            }
+        }
+        public double UserTestX
+        {
+            get => userTestX;
+            set => SetProperty(ref userTestX, value);
+        }
+
+        public double UserTestY
+        {
+            get => userTestY;
+            set => SetProperty(ref userTestY, value);
+        }
+
+
+        public string CurrentFeatureX
+        {
+            get => currentFeatureX;
+            set => SetProperty(ref currentFeatureX, value);
+        }
+
+        public string CurrentFeatureY
+        {
+            get => currentFeatureY;
+            set => SetProperty(ref currentFeatureY, value);
+        }
+
+        public string CurrentFeatureLabel
+        {
+            get => currentFeatureLabel;
+            set => SetProperty(ref currentFeatureLabel, value);
+        }
+
+        public string IsTesting
+        {
+            get => isTesting;
+            set => SetProperty(ref isTesting, value);
+        }
+
+        // Indexing Properties //
+
+        // Indexes designating where each type of data resides in GraphSeires
+
+        // original points in model for comparison
+        public int TrainingDataIndex
+        {
+            get => trainingDataIndex;
+            set => SetProperty(ref trainingDataIndex, value);
+        }
+
+        // test data to classify
+        public int TestDataIndex
+        {
+            get => testDataIndex;
+            set => SetProperty(ref testDataIndex, value);
+        }
+
+        // visualization data
+        // this data has no bearing on the actual model, but is used to visualize
+        // the connections between the test point and its k-nearest neighbors
+        public int VisualizationIndex
+        {
+            get => this.testDataIndex + 1;
+            set => SetProperty(ref visualizationIndex, value);
+        }
+
+
+        // Series Type Properties //
+
+        // Series type properties to indicate how series is visualized
+        // (eg. "ScatterPointSeries", "ScatterLineSeries", etc.)
+        public string TrainingDataSeriesType
+        {
+            get => trainingDataSeriesType;
+            set => SetProperty(ref trainingDataSeriesType, value);
+        }
+
+        public string TestDataSeriesType
+        {
+            get => testDataSeriesType;
+            set => SetProperty(ref testDataSeriesType, value);
+        }
+
+        public string VisualizationDataSeriesType
+        {
+            get => visualizationDataSeriesType;
+            set => SetProperty(ref visualizationDataSeriesType, value);
+        }
     }
-
-
 }
