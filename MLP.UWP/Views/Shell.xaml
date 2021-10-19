@@ -10,24 +10,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <muxc:NavigationView PaneDisplayMode="Top" IsPaneOpen="False" BackRequested="NavigationView_BackRequested" IsBackEnabled="True" IsBackButtonVisible="Collapsed">
-        
+
         <muxc:NavigationView.MenuItems>
-            
-            <muxc:NavigationViewItem Content="Home" PointerPressed="NavigationViewItem_PointerPressed">
-                <muxc:NavigationViewItem.Icon>
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe80f;"/>
-                </muxc:NavigationViewItem.Icon>
-            </muxc:NavigationViewItem>
-            
+
             <muxc:NavigationViewItem Content="Models" PointerPressed="NavigationViewItem_PointerPressed_1">
                 <muxc:NavigationViewItem.Icon>
                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe9d2;"/>
-                </muxc:NavigationViewItem.Icon>
-            </muxc:NavigationViewItem>
-            
-            <muxc:NavigationViewItem Content="Data">
-                <muxc:NavigationViewItem.Icon>
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe80a;"/>
                 </muxc:NavigationViewItem.Icon>
             </muxc:NavigationViewItem>
             

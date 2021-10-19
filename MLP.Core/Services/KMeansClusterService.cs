@@ -86,6 +86,8 @@ namespace MLP.Core.Services
 
         public void AssignToCluster()
         {
+            this.EmptyClustersForReassign();
+
             for(int i = 0; i < this.DataSize; i++)
             {
                 double minDist = double.MaxValue;
@@ -114,6 +116,8 @@ namespace MLP.Core.Services
         {
             bool centroidsUpdated = false;
             List<Tuple<double, double>> newCentroids = new List<Tuple<double, double>>();
+            Dictionary<Tuple<double, double>, List<double>> newClustersX = new Dictionary<Tuple<double, double>, List<double>>();
+            Dictionary<Tuple<double, double>, List<double>> newClustersY = new Dictionary<Tuple<double, double>, List<double>>();
 
             foreach (Tuple<double, double> centroid in this.Centroids)
             {
@@ -128,10 +132,8 @@ namespace MLP.Core.Services
 
                     Tuple<double, double> newCentroid = new Tuple<double, double>(centroidNewX, centroidNewY);
                     newCentroids.Add(newCentroid);
-                    this.ClustersX.Remove(centroid);
-                    this.ClustersY.Remove(centroid);
-                    this.ClustersX[newCentroid] = valueX;
-                    this.ClustersY[newCentroid] = valueY;
+                    newClustersX.Add(newCentroid, valueX);
+                    newClustersY.Add(newCentroid, valueY);
                 }
                 else
                 {
@@ -140,11 +142,13 @@ namespace MLP.Core.Services
             }
 
             this.Centroids = newCentroids;
+            this.ClustersX = newClustersX;
+            this.ClustersY = newClustersY;
 
             return centroidsUpdated;
         }
 
-        // Reeset clusters to empty data structures
+        // Reset clusters to empty data structures
         public void ResetClusters()
         {
             this.Centroids = new List<Tuple<double, double>>();
@@ -153,23 +157,31 @@ namespace MLP.Core.Services
             this.Iteration = 0;
         }
 
+        public void EmptyClustersForReassign()
+        {
+            foreach (Tuple<double, double> centroid in this.Centroids)
+            {
+                this.ClustersX[centroid] = new List<double>();
+                this.ClustersY[centroid] = new List<double>();
+            }
+        }
+
         public bool Iterate()
         {
             if(this.Iteration == 0)
             {
-                this.Iteration++;
                 this.RandomizeCentroids();
                 this.AssignToCluster();
+                this.Iteration++;
                 return false;
             }
             else
             {
                 this.Iteration++;
-                this.RecalculateCentroids();
+                bool result = this.RecalculateCentroids();
                 this.AssignToCluster();
-                return false;
+                return !result;
             }
-            
         }
 
         public bool Iterate(int numIterations)

@@ -29,7 +29,7 @@ namespace MLP.UWP
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.ContentFrame.Navigate(typeof(HomePage));
+            this.ContentFrame.Navigate(typeof(ModelsPage));
         }
 
         private void NavigationViewItem_PointerPressed(object sender, PointerRoutedEventArgs e)

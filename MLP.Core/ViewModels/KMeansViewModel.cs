@@ -35,9 +35,9 @@ namespace MLP.Core.ViewModels
             this.RegressionFeatureNames = new ObservableCollection<string>(this._kmeans_service.RegressionFeatureNames);
             this.CurrentFeatureX = this._kmeans_service.CurrentFeatureX;
             this.CurrentFeatureY = this._kmeans_service.CurrentFeatureY;
-            this.K = this._kmeans_service.K;
 
             this.GraphSeries = new ObservableCollection<NestedSeries<double>>();
+            this.K = this._kmeans_service.K;
             this.InitializeGraph();
         }
 
@@ -65,8 +65,6 @@ namespace MLP.Core.ViewModels
 
         public void AddClustersToGraph()
         {
-            this._kmeans_service.Iterate();
-            this.ClearGraph();
             foreach (List<DataPoint<double>> cluster in this._kmeans_service.GetClusterSeries())
             {
                 this.AddSeries(cluster);
@@ -81,8 +79,32 @@ namespace MLP.Core.ViewModels
         public void KUpdated()
         {
             this._kmeans_service.K = this.K;
+            this.UpdateGraph();
         }
 
+        // Button Clicks //
+
+        public void IterateButton()
+        {
+            this._kmeans_service.Iterate();
+            this.ClearGraph();
+            this.AddClustersToGraph();
+        }
+
+        public void ConvergeButton()
+        {
+            while(!this._kmeans_service.Iterate()) 
+            {
+                continue;
+            }
+            this.ClearGraph();
+            this.AddClustersToGraph();
+        }
+
+        public void ResetButton()
+        {
+            this.UpdateGraph();
+        }
 
         // Observable Props //
         public string CurrentFeatureX
@@ -113,5 +135,4 @@ namespace MLP.Core.ViewModels
             set => SetProperty(ref visualizationIndex, value);
         }
     }
-
 }
