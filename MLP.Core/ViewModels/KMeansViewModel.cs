@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using MLP.Core.Interfaces;
 using MLP.Core.Common;
 using MLP.Core.Models;
+using System.Threading.Tasks;
 
 namespace MLP.Core.ViewModels
 {
@@ -17,6 +18,14 @@ namespace MLP.Core.ViewModels
         private int k;
         private string currentFeatureX;
         private string currentFeatureY;
+        private int iterations;
+        
+        // Result Pane Props
+        private string clusteringState = "Unclustered";
+        private string clusteringStatusText = "";
+        private string doneStatusText = "";
+        private bool isAnimating = false;
+
 
         private int visualizationIndex = 0;
         // centroids index - tbd
@@ -86,25 +95,57 @@ namespace MLP.Core.ViewModels
 
         public void IterateButton()
         {
-            this._kmeans_service.Iterate();
+            if (this._kmeans_service.Iterate())
+            {
+                this.ClusteringState = "Done";
+                this.DoneStatusText = this.GetDoneStatusText();
+            }
+            else
+            {
+                this.ClusteringState = "Clustering";
+                this.ClusteringStatusText = this.GetClusteringStatusText();
+                this.ClearGraph();
+                this.AddClustersToGraph();
+            }
+        }
+            
+
+        public async Task ConvergeButton()
+        {
+            while(!this._kmeans_service.Iterate()) 
+            {
+                if (this.IsAnimating)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(.75));
+                    this.ClusteringStatusText = this.GetClusteringStatusText();
+                    this.ClearGraph();
+                    this.AddClustersToGraph();
+                }
+            }
+
+            this.DoneStatusText = this.GetDoneStatusText();
+            this.ClusteringState = "Done";
             this.ClearGraph();
             this.AddClustersToGraph();
         }
 
-        public void ConvergeButton()
+        public string GetClusteringStatusText()
         {
-            while(!this._kmeans_service.Iterate()) 
-            {
-                continue;
-            }
-            this.ClearGraph();
-            this.AddClustersToGraph();
+            return "After " + this.Iterations + " iterations, the model is still updating the clusters. The model will stop updating once data points are no longer being assigned to new clusters.";
+        }
+
+        public string GetDoneStatusText()
+        {
+            return "The model has converged after " + this.Iterations + " iterations. All of the data points are now assigned to their final clusters.";
         }
 
         public void ResetButton()
         {
+            this.ClusteringState = "Unclustered";
             this.UpdateGraph();
         }
+
+
 
         // Observable Props //
         public string CurrentFeatureX
@@ -133,6 +174,36 @@ namespace MLP.Core.ViewModels
         {
             get => visualizationIndex;
             set => SetProperty(ref visualizationIndex, value);
+        }
+
+        public string ClusteringState
+        {
+            get => clusteringState;
+            set => SetProperty(ref clusteringState, value);
+        }
+
+        public int Iterations
+        {
+            get => this._kmeans_service.Iteration;
+            set => SetProperty(ref iterations, value);
+        }
+        
+        public string ClusteringStatusText
+        {
+            get => clusteringStatusText;
+            set => SetProperty(ref clusteringStatusText, value);
+        }
+
+        public string DoneStatusText
+        {
+            get => doneStatusText;
+            set => SetProperty(ref doneStatusText, value);
+        }
+
+        public bool IsAnimating
+        {
+            get => isAnimating;
+            set => SetProperty(ref isAnimating, value);
         }
     }
 }

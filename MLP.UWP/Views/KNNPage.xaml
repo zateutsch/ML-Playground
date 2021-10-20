@@ -44,8 +44,8 @@
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="25*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <CommandBar Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" DefaultLabelPosition="Right" HorizontalAlignment="Center">
@@ -180,33 +180,22 @@
 
 
                 <Border Grid.Row="2" Margin="10,10,10,10" CornerRadius="5" Background="White" Width="750" BorderBrush="LightGray" BorderThickness="1">
-                    <Grid HorizontalAlignment="Center" Margin="10,10,10,10">
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="5*"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock FontSize="18" FontWeight="Light" HorizontalAlignment="Center" > Results</TextBlock>
-                        <Border Width="100" BorderThickness="1" BorderBrush="LightGray" VerticalAlignment="Bottom"/>
-                        <ScrollViewer Grid.Row="1" VerticalAlignment="Center">
-                            <toolkit:SwitchPresenter  Value="{x:Bind KNNViewModel.IsTesting, Mode=TwoWay}" >
-                                <toolkit:Case Value="True">
-                                    <StackPanel HorizontalAlignment="Center" >
-                                        <TextBlock HorizontalAlignment="Center" > Classification result for feature "Rain":</TextBlock>
-                                        <TextBlock HorizontalAlignment="Center" FontSize="36" FontWeight="SemiLight" Margin="0,0,0,5" Foreground="SlateGray" Text="{x:Bind KNNViewModel.PredictedLabelText, Mode=OneWay}"/>
-                                        <TextBlock HorizontalAlignment="Center" FontWeight="Light" TextWrapping="Wrap" TextAlignment="Center" Text="{x:Bind KNNViewModel.ResultExplanationText, Mode=OneWay}"/>
-                                    </StackPanel>
-                                </toolkit:Case>
-                                <toolkit:Case Value="False">
-                                    <StackPanel VerticalAlignment="Center">
-                                        <TextBlock FontWeight="Light"> No test data is currently being visualized. Click the "Test" tab in the tool bar to test a point.</TextBlock>
-                                    </StackPanel>
-
-                                </toolkit:Case>
-                            </toolkit:SwitchPresenter>
-                        </ScrollViewer>
                         
-                    </Grid>
+                    <toolkit:SwitchPresenter  Value="{x:Bind KNNViewModel.IsTesting, Mode=TwoWay}" HorizontalAlignment="Center" Margin="10">
+                        <toolkit:Case Value="True">
+                            <StackPanel HorizontalAlignment="Center" >
+                                <TextBlock HorizontalAlignment="Center" > Classification result for feature "Rain":</TextBlock>
+                                <TextBlock HorizontalAlignment="Center" FontSize="36" FontWeight="SemiLight" Margin="0,0,0,5" Foreground="SlateGray" Text="{x:Bind KNNViewModel.PredictedLabelText, Mode=OneWay}"/>
+                                <TextBlock HorizontalAlignment="Center" FontWeight="Light" TextWrapping="Wrap" TextAlignment="Center" Text="{x:Bind KNNViewModel.ResultExplanationText, Mode=OneWay}"/>
+                            </StackPanel>
+                        </toolkit:Case>
+                        <toolkit:Case Value="False">
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock FontWeight="Light"> No test data is currently being visualized. Click the "Interact" tab in the tool bar to test a point.</TextBlock>
+                            </StackPanel>
+
+                        </toolkit:Case>
+                    </toolkit:SwitchPresenter>
 
 
                 </Border>
