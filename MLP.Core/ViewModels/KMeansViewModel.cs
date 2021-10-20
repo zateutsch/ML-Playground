@@ -14,6 +14,7 @@ namespace MLP.Core.ViewModels
     {
         private readonly IKMeans _kmeans_service;
         private readonly IDataManagerService _data_manager_service;
+        private readonly string _model_key = "kmeans";
 
         private int k;
         private string currentFeatureX;
@@ -28,6 +29,7 @@ namespace MLP.Core.ViewModels
 
         // Data Set Management
         private string currentDataSetName;
+        public ObservableCollection<string> AvailableDataSets { get; set; }
 
         private int visualizationIndex = 0;
         // centroids index - tbd
@@ -40,7 +42,8 @@ namespace MLP.Core.ViewModels
         {
             this._kmeans_service = kMeansService;
             this._data_manager_service = dataManagerService;
-            this.CurrentDataSetName = this._data_manager_service.CurrentDataModelMappings["kmeans"];
+            this.CurrentDataSetName = this._data_manager_service.CurrentDataModelMappings[this._model_key];
+            this.AvailableDataSets = new ObservableCollection<string>(this._data_manager_service.AvailableDataModelMappings[this._model_key]);
 
             this._kmeans_service.ConfigService(this._data_manager_service.FetchDataSet(this.CurrentDataSetName));
 
@@ -51,6 +54,11 @@ namespace MLP.Core.ViewModels
             this.GraphSeries = new ObservableCollection<NestedSeries<double>>();
             this.K = this._kmeans_service.K;
             this.InitializeGraph();
+        }
+
+        public void UpdateCurrentDataModelMapping()
+        {
+            this._data_manager_service.CurrentDataModelMappings[this._model_key] = this.CurrentDataSetName;
         }
 
         public void InitializeGraph()

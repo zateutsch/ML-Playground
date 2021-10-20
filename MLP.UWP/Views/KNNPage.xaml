@@ -119,7 +119,7 @@
                     <Flyout>
                         <StackPanel>
                             <TextBlock HorizontalAlignment="Center" FontWeight="Light">X</TextBlock>
-                            <ListBox ItemsSource="{x:Bind KNNViewModel.RegressionFeatureNames}" SelectedItem="{x:Bind KNNViewModel.CurrentFeatureX, Mode=TwoWay}" SelectionChanged="{x:Bind KNNViewModel.UpdateGraph}" Margin="2,2,2,2"/>
+                            <ListBox ItemsSource="{x:Bind KNNViewModel.AvailableDataSets}" SelectedItem="{x:Bind KNNViewModel.CurrentDataSetName, Mode=TwoWay}" SelectionChanged="ReloadPageWithNewData" Margin="2,2,2,2"/>
                         </StackPanel>
                     </Flyout>
                 </AppBarButton.Flyout>

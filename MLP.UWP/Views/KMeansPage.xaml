@@ -94,6 +94,14 @@
                 <AppBarButton.Icon>
                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe809;"/>
                 </AppBarButton.Icon>
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <StackPanel>
+                            <TextBlock HorizontalAlignment="Center" FontWeight="Light">X</TextBlock>
+                            <ListBox ItemsSource="{x:Bind KMViewModel.AvailableDataSets}" SelectedValue="{x:Bind KMViewModel.CurrentDataSetName, Mode=TwoWay}" SelectionChanged="ReloadPageWithNewData" Margin="2,2,2,2"/>
+                        </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
             </AppBarButton>
         </CommandBar>
 

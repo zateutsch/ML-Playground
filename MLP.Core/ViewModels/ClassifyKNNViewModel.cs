@@ -15,6 +15,7 @@ namespace MLP.Core.ViewModels
         // Private Members
         private readonly IClassificationKNN _knn_service;
         private readonly IDataManagerService _data_manager_service;
+        private readonly string _model_key = "knn";
         private double _currentTestX;
         private double _currentTestY;
         private bool _isTesting = false;
@@ -52,6 +53,7 @@ namespace MLP.Core.ViewModels
 
         // Data Set Management
         private string currentDataSetName;
+        public ObservableCollection<string> AvailableDataSets { get; set; }
 
         // Primary Observable Collection - Core of KNN Graph Representation
 
@@ -70,7 +72,8 @@ namespace MLP.Core.ViewModels
         {
             this._data_manager_service = dataManager;
             this._knn_service = knn;
-            this.CurrentDataSetName = this._data_manager_service.CurrentDataModelMappings["knn"];
+            this.CurrentDataSetName = this._data_manager_service.CurrentDataModelMappings[this._model_key];
+            this.AvailableDataSets = new ObservableCollection<string>(this._data_manager_service.AvailableDataModelMappings[this._model_key]);
             this._knn_service.ConfigService(this._data_manager_service.FetchDataSet(this.CurrentDataSetName));
 
             this.RegressionFeatureNames = new ObservableCollection<string>(this._knn_service.RegressionFeatureNames);
@@ -85,6 +88,10 @@ namespace MLP.Core.ViewModels
             this.InitializeGraph();
         }
 
+        public void UpdateCurrentDataModelMapping()
+        {
+            this._data_manager_service.CurrentDataModelMappings[this._model_key] = this.CurrentDataSetName;
+        }
         // Methods
         public void AddTrainingDataSeries(string label, List<DataPoint<double>> series)
         {

@@ -37,5 +37,15 @@ namespace MLP.UWP
             this.InfoViewModel = App.Services.GetRequiredService<InfoPaneViewModel>();
             this.InitializeComponent();
         }
+
+        private void ReloadPageWithNewData(object sender, SelectionChangedEventArgs e)
+        {
+            if ((sender as ListBox).IsLoaded)
+            {
+                this.KMViewModel.UpdateCurrentDataModelMapping();
+                Frame.Navigate(typeof(KMeansPage));
+
+            }
+        }
     }
 }
