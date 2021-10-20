@@ -9,7 +9,8 @@ namespace MLP.Core.Models
 
     public class DataSet
     {
-        public string Name { get; set; }
+        public string DisplayName { get; set; }
+        public string FileName { get; set; }
         public string DefaultFeatureX { get; set; }
         public string DefaultFeatureY { get; set; }
         public string DefaultFeatureLabel { get; set; }
@@ -20,6 +21,7 @@ namespace MLP.Core.Models
         }
         public Dictionary<string, List<string>> ClassificationData { get; set; }
         public Dictionary<string, List<double>> RegressionData { get; set; }
+        public List<string> EnabledModels { get; set; }
 
     }
 }

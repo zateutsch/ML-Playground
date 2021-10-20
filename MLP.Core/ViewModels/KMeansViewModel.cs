@@ -19,13 +19,15 @@ namespace MLP.Core.ViewModels
         private string currentFeatureX;
         private string currentFeatureY;
         private int iterations;
-        
+
         // Result Pane Props
         private string clusteringState = "Unclustered";
         private string clusteringStatusText = "";
         private string doneStatusText = "";
         private bool isAnimating = false;
 
+        // Data Set Management
+        private string currentDataSetName;
 
         private int visualizationIndex = 0;
         // centroids index - tbd
@@ -33,13 +35,14 @@ namespace MLP.Core.ViewModels
         public ObservableCollection<string> RegressionFeatureNames { get; set; }
         public ObservableCollection<NestedSeries<double>> GraphSeries { get; set; }
 
-        
+
         public KMeansViewModel(IKMeans kMeansService, IDataManagerService dataManagerService)
         {
             this._kmeans_service = kMeansService;
             this._data_manager_service = dataManagerService;
+            this.CurrentDataSetName = this._data_manager_service.CurrentDataModelMappings["kmeans"];
 
-            this._kmeans_service.ConfigService(this._data_manager_service.FetchDataSet("Kmeans-Large-Test"));
+            this._kmeans_service.ConfigService(this._data_manager_service.FetchDataSet(this.CurrentDataSetName));
 
             this.RegressionFeatureNames = new ObservableCollection<string>(this._kmeans_service.RegressionFeatureNames);
             this.CurrentFeatureX = this._kmeans_service.CurrentFeatureX;
@@ -108,11 +111,11 @@ namespace MLP.Core.ViewModels
                 this.AddClustersToGraph();
             }
         }
-            
+
 
         public async Task ConvergeButton()
         {
-            while(!this._kmeans_service.Iterate()) 
+            while (!this._kmeans_service.Iterate())
             {
                 if (this.IsAnimating)
                 {
@@ -187,7 +190,7 @@ namespace MLP.Core.ViewModels
             get => this._kmeans_service.Iteration;
             set => SetProperty(ref iterations, value);
         }
-        
+
         public string ClusteringStatusText
         {
             get => clusteringStatusText;
@@ -204,6 +207,12 @@ namespace MLP.Core.ViewModels
         {
             get => isAnimating;
             set => SetProperty(ref isAnimating, value);
+        }
+
+        public string CurrentDataSetName
+        {
+            get => currentDataSetName;
+            set => SetProperty(ref currentDataSetName, value);
         }
     }
 }

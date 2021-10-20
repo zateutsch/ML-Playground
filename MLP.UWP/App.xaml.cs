@@ -80,6 +80,7 @@ namespace MLP.UWP
                 _dataManagerService = Services.GetRequiredService<IDataManagerService>();
 
                 _dataManagerService.DataSets = await _dataFileService.ReadAllDataSets();
+                _dataManagerService.InitDataModelMappings();
 
             }
 

@@ -50,6 +50,9 @@ namespace MLP.Core.ViewModels
         private string isTesting = "false";
         private int k;
 
+        // Data Set Management
+        private string currentDataSetName;
+
         // Primary Observable Collection - Core of KNN Graph Representation
 
         // Observable collection of NestedSeries objects (see MLP.Core.Common.NestedSeries)
@@ -67,7 +70,8 @@ namespace MLP.Core.ViewModels
         {
             this._data_manager_service = dataManager;
             this._knn_service = knn;
-            this._knn_service.ConfigService(this._data_manager_service.FetchDataSet("Weather-Test-001"));
+            this.CurrentDataSetName = this._data_manager_service.CurrentDataModelMappings["knn"];
+            this._knn_service.ConfigService(this._data_manager_service.FetchDataSet(this.CurrentDataSetName));
 
             this.RegressionFeatureNames = new ObservableCollection<string>(this._knn_service.RegressionFeatureNames);
             this.CurrentFeatureX = this._knn_service.CurrentFeatureX;
@@ -373,6 +377,12 @@ namespace MLP.Core.ViewModels
         {
             get => visualizationDataSeriesType;
             set => SetProperty(ref visualizationDataSeriesType, value);
+        }
+
+        public string CurrentDataSetName
+        {
+            get => currentDataSetName;
+            set => SetProperty(ref currentDataSetName, value);
         }
     }
 }

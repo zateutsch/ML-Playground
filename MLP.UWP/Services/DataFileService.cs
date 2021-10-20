@@ -39,7 +39,7 @@ namespace MLP.UWP.Services
             foreach (StorageFile file in await sourceFolder.GetFilesAsync())
             {
                 DataSet dataSet = await this.ReadJsonToDataSet(file);
-                dataSetDictionary.Add(dataSet.Name, dataSet);
+                dataSetDictionary.Add(dataSet.DisplayName, dataSet);
             }
 
             return dataSetDictionary;
@@ -69,7 +69,7 @@ namespace MLP.UWP.Services
         public async Task WriteDataSetToJson(DataSet dataSet)
         {
             StorageFolder destinationFolder = await this.GetDataFolder();
-            StorageFile writeFile = await destinationFolder.CreateFileAsync(dataSet.Name + ".json", CreationCollisionOption.ReplaceExisting);
+            StorageFile writeFile = await destinationFolder.CreateFileAsync(dataSet.DisplayName + ".json", CreationCollisionOption.ReplaceExisting);
 
             await FileIO.WriteTextAsync(writeFile, this.Serialize(dataSet));
         }
