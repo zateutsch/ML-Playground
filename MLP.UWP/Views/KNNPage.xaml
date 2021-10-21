@@ -48,7 +48,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <CommandBar Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" DefaultLabelPosition="Right" HorizontalAlignment="Center">
+        <CommandBar DefaultLabelPosition="Right" HorizontalAlignment="Center">
             <AppBarButton Label="Interact: Classify" AllowFocusOnInteraction="True">
                 <AppBarButton.Icon>
                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe707;"/>
@@ -126,25 +126,25 @@
             </AppBarButton>
         </CommandBar>
 
-        <CommandBar Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" DefaultLabelPosition="Right" HorizontalAlignment="Right">
+        <CommandBar DefaultLabelPosition="Right" HorizontalAlignment="Right">
             <AppBarButton Icon="Help"  HorizontalAlignment="Right" Click="{x:Bind InfoViewModel.TogglePaneOpen}"/>
         </CommandBar>
 
-        <SplitView IsPaneOpen="{x:Bind InfoViewModel.IsPaneOpen, Mode=TwoWay}" DisplayMode="Inline" PanePlacement="Right" Grid.Row="1" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+        <SplitView IsPaneOpen="{x:Bind InfoViewModel.IsPaneOpen, Mode=TwoWay}" DisplayMode="Inline" PanePlacement="Right" Grid.Row="1">
             <SplitView.Pane>
-                <Border Background="White" BorderBrush="LightGray" BorderThickness="1" Margin="10,0,10,10" CornerRadius="5" >
+                <Border BorderBrush="LightGray" BorderThickness="1" Margin="10,0,10,10" CornerRadius="5" >
 
                 </Border>
             </SplitView.Pane>
-            <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+            <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="16*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.RowSpan="2" Background="White" BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Margin="5,0,5,0"/>
-                <telerikChart:RadCartesianChart Margin="10,10,10,0" Palette="{StaticResource GraphPalete}"  Background="White" Grid.Row="0" >
+                <Border Grid.RowSpan="2" BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Margin="5,0,5,0"/>
+                <telerikChart:RadCartesianChart Margin="10,10,10,0" Palette="{StaticResource GraphPalete}"  Grid.Row="0" >
                     <telerikChart:RadCartesianChart.HorizontalAxis>
                         <telerikChart:LinearAxis Title="{x:Bind KNNViewModel.CurrentFeatureX, Mode=TwoWay}"/>
                     </telerikChart:RadCartesianChart.HorizontalAxis>
@@ -176,7 +176,7 @@
                 </telerikChart:RadCartesianChart>
 
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Background="White">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" >
                     <TextBlock Text="{x:Bind KNNViewModel.KeyHeaderText}" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,10,0"/>
                     <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.FirstSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
                     <TextBlock Text="{x:Bind KNNViewModel.FirstSeriesLabel}" FontWeight="Light" Margin="5,0,10,0"/>
@@ -187,7 +187,7 @@
                 </StackPanel>
 
 
-                <Border Grid.Row="2" Margin="10,10,10,10" CornerRadius="5" Background="White" Width="750" BorderBrush="LightGray" BorderThickness="1">
+                <Border Grid.Row="2" Margin="10,10,10,10" CornerRadius="5" Width="750" BorderBrush="LightGray" BorderThickness="1">
                         
                     <toolkit:SwitchPresenter  Value="{x:Bind KNNViewModel.IsTesting, Mode=TwoWay}" HorizontalAlignment="Center" Margin="10">
                         <toolkit:Case Value="True">

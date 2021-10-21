@@ -20,20 +20,18 @@
         
             <Grid>
                 <Image Stretch="UniformToFill" Source="{x:Bind ImagePath}" Width="250" Height="300"/>
-                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Height="75">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Height="75" Background="{ThemeResource SystemChromeLowColor}">
                     <TextBlock
                     Text="{x:Bind ModelName}"
                     FontSize="20"
                     FontWeight="ExtraLight"
                     Margin="10,10,10,10"
                     HorizontalAlignment="Center"/>
-
                 </StackPanel>
             </Grid>
 
         </DataTemplate>
         
-        <AcrylicBrush x:Key="CustomAcrylicBrush" TintColor="LightGray" Opacity=".1" BackgroundSource="Backdrop"/>
 
         <Style TargetType="GridViewItem" BasedOn="{StaticResource GridViewItemExpanded}">
             <Setter Property="ui:Effects.Shadow" Value="{StaticResource CommonShadow}"/>
@@ -45,7 +43,7 @@
         x:Name="ModelsGridView"
         ItemsSource="{x:Bind ViewModel.ModelPreviews}"
         ItemTemplate="{StaticResource ModelPreviewTemplate}"
-        Background="{ThemeResource CustomAcrylicBrush}"
+        Background="{ThemeResource SystemChromeMediumLowColor}"
         CanReorderItems="True"
         ItemClick="ModelsGridView_ItemClick"
         IsItemClickEnabled="True">
