@@ -40,10 +40,10 @@ namespace MLP.Core.ViewModels
         private string predictedLabelText = "";
         private string resultExplanationText = "";
 
-        private string firstSeriesColor = "Gold";
-        private string secondSeriesColor = "CornflowerBlue";
-        private string testSeriesColor = "Red";
-        private string visualizationColor = "PaleGreen";
+        private string firstSeriesColor = "#CC0062";
+        private string secondSeriesColor = "#00CC6A";
+        private string testSeriesColor = "White";
+        private string visualizationColor = "White";
 
         private string firstSeriesLabel = "";
         private string secondSeriesLabel= "";

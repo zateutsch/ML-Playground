@@ -40,6 +40,22 @@
         <Style TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Light"/>
         </Style>
+
+        <DataTemplate x:Key="InfoPaneItemView" x:DataType="model:InfoItem">
+            <Border Width="275" Height="200"  Margin="5" Background="{ThemeResource SystemChromeMediumColor}" CornerRadius="20">
+                <toolkit:SwitchPresenter Value="{x:Bind Displaying, Mode=OneWay}">
+                    <toolkit:Case Value="Header">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{ThemeResource SystemAccentColorLight3}">
+                            <TextBlock Text="{x:Bind Header}"  FontSize="20" TextWrapping="Wrap" Padding="7"/>
+                        </StackPanel>
+                        
+                    </toolkit:Case>
+                    <toolkit:Case Value="Content">
+                        <TextBlock Text="{x:Bind Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Padding="5"/>
+                    </toolkit:Case>
+                </toolkit:SwitchPresenter>
+            </Border>
+        </DataTemplate>
         
     </Page.Resources>
     <Grid>
@@ -130,10 +146,10 @@
             <AppBarButton Icon="Help"  HorizontalAlignment="Right" Click="{x:Bind InfoViewModel.TogglePaneOpen}"/>
         </CommandBar>
 
-        <SplitView IsPaneOpen="{x:Bind InfoViewModel.IsPaneOpen, Mode=TwoWay}" DisplayMode="Inline" PanePlacement="Right" Grid.Row="1">
+        <SplitView IsPaneOpen="{x:Bind InfoViewModel.IsPaneOpen, Mode=TwoWay}" DisplayMode="Inline" PanePlacement="Right" Grid.Row="1" Margin="5" CornerRadius="5">
             <SplitView.Pane>
-                <Border BorderBrush="LightGray" BorderThickness="1" Margin="10,0,10,10" CornerRadius="5" >
-
+                <Border Background="{ThemeResource SystemChromeLowColor}" BorderThickness="1"  CornerRadius="5" HorizontalAlignment="Center">
+                    <GridView ItemsSource="{x:Bind InfoViewModel.InfoItems}" ItemTemplate="{StaticResource InfoPaneItemView}" Background="{ThemeResource SystemChromeLowColor}" SelectedIndex="{x:Bind InfoViewModel.SelectedIndex, Mode=TwoWay}"/>
                 </Border>
             </SplitView.Pane>
             <Grid >
@@ -143,7 +159,7 @@
                     <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.RowSpan="2" BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Margin="5,0,5,0"/>
+                <Border Grid.RowSpan="2" CornerRadius="5" Margin="5,0,5,0" Background="{ThemeResource SystemChromeLowColor}"/>
                 <telerikChart:RadCartesianChart Margin="10,10,10,0" Palette="{StaticResource GraphPalete}"  Grid.Row="0" >
                     <telerikChart:RadCartesianChart.HorizontalAxis>
                         <telerikChart:LinearAxis Title="{x:Bind KNNViewModel.CurrentFeatureX, Mode=TwoWay}"/>
@@ -187,13 +203,13 @@
                 </StackPanel>
 
 
-                <Border Grid.Row="2" Margin="10,10,10,10" CornerRadius="5" Width="750" BorderBrush="LightGray" BorderThickness="1">
+                <Border Grid.Row="2" Margin="10,10,10,10" CornerRadius="5" Width="750" Background="{ThemeResource SystemChromeLowColor}" BorderThickness="1">
                         
-                    <toolkit:SwitchPresenter  Value="{x:Bind KNNViewModel.IsTesting, Mode=TwoWay}" HorizontalAlignment="Center" Margin="10">
+                    <toolkit:SwitchPresenter  Value="{x:Bind KNNViewModel.IsTesting, Mode=TwoWay}" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Center">
                         <toolkit:Case Value="True">
                             <StackPanel HorizontalAlignment="Center" >
                                 <TextBlock HorizontalAlignment="Center" > Classification result for feature "Rain":</TextBlock>
-                                <TextBlock HorizontalAlignment="Center" FontSize="36" FontWeight="SemiLight" Margin="0,0,0,5" Foreground="SlateGray" Text="{x:Bind KNNViewModel.PredictedLabelText, Mode=OneWay}"/>
+                                <TextBlock HorizontalAlignment="Center" FontSize="36" FontWeight="SemiLight" Margin="0,0,0,5" Foreground="{ThemeResource SystemAccentColor}" Text="{x:Bind KNNViewModel.PredictedLabelText, Mode=OneWay}"/>
                                 <TextBlock HorizontalAlignment="Center" FontWeight="Light" TextWrapping="Wrap" TextAlignment="Center" Text="{x:Bind KNNViewModel.ResultExplanationText, Mode=OneWay}"/>
                             </StackPanel>
                         </toolkit:Case>

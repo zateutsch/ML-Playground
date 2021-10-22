@@ -36,6 +36,7 @@ namespace MLP.UWP
         { 
             this.KNNViewModel = App.Services.GetRequiredService<ClassifyKNNViewModel>();
             this.InfoViewModel = App.Services.GetRequiredService<InfoPaneViewModel>();
+            this.InfoViewModel.SetInfoItemsFromList(MLP.Core.Strings.InfoPaneStrings.KNNInfo);
             this.InitializeComponent();
         }
 
