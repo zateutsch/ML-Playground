@@ -22,12 +22,13 @@ namespace MLP.Core.Services
             if (numPoints <= 3) return cluster;
 
             Array.Sort(cluster);
+           
             int k = 0;
             Point[] hull = new Point[2 * numPoints];
 
             for(int i = 0; i < numPoints; ++i)
             {
-                while (k >= 2 & CrossProduct( hull[k - 2], hull[k - 1], cluster[i]) <= 0) k--;
+                while (k >= 2 && CrossProduct( hull[k - 2], hull[k - 1], cluster[i]) <= 0) k--;
                 hull[k++] = cluster[i];
             }
 
@@ -37,9 +38,9 @@ namespace MLP.Core.Services
                 hull[k++] = cluster[i - 1];
             }
 
-            Array.Resize(ref cluster, k - 1);
+            Array.Resize(ref hull, k);
 
-            return cluster;
+            return hull;
         }
     }
 }

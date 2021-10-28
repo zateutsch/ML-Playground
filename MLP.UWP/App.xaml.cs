@@ -135,6 +135,7 @@ namespace MLP.UWP
                 .AddTransient<IClassificationKNN, KNearestNeighborsService>()
                 .AddTransient<IKMeans, KMeansClusterService>()
                 .AddSingleton<IMathHelper, MathHelper>()
+                .AddSingleton<IConvexHull, MonotoneChainConvexHull>()
                 .BuildServiceProvider(true);
 
             return provider;

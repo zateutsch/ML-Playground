@@ -12,8 +12,9 @@ namespace MLP.Core.ViewModels
 {
     public class KMeansViewModel : ObservableObject
     {
-        private readonly IKMeans _kmeans_service;
-        private readonly IDataManagerService _data_manager_service;
+        private readonly IKMeans _kMeansService;
+        private readonly IDataManagerService _dataManagerService;
+        private readonly IConvexHull _convexHullService;
         private readonly string _model_key = "kmeans";
 
         private int k;
@@ -26,6 +27,8 @@ namespace MLP.Core.ViewModels
         private string clusteringStatusText = "";
         private string doneStatusText = "";
         private bool isAnimating = false;
+        private bool isDrawingClusters = true;
+
 
         // Data Set Management
         private string currentDataSetName;
@@ -38,32 +41,33 @@ namespace MLP.Core.ViewModels
         public ObservableCollection<NestedSeries> GraphSeries { get; set; }
 
 
-        public KMeansViewModel(IKMeans kMeansService, IDataManagerService dataManagerService)
+        public KMeansViewModel(IKMeans kMeansService, IDataManagerService dataManagerService, IConvexHull convexHullService)
         {
-            this._kmeans_service = kMeansService;
-            this._data_manager_service = dataManagerService;
-            this.CurrentDataSetName = this._data_manager_service.CurrentDataModelMappings[this._model_key];
-            this.AvailableDataSets = new ObservableCollection<string>(this._data_manager_service.AvailableDataModelMappings[this._model_key]);
+            this._kMeansService = kMeansService;
+            this._dataManagerService = dataManagerService;
+            this._convexHullService = convexHullService;
+            this.CurrentDataSetName = this._dataManagerService.CurrentDataModelMappings[this._model_key];
+            this.AvailableDataSets = new ObservableCollection<string>(this._dataManagerService.AvailableDataModelMappings[this._model_key]);
 
-            this._kmeans_service.ConfigService(this._data_manager_service.FetchDataSet(this.CurrentDataSetName));
+            this._kMeansService.ConfigService(this._dataManagerService.FetchDataSet(this.CurrentDataSetName));
 
-            this.RegressionFeatureNames = new ObservableCollection<string>(this._kmeans_service.RegressionFeatureNames);
-            this.CurrentFeatureX = this._kmeans_service.CurrentFeatureX;
-            this.CurrentFeatureY = this._kmeans_service.CurrentFeatureY;
+            this.RegressionFeatureNames = new ObservableCollection<string>(this._kMeansService.RegressionFeatureNames);
+            this.CurrentFeatureX = this._kMeansService.CurrentFeatureX;
+            this.CurrentFeatureY = this._kMeansService.CurrentFeatureY;
 
             this.GraphSeries = new ObservableCollection<NestedSeries>();
-            this.K = this._kmeans_service.K;
+            this.K = this._kMeansService.K;
             this.InitializeGraph();
         }
 
         public void UpdateCurrentDataModelMapping()
         {
-            this._data_manager_service.CurrentDataModelMappings[this._model_key] = this.CurrentDataSetName;
+            this._dataManagerService.CurrentDataModelMappings[this._model_key] = this.CurrentDataSetName;
         }
 
         public void InitializeGraph()
         {
-            this.AddSeries(this._kmeans_service.GetBaseSeries());
+            this.AddSeries(this._kMeansService.GetBaseSeries());
         }
 
         public void ClearGraph()
@@ -79,15 +83,20 @@ namespace MLP.Core.ViewModels
         public void UpdateGraph()
         {
             this.ClearGraph();
-            this._kmeans_service.Train(this.CurrentFeatureX, this.CurrentFeatureY);
+            this._kMeansService.Train(this.CurrentFeatureX, this.CurrentFeatureY);
             this.InitializeGraph();
         }
 
         public void AddClustersToGraph()
         {
-            foreach (List<Point> cluster in this._kmeans_service.GetClusterSeries())
+            foreach (List<Point> cluster in this._kMeansService.GetClusterSeries())
             {
                 this.AddSeries(cluster);
+                if (this.IsDrawingClusters)
+                {
+                    Point[] test = this._convexHullService.GetConvexHull(cluster.ToArray());
+                    this.AddVisualizationSeries(test);
+                }
             }
         }
 
@@ -96,9 +105,14 @@ namespace MLP.Core.ViewModels
             this.GraphSeries.Insert(this.VisualizationIndex, new NestedSeries(series));
             this.VisualizationIndex += 1;
         }
+
+        public void AddVisualizationSeries(Point[] series)
+        {
+            this.GraphSeries.Insert(this.VisualizationIndex, new NestedSeries(series));
+        }
         public void KUpdated()
         {
-            this._kmeans_service.K = this.K;
+            this._kMeansService.K = this.K;
             this.UpdateGraph();
         }
 
@@ -106,7 +120,7 @@ namespace MLP.Core.ViewModels
 
         public void IterateButton()
         {
-            if (this._kmeans_service.Iterate())
+            if (this._kMeansService.Iterate())
             {
                 this.ClusteringState = "Done";
                 this.DoneStatusText = this.GetDoneStatusText();
@@ -123,7 +137,7 @@ namespace MLP.Core.ViewModels
 
         public async Task ConvergeButton()
         {
-            while (!this._kmeans_service.Iterate())
+            while (!this._kMeansService.Iterate())
             {
                 if (this.IsAnimating)
                 {
@@ -195,7 +209,7 @@ namespace MLP.Core.ViewModels
 
         public int Iterations
         {
-            get => this._kmeans_service.Iteration;
+            get => this._kMeansService.Iteration;
             set => SetProperty(ref iterations, value);
         }
 
@@ -215,6 +229,12 @@ namespace MLP.Core.ViewModels
         {
             get => isAnimating;
             set => SetProperty(ref isAnimating, value);
+        }
+
+        public bool IsDrawingClusters
+        {
+            get => isDrawingClusters;
+            set => SetProperty(ref isDrawingClusters, value);
         }
 
         public string CurrentDataSetName

@@ -138,9 +138,9 @@
                                             <Style TargetType="telerikChart:ScatterPointSeries"/>
                                         </telerikChart:ScatterSeriesDescriptor.Style>
                                     </telerikChart:ScatterSeriesDescriptor>
-                                    <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind KMViewModel.VisualizationIndex}">
+                                    <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind KMViewModel.VisualizationIndex, Mode=TwoWay}">
                                         <telerikChart:ScatterSeriesDescriptor.Style>
-                                            <Style TargetType="telerikChart:ScatterPointSeries"/>
+                                            <Style TargetType="telerikChart:ScatterLineSeries"/>
                                         </telerikChart:ScatterSeriesDescriptor.Style>
                                     </telerikChart:ScatterSeriesDescriptor>
                                 </telerikChart:ChartSeriesProvider.SeriesDescriptors>
