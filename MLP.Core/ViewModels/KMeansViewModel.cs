@@ -35,7 +35,7 @@ namespace MLP.Core.ViewModels
         // centroids index - tbd
 
         public ObservableCollection<string> RegressionFeatureNames { get; set; }
-        public ObservableCollection<NestedSeries<double>> GraphSeries { get; set; }
+        public ObservableCollection<NestedSeries> GraphSeries { get; set; }
 
 
         public KMeansViewModel(IKMeans kMeansService, IDataManagerService dataManagerService)
@@ -51,7 +51,7 @@ namespace MLP.Core.ViewModels
             this.CurrentFeatureX = this._kmeans_service.CurrentFeatureX;
             this.CurrentFeatureY = this._kmeans_service.CurrentFeatureY;
 
-            this.GraphSeries = new ObservableCollection<NestedSeries<double>>();
+            this.GraphSeries = new ObservableCollection<NestedSeries>();
             this.K = this._kmeans_service.K;
             this.InitializeGraph();
         }
@@ -85,15 +85,15 @@ namespace MLP.Core.ViewModels
 
         public void AddClustersToGraph()
         {
-            foreach (List<DataPoint<double>> cluster in this._kmeans_service.GetClusterSeries())
+            foreach (List<Point> cluster in this._kmeans_service.GetClusterSeries())
             {
                 this.AddSeries(cluster);
             }
         }
 
-        public void AddSeries(List<DataPoint<double>> series)
+        public void AddSeries(List<Point> series)
         {
-            this.GraphSeries.Insert(this.VisualizationIndex, new NestedSeries<double>(series));
+            this.GraphSeries.Insert(this.VisualizationIndex, new NestedSeries(series));
             this.VisualizationIndex += 1;
         }
         public void KUpdated()

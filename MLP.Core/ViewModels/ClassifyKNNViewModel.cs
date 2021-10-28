@@ -40,8 +40,8 @@ namespace MLP.Core.ViewModels
         private string predictedLabelText = "";
         private string resultExplanationText = "";
 
-        private string firstSeriesColor = "#CC0062";
-        private string secondSeriesColor = "#00CC6A";
+        private string firstSeriesColor = "#00CC6A";
+        private string secondSeriesColor = "#FF7960";
         private string testSeriesColor = "White";
         private string visualizationColor = "White";
 
@@ -61,7 +61,7 @@ namespace MLP.Core.ViewModels
         // Contains dynamical generated series of three different types, separated by index
 
         // Series data collection object
-        public ObservableCollection<NestedSeries<double>> GraphSeries { get; set; }
+        public ObservableCollection<NestedSeries> GraphSeries { get; set; }
         // Test History collection
         public ObservableCollection<KNNTest> TestHistory { get; set; }
         // Feature Collection
@@ -82,7 +82,7 @@ namespace MLP.Core.ViewModels
             this.CurrentFeatureLabel = this._knn_service.CurrentFeatureLabel;
             this.K = this._knn_service.K;
 
-            this.GraphSeries = new ObservableCollection<NestedSeries<double>>();
+            this.GraphSeries = new ObservableCollection<NestedSeries>();
             this.TestHistory = new ObservableCollection<KNNTest>();
             this.PredictedLabelText = this.GetPredictedLabelText();
             this.InitializeGraph();
@@ -93,16 +93,16 @@ namespace MLP.Core.ViewModels
             this._data_manager_service.CurrentDataModelMappings[this._model_key] = this.CurrentDataSetName;
         }
         // Methods
-        public void AddTrainingDataSeries(string label, List<DataPoint<double>> series)
+        public void AddTrainingDataSeries(string label, List<Point> series)
         {
-            this.GraphSeries.Insert(this.TrainingDataIndex, new NestedSeries<double>(series));
+            this.GraphSeries.Insert(this.TrainingDataIndex, new NestedSeries(series));
             this.TestDataIndex += 1;
             this.VisualizationIndex += 1;
         }
 
         public void AddTestDataSeries(double testX, double testY)
         {
-            this.GraphSeries.Insert(this.TestDataIndex, new NestedSeries<double>(new[] { testX }, new[] { testY }));
+            this.GraphSeries.Insert(this.TestDataIndex, new NestedSeries(new[] { testX }, new[] { testY }));
             this._currentTestX = testX;
             this._currentTestY = testY;
             this.VisualizationIndex += 1;
@@ -110,14 +110,14 @@ namespace MLP.Core.ViewModels
 
         public void AddVisualizationSeries(double endX, double endY)
         {
-            this.GraphSeries.Insert(this.VisualizationIndex, new NestedSeries<double>(new[] { this._currentTestX, endX }, new[] { this._currentTestY, endY }));
+            this.GraphSeries.Insert(this.VisualizationIndex, new NestedSeries(new[] { this._currentTestX, endX }, new[] { this._currentTestY, endY }));
         }
 
         public void InitializeGraph()
         {
-            Dictionary<string, List<DataPoint<double>>> seriesDict = _knn_service.GetLabeledSeries();
+            Dictionary<string, List<Point>> seriesDict = _knn_service.GetLabeledSeries();
 
-            foreach (KeyValuePair<string, List<DataPoint<double>>> series in seriesDict)
+            foreach (KeyValuePair<string, List<Point>> series in seriesDict)
             {
                 this.AddTrainingDataSeries(series.Key, series.Value);
                 if(this.secondSeriesLabel == "")

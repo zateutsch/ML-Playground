@@ -196,26 +196,26 @@ namespace MLP.Core.Services
             return false;
         }
 
-        public List<DataPoint<double>> GetBaseSeries()
+        public List<Point> GetBaseSeries()
         {
-            List<DataPoint<double>> baseSeries = new List<DataPoint<double>>();
+            List<Point> baseSeries = new List<Point>();
             for(int i = 0; i < this.DataSize; i++)
             {
-                baseSeries.Add(new DataPoint<double>(this.CurrentDataX[i], this.CurrentDataY[i]));
+                baseSeries.Add(new Point(this.CurrentDataX[i], this.CurrentDataY[i]));
             }
 
             return baseSeries;
         }
 
-        public List<List<DataPoint<double>>> GetClusterSeries()
+        public List<List<Point>> GetClusterSeries()
         {
-            List<List<DataPoint<double>>> clusters = new List<List<DataPoint<double>>>();
+            List<List<Point>> clusters = new List<List<Point>>();
             foreach (Tuple<double, double> centroid in this.Centroids)
             {
-                List<DataPoint<double>> cluster = new List<DataPoint<double>>();
+                List<Point> cluster = new List<Point>();
                 for (int i = 0; i < this.ClustersX[centroid].Count; i++)
                 {
-                    cluster.Add(new DataPoint<double>(this.ClustersX[centroid][i], this.ClustersY[centroid][i]));
+                    cluster.Add(new Point(this.ClustersX[centroid][i], this.ClustersY[centroid][i]));
                 }
 
                 clusters.Add(cluster);

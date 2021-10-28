@@ -4,14 +4,14 @@ using System.Text;
 
 namespace MLP.Core.Common
 {
-    public class DataPoint<T>
+    public class Point
     {
-        public T X { set; get; }
-        public T Y { set; get; }
+        public double X { set; get; }
+        public double Y { set; get; }
 
         public string Label { get; set; }
 
-        public DataPoint(T x, T y, string label = null)
+        public Point(double x, double y, string label = null)
         {
             this.X = x;
             this.Y = y;

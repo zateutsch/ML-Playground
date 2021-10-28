@@ -96,9 +96,9 @@ namespace MLP.Core.Services
         // each key is a unique label that appears in current classification problem and
         // each entry is a list of all data points that have that label
 
-        public Dictionary<string, List<DataPoint<double>>> GetLabeledSeries()
+        public Dictionary<string, List<Point>> GetLabeledSeries()
         {
-            Dictionary<string, List<DataPoint<double>>> labeledSeries = new Dictionary<string, List<DataPoint<double>>>();
+            Dictionary<string, List<Point>> labeledSeries = new Dictionary<string, List<Point>>();
 
             for(int i = 0; i < this.DataSize; i++)
             {
@@ -106,10 +106,10 @@ namespace MLP.Core.Services
 
                 if (!labeledSeries.ContainsKey(label))
                 {
-                    labeledSeries[label] = new List<DataPoint<double>>();  
+                    labeledSeries[label] = new List<Point>();  
                 }
 
-                labeledSeries[label].Add(new DataPoint<double>(this.CurrentDataX[i], this.CurrentDataY[i]));
+                labeledSeries[label].Add(new Point(this.CurrentDataX[i], this.CurrentDataY[i]));
 
             }
 

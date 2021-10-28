@@ -25,7 +25,7 @@ namespace MLP.Core.Interfaces
         void Train(string featureX, string featureY);
         bool Iterate();
         bool Iterate(int numIterations);
-        List<DataPoint<double>> GetBaseSeries();
-        List<List<DataPoint<double>>> GetClusterSeries();
+        List<Point> GetBaseSeries();
+        List<List<Point>> GetClusterSeries();
     }
 }
