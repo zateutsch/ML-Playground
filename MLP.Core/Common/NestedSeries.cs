@@ -27,5 +27,11 @@ namespace MLP.Core.Common
         {
             this.Data = new ObservableCollection<Point>(fullSeries);
         }
+
+        public NestedSeries(Point[] fullSeries)
+        {
+            this.Data = new ObservableCollection<Point>(fullSeries);
+        }
+
     }
 }
