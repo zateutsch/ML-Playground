@@ -129,6 +129,7 @@ namespace MLP.UWP
                 .AddTransient<KMeansViewModel>()
                 .AddTransient<ModelsPageViewModel>()
                 .AddTransient<InfoPaneViewModel>()
+                .AddTransient<GraphPaletteService>()
                 .AddSingleton<DataFileService>()
                 .AddSingleton<IDataManagerService, DataManagerService>()
                 .AddTransient<IDataSetService, DataSetService>()

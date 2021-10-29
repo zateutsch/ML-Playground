@@ -31,15 +31,20 @@ namespace MLP.UWP
 
         public ClassifyKNNViewModel KNNViewModel;
         public InfoPaneViewModel InfoViewModel;
+        public GraphPaletteService PaletteService;
 
         public KNNPage()
         { 
             this.KNNViewModel = App.Services.GetRequiredService<ClassifyKNNViewModel>();
             this.InfoViewModel = App.Services.GetRequiredService<InfoPaneViewModel>();
+            this.PaletteService = App.Services.GetRequiredService<GraphPaletteService>();
+            
             this.InfoViewModel.SetInfoItemsFromList(MLP.Core.Strings.InfoPaneStrings.KNNInfo);
-            this.InitializeComponent();
-        }
 
+            this.InitializeComponent();
+
+            UpdatePalette();
+        }
         private void ReloadPageWithNewData(object sender, SelectionChangedEventArgs e)
         {
             if((sender as ListBox).IsLoaded)
@@ -48,6 +53,14 @@ namespace MLP.UWP
                 Frame.Navigate(typeof(KNNPage));
             }
              
+        }
+
+        private void UpdatePalette()
+        {
+            this.Graph.Palette = PaletteService.DefaultKNNPalette();
+            this.KNNViewModel.FirstSeriesColor = (this.Graph.Palette.FillEntries.Brushes[0] as SolidColorBrush).Color.ToString();
+            this.KNNViewModel.SecondSeriesColor = (this.Graph.Palette.FillEntries.Brushes[1] as SolidColorBrush).Color.ToString();
+            this.KNNViewModel.TestSeriesColor = (this.Graph.Palette.FillEntries.Brushes[2] as SolidColorBrush).Color.ToString();
         }
     }
 }

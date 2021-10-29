@@ -17,7 +17,8 @@
 
         <!-- KNN Graph Pallette
         TODO: Hopefully figure out how to automate-->
-        <telerikChart:ChartPalette x:Key="GraphPalete" >
+        <!--
+        <telerikChart:ChartPalette x:Key="GraphPalette" >
             <telerikChart:ChartPalette.FillEntries>
                 <telerikChart:PaletteEntryCollection SeriesFamily="ScatterSpline">
                     <SolidColorBrush Color="{x:Bind KNNViewModel.FirstSeriesColor, Mode=TwoWay}"></SolidColorBrush>
@@ -33,7 +34,7 @@
                 </telerikChart:PaletteEntryCollection>
             </telerikChart:ChartPalette.FillEntries>
         </telerikChart:ChartPalette>
-
+        -->
         <!-- reference to double input validation class in MLP.UWP.Common -->
         <common:DoubleConverter x:Key="DoubleConverter"/>
 
@@ -42,7 +43,7 @@
         </Style>
 
         <DataTemplate x:Key="InfoPaneItemView" x:DataType="model:InfoItem">
-            <Border Width="275" Height="200"  Margin="5" Background="{ThemeResource SystemChromeMediumColor}" CornerRadius="20">
+            <Border Width="275" Height="200" Margin="5" Background="{ThemeResource SystemChromeMediumColor}" CornerRadius="20">
                 <toolkit:SwitchPresenter Value="{x:Bind Displaying, Mode=OneWay}">
                     <toolkit:Case Value="Header">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{ThemeResource SystemAccentColorLight3}">
@@ -160,7 +161,7 @@
                 </Grid.RowDefinitions>
 
                 <Border Grid.RowSpan="2" CornerRadius="5" Margin="5,0,5,0" Background="{ThemeResource SystemChromeLowColor}"/>
-                <telerikChart:RadCartesianChart Margin="10,10,10,0" Palette="{StaticResource GraphPalete}"  Grid.Row="0" >
+                <telerikChart:RadCartesianChart x:Name="Graph" PaletteName="DefaultDark" Margin="10,10,10,0" Grid.Row="0">
                     <telerikChart:RadCartesianChart.HorizontalAxis>
                         <telerikChart:LinearAxis Title="{x:Bind KNNViewModel.CurrentFeatureX, Mode=TwoWay}"/>
                     </telerikChart:RadCartesianChart.HorizontalAxis>
@@ -194,10 +195,10 @@
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" >
                     <TextBlock Text="{x:Bind KNNViewModel.KeyHeaderText}" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.FirstSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
-                    <TextBlock Text="{x:Bind KNNViewModel.FirstSeriesLabel}" FontWeight="Light" Margin="5,0,10,0"/>
                     <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.SecondSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
                     <TextBlock Text="{x:Bind KNNViewModel.SecondSeriesLabel}" FontWeight="Light" Margin="5,0,10,0"/>
+                    <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.FirstSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
+                    <TextBlock Text="{x:Bind KNNViewModel.FirstSeriesLabel}" FontWeight="Light" Margin="5,0,10,0"/>
                     <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.TestSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
                     <TextBlock Text="{x:Bind KNNViewModel.TestSeriesLabel}" FontWeight="Light" Margin="5,0,10,0"/>
                 </StackPanel>

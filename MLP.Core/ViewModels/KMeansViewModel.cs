@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using MLP.Core.Interfaces;
 using MLP.Core.Common;
+using MLP.Core.Messages;
 using MLP.Core.Models;
 using System.Threading.Tasks;
 
@@ -191,6 +193,7 @@ namespace MLP.Core.ViewModels
             set
             {
                 SetProperty(ref k, value);
+                WeakReferenceMessenger.Default.Send(new ParameterChangedMessage(this.K));
                 this.KUpdated();
             }
         }
