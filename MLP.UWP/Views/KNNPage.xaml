@@ -14,27 +14,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-
-        <!-- KNN Graph Pallette
-        TODO: Hopefully figure out how to automate-->
-        <!--
-        <telerikChart:ChartPalette x:Key="GraphPalette" >
-            <telerikChart:ChartPalette.FillEntries>
-                <telerikChart:PaletteEntryCollection SeriesFamily="ScatterSpline">
-                    <SolidColorBrush Color="{x:Bind KNNViewModel.FirstSeriesColor, Mode=TwoWay}"></SolidColorBrush>
-                    <SolidColorBrush Color="{x:Bind KNNViewModel.SecondSeriesColor, Mode=TwoWay}"></SolidColorBrush>
-                    <SolidColorBrush Color="{x:Bind KNNViewModel.TestSeriesColor, Mode=TwoWay}"></SolidColorBrush>
-                    <SolidColorBrush Color="{x:Bind KNNViewModel.VisualizationColor, Mode=TwoWay}"></SolidColorBrush>
-                    <SolidColorBrush Color="{x:Bind KNNViewModel.VisualizationColor, Mode=TwoWay}"></SolidColorBrush>
-                    <SolidColorBrush Color="{x:Bind KNNViewModel.VisualizationColor, Mode=TwoWay}"></SolidColorBrush>
-                    <SolidColorBrush Color="{x:Bind KNNViewModel.VisualizationColor, Mode=TwoWay}"></SolidColorBrush>
-                    <SolidColorBrush Color="{x:Bind KNNViewModel.VisualizationColor, Mode=TwoWay}"></SolidColorBrush>
-                    <SolidColorBrush Color="{x:Bind KNNViewModel.VisualizationColor, Mode=TwoWay}"></SolidColorBrush>
-                    <SolidColorBrush Color="{x:Bind KNNViewModel.VisualizationColor, Mode=TwoWay}"></SolidColorBrush>
-                </telerikChart:PaletteEntryCollection>
-            </telerikChart:ChartPalette.FillEntries>
-        </telerikChart:ChartPalette>
-        -->
         <!-- reference to double input validation class in MLP.UWP.Common -->
         <common:DoubleConverter x:Key="DoubleConverter"/>
 
