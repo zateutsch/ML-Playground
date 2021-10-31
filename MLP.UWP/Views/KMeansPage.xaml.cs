@@ -30,12 +30,17 @@ namespace MLP.UWP
     {
         public KMeansViewModel KMViewModel;
         public InfoPaneViewModel InfoViewModel;
+        public GraphPaletteService PaletteService;
+
 
         public KMeansPage()
         {
             this.KMViewModel = App.Services.GetRequiredService<KMeansViewModel>();
             this.InfoViewModel = App.Services.GetRequiredService<InfoPaneViewModel>();
+            this.PaletteService = App.Services.GetRequiredService<GraphPaletteService>();
             this.InitializeComponent();
+
+            this.UpdatePalette();
         }
 
         private void ReloadPageWithNewData(object sender, SelectionChangedEventArgs e)
@@ -46,6 +51,17 @@ namespace MLP.UWP
                 Frame.Navigate(typeof(KMeansPage));
 
             }
+        }
+
+        private void UpdatePalette()
+        {
+            this.Graph.Palette = PaletteService.DefaultKMeansPalette(this.KMViewModel.K);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.UpdatePalette();
+            this.KMViewModel.IterateButton();
         }
     }
 }

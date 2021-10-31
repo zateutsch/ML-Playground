@@ -5,7 +5,7 @@
     xmlns:local="using:MLP.UWP"
     RequestedTheme="Dark">
 
-    <!-- Add accent color: #00CC6A, #F7630C -->
+    <!-- Add accent color: #00CC6A, #F7630C,  -->
     <Application.Resources>
         <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
     </Application.Resources>
