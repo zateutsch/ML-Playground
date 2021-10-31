@@ -55,7 +55,7 @@ namespace MLP.UWP
 
         private void UpdatePalette()
         {
-            this.Graph.Palette = PaletteService.DefaultKMeansPalette(this.KMViewModel.K);
+            this.ModelChart.Palette = PaletteService.DefaultKMeansPalette(this.KMViewModel.K);
         }
 
         private void Start_Clicked(object sender, RoutedEventArgs e)

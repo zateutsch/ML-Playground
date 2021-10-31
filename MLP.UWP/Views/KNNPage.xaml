@@ -10,6 +10,7 @@
     xmlns:telerikChart="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:MLP.UWP.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -140,38 +141,12 @@
                 </Grid.RowDefinitions>
 
                 <Border Grid.RowSpan="2" CornerRadius="5" Margin="5,0,5,0" Background="{ThemeResource SystemChromeLowColor}"/>
-                <telerikChart:RadCartesianChart x:Name="Graph" PaletteName="DefaultDark" Margin="10,10,10,0" Grid.Row="0">
-                    <telerikChart:RadCartesianChart.HorizontalAxis>
-                        <telerikChart:LinearAxis Title="{x:Bind KNNViewModel.CurrentFeatureX, Mode=TwoWay}"/>
-                    </telerikChart:RadCartesianChart.HorizontalAxis>
-                    <telerikChart:RadCartesianChart.VerticalAxis>
-                        <telerikChart:LinearAxis Title="{x:Bind KNNViewModel.CurrentFeatureY, Mode=TwoWay}"/>
-                    </telerikChart:RadCartesianChart.VerticalAxis>
-                    <telerikChart:RadCartesianChart.SeriesProvider >
-                        <telerikChart:ChartSeriesProvider x:Name="provider" Source="{x:Bind KNNViewModel.GraphSeries}" >
-                            <telerikChart:ChartSeriesProvider.SeriesDescriptors>
-                                <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="0">
-                                    <telerikChart:ScatterSeriesDescriptor.Style>
-                                        <Style TargetType="telerikChart:ScatterPointSeries"/>
-                                    </telerikChart:ScatterSeriesDescriptor.Style>
-                                </telerikChart:ScatterSeriesDescriptor>
-                                <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind KNNViewModel.TestDataIndex}">
-                                    <telerikChart:ScatterSeriesDescriptor.Style>
-                                        <Style TargetType="telerikChart:ScatterPointSeries"/>
-                                    </telerikChart:ScatterSeriesDescriptor.Style>
-                                </telerikChart:ScatterSeriesDescriptor>
-                                <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind KNNViewModel.VisualizationIndex}">
-                                    <telerikChart:ScatterSeriesDescriptor.Style>
-                                        <Style TargetType="telerikChart:ScatterSplineSeries"/>
-                                    </telerikChart:ScatterSeriesDescriptor.Style>
-                                </telerikChart:ScatterSeriesDescriptor>
-                            </telerikChart:ChartSeriesProvider.SeriesDescriptors>
-                        </telerikChart:ChartSeriesProvider>
-                    </telerikChart:RadCartesianChart.SeriesProvider>
-
-                </telerikChart:RadCartesianChart>
-
-
+                <controls:ModelChartControl x:Name="ModelChart" 
+                                                Source="{x:Bind KNNViewModel.GraphSeries}" 
+                                                AxisLabelX="{x:Bind KNNViewModel.CurrentFeatureX, Mode=TwoWay}" 
+                                                AxisLabelY="{x:Bind KNNViewModel.CurrentFeatureY, Mode=TwoWay}" 
+                                                VisualizationIndex="{x:Bind KNNViewModel.VisualizationIndex, Mode=TwoWay}"/>
+               
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" >
                     <TextBlock Text="{x:Bind KNNViewModel.KeyHeaderText}" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,10,0"/>
                     <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.SecondSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>

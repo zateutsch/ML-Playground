@@ -57,10 +57,10 @@ namespace MLP.UWP
 
         private void UpdatePalette()
         {
-            this.Graph.Palette = PaletteService.DefaultKNNPalette();
-            this.KNNViewModel.FirstSeriesColor = (this.Graph.Palette.FillEntries.Brushes[0] as SolidColorBrush).Color.ToString();
-            this.KNNViewModel.SecondSeriesColor = (this.Graph.Palette.FillEntries.Brushes[1] as SolidColorBrush).Color.ToString();
-            this.KNNViewModel.TestSeriesColor = (this.Graph.Palette.FillEntries.Brushes[2] as SolidColorBrush).Color.ToString();
+            this.ModelChart.Palette = PaletteService.DefaultKNNPalette();
+            this.KNNViewModel.FirstSeriesColor = (this.ModelChart.Palette.FillEntries.Brushes[0] as SolidColorBrush).Color.ToString();
+            this.KNNViewModel.SecondSeriesColor = (this.ModelChart.Palette.FillEntries.Brushes[1] as SolidColorBrush).Color.ToString();
+            this.KNNViewModel.TestSeriesColor = (this.ModelChart.Palette.FillEntries.Brushes[2] as SolidColorBrush).Color.ToString();
         }
     }
 }

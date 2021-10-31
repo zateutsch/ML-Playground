@@ -1,0 +1,40 @@
+﻿<UserControl
+    x:Class="MLP.UWP.Controls.ModelChartControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MLP.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerikChart="using:Telerik.UI.Xaml.Controls.Chart"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+        <telerikChart:RadCartesianChart x:Name="Graph" Palette="{x:Bind Palette, Mode=TwoWay}" Margin="10" Grid.RowSpan="2">
+            <telerikChart:RadCartesianChart.HorizontalAxis>
+                <telerikChart:LinearAxis Title="{x:Bind AxisLabelX, Mode=TwoWay}"/>
+
+            </telerikChart:RadCartesianChart.HorizontalAxis>
+            <telerikChart:RadCartesianChart.VerticalAxis>
+                <telerikChart:LinearAxis Title="{x:Bind AxisLabelY, Mode=TwoWay}"/>
+            </telerikChart:RadCartesianChart.VerticalAxis>
+            <telerikChart:RadCartesianChart.SeriesProvider >
+                <telerikChart:ChartSeriesProvider x:Name="provider" Source="{x:Bind Source}" >
+                    <telerikChart:ChartSeriesProvider.SeriesDescriptors>
+                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="0">
+                            <telerikChart:ScatterSeriesDescriptor.Style>
+                                <Style TargetType="telerikChart:ScatterPointSeries"/>
+                            </telerikChart:ScatterSeriesDescriptor.Style>
+                        </telerikChart:ScatterSeriesDescriptor>
+                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y" CollectionIndex="{x:Bind VisualizationIndex, Mode=TwoWay}">
+                            <telerikChart:ScatterSeriesDescriptor.Style>
+                                <Style TargetType="telerikChart:ScatterLineSeries"/>
+                            </telerikChart:ScatterSeriesDescriptor.Style>
+                        </telerikChart:ScatterSeriesDescriptor>
+                    </telerikChart:ChartSeriesProvider.SeriesDescriptors>
+                </telerikChart:ChartSeriesProvider>
+            </telerikChart:RadCartesianChart.SeriesProvider>
+        </telerikChart:RadCartesianChart>
+    </Grid>
+</UserControl>

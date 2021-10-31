@@ -110,7 +110,7 @@ namespace MLP.Core.ViewModels
 
         public void AddVisualizationSeries(double endX, double endY)
         {
-            this.GraphSeries.Insert(this.VisualizationIndex, new NestedSeries(new[] { this._currentTestX, endX }, new[] { this._currentTestY, endY }));
+            this.GraphSeries.Insert(this.VisualizationIndex, new NestedSeries(new[] { this._currentTestX, endX, endX }, new[] { this._currentTestY, endY, endY }));
         }
 
         public void InitializeGraph()
