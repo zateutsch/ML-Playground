@@ -115,6 +115,7 @@ namespace MLP.Core.ViewModels
         public void KUpdated()
         {
             this._kMeansService.K = this.K;
+            this.ClusteringState = "Unclustered";
             this.UpdateGraph();
         }
 
@@ -133,6 +134,14 @@ namespace MLP.Core.ViewModels
                 this.ClusteringStatusText = this.GetClusteringStatusText();
                 this.ClearGraph();
                 this.AddClustersToGraph();
+            }
+        }
+
+        public void StartButton()
+        {
+            if(this.ClusteringState == "Unclustered")
+            {
+                this.IterateButton();
             }
         }
 

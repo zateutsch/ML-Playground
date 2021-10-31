@@ -48,7 +48,7 @@
                     <Flyout>
                         <StackPanel HorizontalAlignment="Center">
                             <TextBlock HorizontalAlignment="Center"> Clustering Options:</TextBlock>
-                            <Button HorizontalAlignment="Center" Margin="10" Click="Button_Click" >Start Clustering</Button>
+                            <Button HorizontalAlignment="Center" Margin="10" Click="Start_Clicked" >Start Clustering</Button>
                             <Button HorizontalAlignment="Center" Click="{x:Bind KMViewModel.ResetButton}">Reset Clusters</Button>
                         </StackPanel>
                     </Flyout>
@@ -182,6 +182,7 @@
                         <toolkit:Case Value="Done">
                             <StackPanel VerticalAlignment="Center">
                                 <TextBlock FontWeight="Light" Text="{x:Bind KMViewModel.DoneStatusText, Mode=OneWay}"/>
+                                <Button HorizontalAlignment="Center" Click="{x:Bind KMViewModel.ResetButton}" Margin="10">Reset Clusters</Button>
                             </StackPanel>
                         </toolkit:Case>
                     </toolkit:SwitchPresenter>

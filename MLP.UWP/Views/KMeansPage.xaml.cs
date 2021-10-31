@@ -58,10 +58,10 @@ namespace MLP.UWP
             this.Graph.Palette = PaletteService.DefaultKMeansPalette(this.KMViewModel.K);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Start_Clicked(object sender, RoutedEventArgs e)
         {
             this.UpdatePalette();
-            this.KMViewModel.IterateButton();
+            this.KMViewModel.StartButton();
         }
     }
 }
