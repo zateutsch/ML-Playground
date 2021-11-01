@@ -120,6 +120,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\DoubleConverter.cs" />
+    <Compile Include="Controls\InfoPaneControl.xaml.cs">
+      <DependentUpon>InfoPaneControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ModelChartControl.xaml.cs">
       <DependentUpon>ModelChartControl.xaml</DependentUpon>
     </Compile>
@@ -165,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\InfoPaneControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ModelChartControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

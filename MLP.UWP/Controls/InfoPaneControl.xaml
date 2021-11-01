@@ -1,0 +1,37 @@
+﻿<UserControl
+    x:Class="MLP.UWP.Controls.InfoPaneControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MLP.UWP.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:model="using:MLP.Core.Models"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="InfoPaneItemView" x:DataType="model:InfoItem">
+            <Border Width="275" Height="200" Margin="5" Background="{ThemeResource SystemChromeMediumColor}" CornerRadius="20">
+                <toolkit:SwitchPresenter Value="{x:Bind Displaying, Mode=OneWay}">
+                    <toolkit:Case Value="Header">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{ThemeResource SystemAccentColorLight3}">
+                            <TextBlock Text="{x:Bind Header}"  FontSize="20" TextWrapping="Wrap" Padding="7"/>
+                        </StackPanel>
+                    </toolkit:Case>
+                    <toolkit:Case Value="Content">
+                        <TextBlock Text="{x:Bind Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Padding="5"/>
+                    </toolkit:Case>
+                </toolkit:SwitchPresenter>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Border Background="{ThemeResource SystemChromeLowColor}" BorderThickness="1"  CornerRadius="5" HorizontalAlignment="Center">
+            <GridView ItemsSource="{x:Bind ItemsSource}" ItemTemplate="{StaticResource InfoPaneItemView}" Background="{ThemeResource SystemChromeLowColor}" SelectedIndex="{x:Bind SelectedIndex, Mode=TwoWay}"/>
+        </Border>
+    </Grid>
+</UserControl>
