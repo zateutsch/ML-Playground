@@ -115,8 +115,7 @@ namespace MLP.Core.ViewModels
         public void KUpdated()
         {
             this._kMeansService.K = this.K;
-            this.ClusteringState = "Unclustered";
-            this.UpdateGraph();
+            this.ResetButton();
         }
 
         // Button Clicks //
@@ -150,12 +149,16 @@ namespace MLP.Core.ViewModels
         {
             while (!this._kMeansService.Iterate())
             {
+                if(this.clusteringState != "Clustering")
+                {
+                    break;
+                }
                 if (this.IsAnimating)
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(.75));
                     this.ClusteringStatusText = this.GetClusteringStatusText();
                     this.ClearGraph();
                     this.AddClustersToGraph();
+                    await Task.Delay(TimeSpan.FromSeconds(.75));
                 }
             }
 
@@ -187,13 +190,21 @@ namespace MLP.Core.ViewModels
         public string CurrentFeatureX
         {
             get => currentFeatureX;
-            set => SetProperty(ref currentFeatureX, value);
+            set
+            {
+                this.ClusteringState = "Unclustered";
+                SetProperty(ref currentFeatureX, value);
+            }
         }
 
         public string CurrentFeatureY
         {
             get => currentFeatureY;
-            set => SetProperty(ref currentFeatureY, value);
+            set
+            {
+                this.ClusteringState = "Unclustered";
+                SetProperty(ref currentFeatureY, value);
+            }
         }
 
         public int K

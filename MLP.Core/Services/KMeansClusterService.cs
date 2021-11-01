@@ -124,7 +124,7 @@ namespace MLP.Core.Services
                 double centroidNewX = this._mathHelper.Mean(this.ClustersX[centroid]);
                 double centroidNewY = this._mathHelper.Mean(this.ClustersY[centroid]);
 
-                if( (centroid.Item1 != centroidNewX) || (centroid.Item2 != centroidNewY) )
+                if( (Math.Round(centroid.Item1, 1) != Math.Round(centroidNewX, 1) ) || (Math.Round(centroid.Item2, 1) != Math.Round(centroidNewY, 1)) )
                 {
                     centroidsUpdated = true;
                     List<double> valueX = this.ClustersX[centroid];

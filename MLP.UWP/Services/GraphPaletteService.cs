@@ -32,9 +32,9 @@ namespace MLP.UWP.Services
             {
                 palette.FillEntries.Brushes.Add(GetSolidColorBrush(_defaultHexColors[i]));
             }
-            for (int i = 0; i < k; i++)
+            for (int i = k - 1; i >= 0; i--)
             {
-                palette.FillEntries.Brushes.Add(GetSolidColorBrush(this.VisualizationColor));
+                palette.FillEntries.Brushes.Add(GetSolidColorBrush(_defaultHexColors[i]));
             }
 
             return palette;
