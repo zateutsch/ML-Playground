@@ -107,9 +107,7 @@
 
         <SplitView IsPaneOpen="{x:Bind InfoViewModel.IsPaneOpen, Mode=TwoWay}" DisplayMode="Inline" PanePlacement="Right" Grid.Row="1" Margin="5" CornerRadius="5">
             <SplitView.Pane >
-                <Border Background="{ThemeResource SystemChromeLowColor}" BorderThickness="1"  CornerRadius="5" HorizontalAlignment="Center">
-
-                </Border>
+                <controls:InfoPaneControl ItemsSource="{x:Bind InfoViewModel.InfoItems}" SelectedIndex="{x:Bind InfoViewModel.SelectedIndex, Mode=TwoWay}"/>
             </SplitView.Pane>
             <Grid >
                 <Grid.RowDefinitions>

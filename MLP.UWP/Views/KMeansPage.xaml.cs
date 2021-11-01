@@ -38,6 +38,7 @@ namespace MLP.UWP
             this.KMViewModel = App.Services.GetRequiredService<KMeansViewModel>();
             this.InfoViewModel = App.Services.GetRequiredService<InfoPaneViewModel>();
             this.PaletteService = App.Services.GetRequiredService<GraphPaletteService>();
+            this.InfoViewModel.SetInfoItemsFromList(MLP.Core.Strings.InfoPaneStrings.KMeansInfo);
             this.InitializeComponent();
 
             this.UpdatePalette();
