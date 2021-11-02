@@ -18,12 +18,14 @@
         
         <DataTemplate x:Key="ModelPreviewTemplate" x:DataType="models:ModelPreview">
         
-            <Grid>
+            <Grid PointerEntered="{x:Bind PointerOver}" PointerExited="{x:Bind PointerExit}" Width="250" Height="300">
                 <Image Stretch="UniformToFill" Source="{x:Bind ImagePath}" Width="250" Height="300"/>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Height="75" Background="{ThemeResource SystemChromeLowColor}">
                     <TextBlock
-                    Text="{x:Bind ModelName}"
-                    FontSize="20"
+                    Text="{x:Bind DisplayText, Mode=OneWay}"
+                    FontSize="{x:Bind FontSize, Mode=OneWay}"
+                    TextWrapping="Wrap"
+                    TextAlignment="Center"
                     FontWeight="ExtraLight"
                     Margin="10,10,10,10"
                     HorizontalAlignment="Center"/>
