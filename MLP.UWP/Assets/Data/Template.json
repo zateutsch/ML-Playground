@@ -1,0 +1,14 @@
+{
+  "FileName": "Template",
+  "DisplayName": "Display Name",
+  "DefaultFeatureX": "X",
+  "DefaultFeatureY": "Y",
+  "DefaultFeatureLabel": "Label",
+  "FeatureSize": 3,
+  "ClassificationData": { "Label": [ "yes", "no", "no", "yes", "no", "yes", "yes", "no", "yes", "yes", "no", "yes" ] },
+  "RegressionData": {
+    "X": [ 70.0, 80.0, 30.0, 20.0, 5.0, 3.0, 90.0, 45.0, 50.0, 43.2, 72.5, 24.0 ],
+    "Y": [ 50.0, 60.0, 62.0, 68.0, 72.0, 73.0, 61.0, 58.0, 44.0, 29.0, 35.0, 33.3 ],
+  },
+  "EnabledModels": []
+}

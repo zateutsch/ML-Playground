@@ -230,10 +230,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Data\Weather-Test-001.json" />
+    <Content Include="Assets\Data\Berlin-Rent.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Data\Berlin-Rent.json" />
+    <Content Include="Assets\Data\Cairns-Weather.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Data\Car-Make.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Data\Template.json" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

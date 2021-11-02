@@ -13,10 +13,10 @@
     <Grid>
         <telerikChart:RadCartesianChart x:Name="Graph" Palette="{x:Bind Palette, Mode=TwoWay}" Margin="10" Grid.RowSpan="2">
             <telerikChart:RadCartesianChart.HorizontalAxis>
-                <telerikChart:LinearAxis Title="{x:Bind AxisLabelX, Mode=TwoWay}"/>
+                <telerikChart:LinearAxis Title="{x:Bind AxisLabelX, Mode=TwoWay}" RangeExtendDirection="Both"/>
             </telerikChart:RadCartesianChart.HorizontalAxis>
             <telerikChart:RadCartesianChart.VerticalAxis>
-                <telerikChart:LinearAxis Title="{x:Bind AxisLabelY, Mode=TwoWay}"/>
+                <telerikChart:LinearAxis Title="{x:Bind AxisLabelY, Mode=TwoWay}" RangeExtendDirection="Both"/>
             </telerikChart:RadCartesianChart.VerticalAxis>
             <telerikChart:RadCartesianChart.SeriesProvider >
                 <telerikChart:ChartSeriesProvider x:Name="provider" Source="{x:Bind Source}" >
