@@ -89,6 +89,7 @@ namespace MLP.Core.ViewModels
             this.GraphSeries = new ObservableCollection<NestedSeries>();
             this.TestHistory = new ObservableCollection<KNNTest>();
             this.PredictedLabelText = this.GetPredictedLabelText();
+            this.UpdateMinMaxes();
             this.InitializeGraph();
         }
 
@@ -160,12 +161,12 @@ namespace MLP.Core.ViewModels
 
         public void UpdateMinMaxes()
         {
-            double yMargin = Math.Abs(this._knn_service.MaxY - this._knn_service.MinY) * .1;
-            double xMargin = Math.Abs(this._knn_service.MaxX - this._knn_service.MinX) * .1;
-            this.MaxX = this._knn_service.MaxX + xMargin;
-            this.MaxY = this._knn_service.MaxY + yMargin;
-            this.MinX = this._knn_service.MinX + xMargin;
-            this.MinY = this._knn_service.MinY + yMargin;
+            double yMargin = Math.Abs(this._knn_service.MaxY - this._knn_service.MinY) * .05;
+            double xMargin = Math.Abs(this._knn_service.MaxX - this._knn_service.MinX) * .05;
+            this.MaxX = Math.Ceiling(this._knn_service.MaxX + xMargin);
+            this.MaxY = Math.Ceiling(this._knn_service.MaxY + yMargin);
+            this.MinX = Math.Floor(this._knn_service.MinX - xMargin);
+            this.MinY = Math.Floor(this._knn_service.MinY - yMargin);
         }
 
         public void TestPoint()

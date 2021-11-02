@@ -105,60 +105,51 @@
             </AppBarButton>
         </CommandBar>
 
-        <CommandBar DefaultLabelPosition="Right" HorizontalAlignment="Right">
-            <AppBarButton Icon="Help"  HorizontalAlignment="Right" Click="{x:Bind InfoViewModel.TogglePaneOpen}"/>
-        </CommandBar>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="16*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
 
-        <SplitView IsPaneOpen="{x:Bind InfoViewModel.IsPaneOpen, Mode=TwoWay}" DisplayMode="Inline" PanePlacement="Right" Grid.Row="1" Margin="5" CornerRadius="5">
-            <SplitView.Pane>
-                <controls:InfoPaneControl ItemsSource="{x:Bind InfoViewModel.InfoItems}" SelectedIndex="{x:Bind InfoViewModel.SelectedIndex, Mode=TwoWay}"/>
-            </SplitView.Pane>
-            <Grid >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="16*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="5*"/>
-                </Grid.RowDefinitions>
-
-                <Border Grid.RowSpan="2" CornerRadius="5" Margin="5,0,5,0" Background="{ThemeResource SystemChromeLowColor}"/>
-                <controls:ModelChartControl x:Name="ModelChart" 
+            <Border Grid.RowSpan="2" CornerRadius="5" Margin="5,0,5,0" Background="{ThemeResource SystemChromeLowColor}"/>
+            <controls:ModelChartControl x:Name="ModelChart" 
                                                 Source="{x:Bind KNNViewModel.GraphSeries}" 
                                                 AxisLabelX="{x:Bind KNNViewModel.CurrentFeatureX, Mode=TwoWay}" 
                                                 AxisLabelY="{x:Bind KNNViewModel.CurrentFeatureY, Mode=TwoWay}" 
-                                                VisualizationIndex="{x:Bind KNNViewModel.VisualizationIndex, Mode=TwoWay}"/>
-               
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" >
-                    <TextBlock Text="{x:Bind KNNViewModel.KeyHeaderText}" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.SecondSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
-                    <TextBlock Text="{x:Bind KNNViewModel.SecondSeriesLabel}" FontWeight="Light" Margin="5,0,10,0"/>
-                    <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.FirstSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
-                    <TextBlock Text="{x:Bind KNNViewModel.FirstSeriesLabel}" FontWeight="Light" Margin="5,0,10,0"/>
-                    <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.TestSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
-                    <TextBlock Text="{x:Bind KNNViewModel.TestSeriesLabel}" FontWeight="Light" Margin="5,0,10,0"/>
-                </StackPanel>
+                                                VisualizationIndex="{x:Bind KNNViewModel.VisualizationIndex, Mode=TwoWay}"
+                                                XMax="{x:Bind KNNViewModel.MaxX, Mode=TwoWay}"
+                                                XMin="{x:Bind KNNViewModel.MinX, Mode=TwoWay}"
+                                                YMax="{x:Bind KNNViewModel.MaxY, Mode=TwoWay}"
+                                                YMin="{x:Bind KNNViewModel.MinY, Mode=TwoWay}"/>
 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" >
+                <TextBlock Text="{x:Bind KNNViewModel.KeyHeaderText}" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.SecondSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
+                <TextBlock Text="{x:Bind KNNViewModel.SecondSeriesLabel}" FontWeight="Light" Margin="5,0,10,0"/>
+                <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.FirstSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
+                <TextBlock Text="{x:Bind KNNViewModel.FirstSeriesLabel}" FontWeight="Light" Margin="5,0,10,0"/>
+                <Ellipse HorizontalAlignment="Left" Width="15" Height="15" Fill="{x:Bind KNNViewModel.TestSeriesColor, Mode=OneWay}" Margin="10,0,0,0"/>
+                <TextBlock Text="{x:Bind KNNViewModel.TestSeriesLabel}" FontWeight="Light" Margin="5,0,10,0"/>
+            </StackPanel>
 
-                <Border Grid.Row="2" Margin="10,10,10,10" CornerRadius="5" Width="750" Background="{ThemeResource SystemChromeLowColor}" BorderThickness="1">
-                        
-                    <toolkit:SwitchPresenter  Value="{x:Bind KNNViewModel.IsTesting, Mode=TwoWay}" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Center">
-                        <toolkit:Case Value="True">
-                            <StackPanel HorizontalAlignment="Center" >
-                                <TextBlock HorizontalAlignment="Center" > Classification result for feature "Rain":</TextBlock>
-                                <TextBlock HorizontalAlignment="Center" FontSize="36" FontWeight="SemiLight" Margin="0,0,0,11" Foreground="{ThemeResource SystemAccentColor}" Text="{x:Bind KNNViewModel.PredictedLabelText, Mode=OneWay}"/>
-                                <TextBlock HorizontalAlignment="Center" FontWeight="Light" TextWrapping="Wrap" TextAlignment="Center" Text="{x:Bind KNNViewModel.ResultExplanationText, Mode=OneWay}"/>
-                            </StackPanel>
-                        </toolkit:Case>
-                        <toolkit:Case Value="False">
-                            <StackPanel VerticalAlignment="Center">
-                                <TextBlock FontWeight="Light"> No test data is currently being visualized. Click the "Interact" tab in the tool bar to test a point.</TextBlock>
-                            </StackPanel>
+            <Border Grid.Row="2" Margin="10,10,10,10" CornerRadius="5" Width="750" Background="{ThemeResource SystemChromeLowColor}" BorderThickness="1">
+                <toolkit:SwitchPresenter  Value="{x:Bind KNNViewModel.IsTesting, Mode=TwoWay}" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Center">
+                    <toolkit:Case Value="True">
+                        <StackPanel HorizontalAlignment="Center" >
+                            <TextBlock HorizontalAlignment="Center" > Classification result for feature "Rain":</TextBlock>
+                            <TextBlock HorizontalAlignment="Center" FontSize="36" FontWeight="SemiLight" Margin="0,0,0,11" Foreground="{ThemeResource SystemAccentColor}" Text="{x:Bind KNNViewModel.PredictedLabelText, Mode=OneWay}"/>
+                            <TextBlock HorizontalAlignment="Center" FontWeight="Light" TextWrapping="Wrap" TextAlignment="Center" Text="{x:Bind KNNViewModel.ResultExplanationText, Mode=OneWay}"/>
+                        </StackPanel>
+                    </toolkit:Case>
+                    <toolkit:Case Value="False">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock FontWeight="Light"> No test data is currently being visualized. Click the "Interact" tab in the tool bar to test a point.</TextBlock>
+                        </StackPanel>
 
-                        </toolkit:Case>
-                    </toolkit:SwitchPresenter>
-
-
-                </Border>
-            </Grid>
-        </SplitView>
+                    </toolkit:Case>
+                </toolkit:SwitchPresenter>
+            </Border>
+        </Grid>
     </Grid>
 </Page>
