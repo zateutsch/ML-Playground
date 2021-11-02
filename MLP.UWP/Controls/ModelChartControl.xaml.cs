@@ -75,6 +75,43 @@ namespace MLP.UWP.Controls
         // Using a DependencyProperty as the backing store for AxisLabelY.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty AxisLabelYProperty =
             DependencyProperty.Register("AxisLabelY", typeof(string), typeof(ModelChartControl), new PropertyMetadata(0));
+        public double XMin
+        {
+            get { return (double)GetValue(XMinProperty); }
+            set { SetValue(XMinProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for XMin.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty XMinProperty =
+            DependencyProperty.Register("XMin", typeof(double), typeof(ModelChartControl), new PropertyMetadata(0));
+        public double XMax
+        {
+            get { return (double)GetValue(XMaxProperty); }
+            set { SetValue(XMaxProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for XMin.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty XMaxProperty =
+            DependencyProperty.Register("XMax", typeof(double), typeof(ModelChartControl), new PropertyMetadata(0));
+        public double YMin
+        {
+            get { return (double)GetValue(YMinProperty); }
+            set { SetValue(YMinProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for XMin.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty YMinProperty =
+            DependencyProperty.Register("YMin", typeof(double), typeof(ModelChartControl), new PropertyMetadata(0));
+        public double YMax
+        {
+            get { return (double)GetValue(YMaxProperty); }
+            set { SetValue(YMaxProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for XMin.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty YMaxProperty =
+            DependencyProperty.Register("YMax", typeof(double), typeof(ModelChartControl), new PropertyMetadata(0));
+
 
     }
 }

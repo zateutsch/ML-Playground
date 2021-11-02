@@ -33,6 +33,10 @@ namespace MLP.Core.ViewModels
         private string currentFeatureX;
         private string currentFeatureY;
         private string currentFeatureLabel;
+        private double minX;
+        private double minY;
+        private double maxX;
+        private double maxY;
 
         private double userTestX;
         private double userTestY;
@@ -150,7 +154,18 @@ namespace MLP.Core.ViewModels
             this._isTesting = false;
             this.IsTesting = "False";
             this._knn_service.Train(this.CurrentFeatureX, this.CurrentFeatureY, this.CurrentFeatureLabel);
+            this.UpdateMinMaxes();
             this.InitializeGraph();
+        }
+
+        public void UpdateMinMaxes()
+        {
+            double yMargin = Math.Abs(this._knn_service.MaxY - this._knn_service.MinY) * .1;
+            double xMargin = Math.Abs(this._knn_service.MaxX - this._knn_service.MinX) * .1;
+            this.MaxX = this._knn_service.MaxX + xMargin;
+            this.MaxY = this._knn_service.MaxY + yMargin;
+            this.MinX = this._knn_service.MinX + xMargin;
+            this.MinY = this._knn_service.MinY + yMargin;
         }
 
         public void TestPoint()
@@ -390,6 +405,30 @@ namespace MLP.Core.ViewModels
         {
             get => currentDataSetName;
             set => SetProperty(ref currentDataSetName, value);
+        }
+
+        public double MinX
+        {
+            get => minX;
+            set => SetProperty(ref minX, value);
+        }
+
+        public double MaxX
+        {
+            get => maxX;
+            set => SetProperty(ref maxX, value);
+        }
+
+        public double MinY
+        {
+            get => minY;
+            set => SetProperty(ref minY, value);
+        }
+
+        public double MaxY
+        {
+            get => maxY;
+            set => SetProperty(ref maxY, value);
         }
     }
 }

@@ -18,6 +18,10 @@ namespace MLP.Core.Interfaces
         string CurrentFeatureLabel { get; set; }
         List<double> CurrentDataX { get; set; }
         List<double> CurrentDataY { get; set; }
+        double MaxX { get; }
+        double MaxY { get; }
+        double MinX { get; }
+        double MinY { get; }
         void Train(string x_feature, string y_feature, string target_feature);
         string Classify(double x_data, double y_data);
         Tuple<string, Dictionary<int, double>> RobustClassify(double x, double y);

@@ -74,8 +74,8 @@ namespace MLP.Core.Services
         {
             for (int i = 0; i < this.K; i++)
             {
-                double centroidX = (this._mathHelper.RandomDouble() * this.MaxX) + this.MinX;
-                double centroidY = (this._mathHelper.RandomDouble() * this.MaxY) + this.MinY;
+                double centroidX = (this._mathHelper.RandomDouble() * (this.MaxX - this.MinX)) + this.MinX;
+                double centroidY = (this._mathHelper.RandomDouble() * (this.MaxY - this.MinY)) + this.MinY;
 
                 Tuple<double, double> centroid = new Tuple<double, double>(centroidX, centroidY);
                 this.Centroids.Add(centroid);
@@ -110,21 +110,45 @@ namespace MLP.Core.Services
                 this.ClustersX[closestCentroid].Add(dataX);
                 this.ClustersY[closestCentroid].Add(dataY);
             }
+
+            //this.CheckForEmptyClusters();
+
+        }
+
+        public void CheckForEmptyClusters()
+        {
+            List<Tuple<double, double>> centroids_to_delete = new List<Tuple<double, double>>();
+            foreach (Tuple<double, double> centroid in this.Centroids)
+            {
+                if (this.ClustersX[centroid].Count == 0)
+                {
+                    this.ClustersX.Remove(centroid);
+                    this.ClustersY.Remove(centroid);
+                    centroids_to_delete.Add(centroid);
+                }
+            }
+
+            foreach (Tuple<double, double> centroid in centroids_to_delete)
+            {
+                this.Centroids.Remove(centroid);
+            }
         }
 
         public bool RecalculateCentroids()
         {
             bool centroidsUpdated = false;
             List<Tuple<double, double>> newCentroids = new List<Tuple<double, double>>();
-            Dictionary<Tuple<double, double>, List<double>> newClustersX = new Dictionary<Tuple<double, double>, List<double>>();
-            Dictionary<Tuple<double, double>, List<double>> newClustersY = new Dictionary<Tuple<double, double>, List<double>>();
 
             foreach (Tuple<double, double> centroid in this.Centroids)
             {
                 double centroidNewX = this._mathHelper.Mean(this.ClustersX[centroid]);
                 double centroidNewY = this._mathHelper.Mean(this.ClustersY[centroid]);
 
-                if( (Math.Round(centroid.Item1, 1) != Math.Round(centroidNewX, 1) ) || (Math.Round(centroid.Item2, 1) != Math.Round(centroidNewY, 1)) )
+                if(Double.IsNaN(centroidNewX) || Double.IsNaN(centroidNewY))
+                {
+                    newCentroids.Add(centroid);
+                }
+                else if( (Math.Round(centroid.Item1) != Math.Round(centroidNewX) ) || (Math.Round(centroid.Item2) != Math.Round(centroidNewY)) )
                 {
                     centroidsUpdated = true;
                     List<double> valueX = this.ClustersX[centroid];
@@ -132,8 +156,6 @@ namespace MLP.Core.Services
 
                     Tuple<double, double> newCentroid = new Tuple<double, double>(centroidNewX, centroidNewY);
                     newCentroids.Add(newCentroid);
-                    newClustersX.Add(newCentroid, valueX);
-                    newClustersY.Add(newCentroid, valueY);
                 }
                 else
                 {
@@ -142,8 +164,6 @@ namespace MLP.Core.Services
             }
 
             this.Centroids = newCentroids;
-            this.ClustersX = newClustersX;
-            this.ClustersY = newClustersY;
 
             return centroidsUpdated;
         }

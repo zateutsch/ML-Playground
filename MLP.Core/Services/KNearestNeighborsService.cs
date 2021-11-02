@@ -27,6 +27,22 @@ namespace MLP.Core.Services
         public List<string> TargetData { get; set; }
         public Dictionary<string, int> Counts { get; set; }
         public int DataSize { get; set; }
+        public double MinX
+        {
+            get => this._mathHelper.Min(this.CurrentDataX);
+        }
+        public double MaxX
+        {
+            get => this._mathHelper.Max(this.CurrentDataX);
+        }
+        public double MinY
+        {
+            get => this._mathHelper.Min(this.CurrentDataY);
+        }
+        public double MaxY
+        {
+            get => this._mathHelper.Max(this.CurrentDataY);
+        }
 
         // Primary constructor
         public KNearestNeighborsService(IDataSetService dataSetService, IMathHelper mathHelper)

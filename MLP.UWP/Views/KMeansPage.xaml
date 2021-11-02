@@ -120,7 +120,11 @@
                                                 Source="{x:Bind KMViewModel.GraphSeries}" 
                                                 AxisLabelX="{x:Bind KMViewModel.CurrentFeatureX, Mode=TwoWay}" 
                                                 AxisLabelY="{x:Bind KMViewModel.CurrentFeatureY, Mode=TwoWay}" 
-                                                VisualizationIndex="{x:Bind KMViewModel.VisualizationIndex, Mode=TwoWay}"/>
+                                                VisualizationIndex="{x:Bind KMViewModel.VisualizationIndex, Mode=TwoWay}"
+                                                XMax="{x:Bind KMViewModel.MaxX, Mode=TwoWay}"
+                                                XMin="{x:Bind KMViewModel.MinX, Mode=TwoWay}"
+                                                YMax="{x:Bind KMViewModel.MaxY, Mode=TwoWay}"
+                                                YMin="{x:Bind KMViewModel.MinY, Mode=TwoWay}"/>
                 </Border>
 
 

@@ -14,7 +14,10 @@ namespace MLP.Core.Interfaces
         string CurrentFeatureY { get; set; }
         List<double> CurrentDataX { get; set; }
         List<double> CurrentDataY { get; set; }
-
+        double MaxX { get; set; }
+        double MaxY { get; set; }
+        double MinX { get; set; }
+        double MinY { get; set; }
         List<Tuple<double, double>> Centroids { get; set; }
         Dictionary<Tuple<double, double>, List<double>> ClustersX { get; set; }
         Dictionary<Tuple<double, double>, List<double>> ClustersY { get; set; }

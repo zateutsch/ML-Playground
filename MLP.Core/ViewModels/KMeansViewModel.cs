@@ -23,6 +23,10 @@ namespace MLP.Core.ViewModels
         private string currentFeatureX;
         private string currentFeatureY;
         private int iterations;
+        private double minX;
+        private double minY;
+        private double maxX;
+        private double maxY;
 
         // Result Pane Props
         private string clusteringState = "Unclustered";
@@ -59,6 +63,7 @@ namespace MLP.Core.ViewModels
 
             this.GraphSeries = new ObservableCollection<NestedSeries>();
             this.K = this._kMeansService.K;
+            this.UpdateMinMaxes();
             this.InitializeGraph();
         }
 
@@ -86,7 +91,18 @@ namespace MLP.Core.ViewModels
         {
             this.ClearGraph();
             this._kMeansService.Train(this.CurrentFeatureX, this.CurrentFeatureY);
+            this.UpdateMinMaxes();
             this.InitializeGraph();
+        }
+
+        public void UpdateMinMaxes()
+        {
+            double yMargin = Math.Abs(this._kMeansService.MaxY - this._kMeansService.MinY) * .05;
+            double xMargin = Math.Abs(this._kMeansService.MaxX - this._kMeansService.MinX) * .05;
+            this.MaxX = Math.Ceiling(this._kMeansService.MaxX + xMargin);
+            this.MaxY = Math.Ceiling(this._kMeansService.MaxY + yMargin);
+            this.MinX = Math.Floor(this._kMeansService.MinX - xMargin);
+            this.MinY = Math.Floor(this._kMeansService.MinY - yMargin);
         }
 
         public void AddClustersToGraph()
@@ -264,6 +280,30 @@ namespace MLP.Core.ViewModels
         {
             get => currentDataSetName;
             set => SetProperty(ref currentDataSetName, value);
+        }
+
+        public double MinX
+        {
+            get => minX;
+            set => SetProperty(ref minX, value);
+        }
+
+        public double MaxX
+        {
+            get => maxX;
+            set => SetProperty(ref maxX, value);
+        }
+
+        public double MinY
+        {
+            get => minY;
+            set => SetProperty(ref minY, value);
+        }
+
+        public double MaxY
+        {
+            get => maxY;
+            set => SetProperty(ref maxY, value);
         }
     }
 }
