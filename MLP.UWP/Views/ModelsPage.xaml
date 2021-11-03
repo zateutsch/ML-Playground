@@ -11,7 +11,7 @@
     xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
     xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource SystemChromeMediumColor}">
 
     <Page.Resources>
         <media:AttachedCardShadow x:Key="CommonShadow" Offset="1,2"/>
@@ -45,7 +45,7 @@
         x:Name="ModelsGridView"
         ItemsSource="{x:Bind ViewModel.ModelPreviews}"
         ItemTemplate="{StaticResource ModelPreviewTemplate}"
-        Background="{ThemeResource SystemChromeMediumLowColor}"
+        Background="{ThemeResource SystemChromeMediumColor}"
         CanReorderItems="True"
         ItemClick="ModelsGridView_ItemClick"
         IsItemClickEnabled="True">

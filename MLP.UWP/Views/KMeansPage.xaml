@@ -11,7 +11,7 @@
     xmlns:telerikChart="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource SystemChromeMediumColor}">
 
     <Page.Resources>
 

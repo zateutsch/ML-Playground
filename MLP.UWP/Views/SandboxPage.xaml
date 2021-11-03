@@ -1,0 +1,23 @@
+﻿<Page
+    x:Class="MLP.UWP.SandboxPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MLP.UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:MLP.UWP.Controls"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <controls:ModelChartControl x:Name="SandboxChart"
+                                    Source="{x:Bind SBViewModel.GraphSeries, Mode=OneWay}"
+                                    AxisLabelX="{x:Bind SBViewModel.XFeatureName, Mode=OneWay}"
+                                    AxisLabelY="{x:Bind SBViewModel.YFeatureName, Mode=OneWay}"
+                                    XMax="{x:Bind SBViewModel.MaxX, Mode=TwoWay}"
+                                    XMin="{x:Bind SBViewModel.MinX, Mode=TwoWay}"
+                                    YMax="{x:Bind SBViewModel.MaxY, Mode=TwoWay}"
+                                    YMin="{x:Bind SBViewModel.MinY, Mode=TwoWay}"/>
+    </Grid>
+</Page>

@@ -1,0 +1,35 @@
+﻿<Page
+    x:Class="MLP.UWP.SandboxDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MLP.UWP.Views"
+    xmlns:common="using:MLP.UWP.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+    <Page.Resources>
+        <Style TargetType="TextBlock" x:Key="Input">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="7"/>
+        </Style>
+        <common:DoubleConverter x:Key="DoubleConverter"/>
+    </Page.Resources>
+
+    <StackPanel>
+        <TextBlock Style="{StaticResource Input}" Text="X-Axis Feature Name:"/>
+        <TextBox Text="{x:Bind SBDViewModel.XFeatureName, Mode=TwoWay}"/>
+        <TextBlock Style="{StaticResource Input}" Text="Y-Axis Feature Name:"/>
+        <TextBox Text="{x:Bind SBDViewModel.YFeatureName, Mode=TwoWay}"/>
+        <TextBlock Style="{StaticResource Input}" Text="Minimum X-Axis Value:"/>
+        <TextBox Text="{x:Bind SBDViewModel.MinX, Mode=TwoWay, Converter={StaticResource DoubleConverter}}"/>
+        <TextBlock Style="{StaticResource Input}" Text="Maximum X-Axis Value:"/>
+        <TextBox Text="{x:Bind SBDViewModel.MaxX, Mode=TwoWay, Converter={StaticResource DoubleConverter}}"/>
+        <TextBlock Style="{StaticResource Input}" Text="Minimum Y-Axis Value:"/>
+        <TextBox Text="{x:Bind SBDViewModel.MinY, Mode=TwoWay, Converter={StaticResource DoubleConverter}}"/>
+        <TextBlock Style="{StaticResource Input}" Text="Maximum Y-Axis Value:"/>
+        <TextBox Text="{x:Bind SBDViewModel.MaxY, Mode=TwoWay, Converter={StaticResource DoubleConverter}}" />
+    </StackPanel>
+    
+</Page>

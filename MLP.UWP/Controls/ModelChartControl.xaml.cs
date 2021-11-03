@@ -54,7 +54,7 @@ namespace MLP.UWP.Controls
 
         // Using a DependencyProperty as the backing store for VisualizationIndex.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty VisualizationIndexProperty =
-            DependencyProperty.Register("VisualizationIndex", typeof(int), typeof(ModelChartControl), new PropertyMetadata(0));
+            DependencyProperty.Register("VisualizationIndex", typeof(int), typeof(ModelChartControl), new PropertyMetadata(100));
 
         public string AxisLabelX
         {

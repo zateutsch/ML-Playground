@@ -12,6 +12,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Extensions.DependencyInjection;
+using MLP.Core.ViewModels;
+using MLP.UWP.Services;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -20,26 +23,13 @@ namespace MLP.UWP
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Shell : Page
+    public sealed partial class SandboxDialog : Page
     {
-        public Shell()
+        public SandboxDialogViewModel SBDViewModel;
+        public SandboxDialog()
         {
+            this.SBDViewModel = App.Services.GetRequiredService<SandboxDialogViewModel>();
             this.InitializeComponent();
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            this.ContentFrame.Navigate(typeof(SandboxPage));
-        }
-
-        private void NavigationViewItem_PointerPressed_1(object sender, PointerRoutedEventArgs e)
-        {
-            this.ContentFrame.Navigate(typeof(ModelsPage));
-        }
-
-        private void NavigationView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
-        {
-            this.ContentFrame.GoBack();
         }
     }
 }

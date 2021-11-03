@@ -12,7 +12,7 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:controls="using:MLP.UWP.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource SystemChromeMediumColor}">
 
     <Page.Resources>
         <!-- reference to double input validation class in MLP.UWP.Common -->
