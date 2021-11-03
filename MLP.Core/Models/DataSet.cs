@@ -15,10 +15,7 @@ namespace MLP.Core.Models
         public string DefaultFeatureY { get; set; }
         public string DefaultFeatureLabel { get; set; }
 
-        public int FeatureSize
-        {
-            get { return this.ClassificationData.Count + this.RegressionData.Count; }
-        }
+        public int FeatureSize { get; set; }
         public Dictionary<string, List<string>> ClassificationData { get; set; }
         public Dictionary<string, List<double>> RegressionData { get; set; }
         public List<string> EnabledModels { get; set; }

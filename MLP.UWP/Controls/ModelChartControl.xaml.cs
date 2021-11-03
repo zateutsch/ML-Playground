@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
+using Windows.UI.Input;
 using Windows.UI.Xaml.Controls;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -112,6 +113,10 @@ namespace MLP.UWP.Controls
         public static readonly DependencyProperty YMaxProperty =
             DependencyProperty.Register("YMax", typeof(double), typeof(ModelChartControl), new PropertyMetadata(0.0));
 
-
+        private void Graph_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+           var pos = e.GetCurrentPoint(Graph).Position;
+            Graph.ConvertPointToData(pos);
+        }
     }
 }

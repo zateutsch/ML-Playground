@@ -7,17 +7,29 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:controls="using:MLP.UWP.Controls"
+    xmlns:controls="using:MLP.UWP.Controls" 
+    xmlns:telerikChart="using:Telerik.UI.Xaml.Controls.Chart"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <controls:ModelChartControl x:Name="SandboxChart"
-                                    Source="{x:Bind SBViewModel.GraphSeries, Mode=OneWay}"
-                                    AxisLabelX="{x:Bind SBViewModel.XFeatureName, Mode=OneWay}"
-                                    AxisLabelY="{x:Bind SBViewModel.YFeatureName, Mode=OneWay}"
-                                    XMax="{x:Bind SBViewModel.MaxX, Mode=TwoWay}"
-                                    XMin="{x:Bind SBViewModel.MinX, Mode=TwoWay}"
-                                    YMax="{x:Bind SBViewModel.MaxY, Mode=TwoWay}"
-                                    YMin="{x:Bind SBViewModel.MinY, Mode=TwoWay}"/>
+        <telerikChart:RadCartesianChart x:Name="SandboxChart" Margin="10" PointerPressed="SandboxChart_PointerPressed">
+            <telerikChart:RadCartesianChart.HorizontalAxis>
+                <telerikChart:LinearAxis Title="{x:Bind SBViewModel.XFeatureName, Mode=TwoWay}" RangeExtendDirection="Both" Minimum="{x:Bind SBViewModel.MinX, Mode=TwoWay}" Maximum="{x:Bind SBViewModel.MaxX, Mode=TwoWay}"/>
+            </telerikChart:RadCartesianChart.HorizontalAxis>
+            <telerikChart:RadCartesianChart.VerticalAxis>
+                <telerikChart:LinearAxis Title="{x:Bind SBViewModel.YFeatureName, Mode=TwoWay}" RangeExtendDirection="Both" Minimum="{x:Bind SBViewModel.MinY, Mode=TwoWay}" Maximum="{x:Bind SBViewModel.MaxY, Mode=TwoWay}"/>
+            </telerikChart:RadCartesianChart.VerticalAxis>
+            <telerikChart:RadCartesianChart.SeriesProvider >
+                <telerikChart:ChartSeriesProvider x:Name="provider" Source="{x:Bind SBViewModel.GraphSeries, Mode=TwoWay}" >
+                    <telerikChart:ChartSeriesProvider.SeriesDescriptors>
+                        <telerikChart:ScatterSeriesDescriptor ItemsSourcePath="Data" XValuePath="X" YValuePath="Y">
+                            <telerikChart:ScatterSeriesDescriptor.Style>
+                                <Style TargetType="telerikChart:ScatterPointSeries"/>
+                            </telerikChart:ScatterSeriesDescriptor.Style>
+                        </telerikChart:ScatterSeriesDescriptor>
+                    </telerikChart:ChartSeriesProvider.SeriesDescriptors>
+                </telerikChart:ChartSeriesProvider>
+            </telerikChart:RadCartesianChart.SeriesProvider>
+        </telerikChart:RadCartesianChart>
     </Grid>
 </Page>

@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using MLP.Core.Models;
 using MLP.Core.Common;
+using MLP.Core.Services;
 
 namespace MLP.Core.ViewModels
 {
@@ -16,7 +17,15 @@ namespace MLP.Core.ViewModels
         private double minY = 0;
         private double maxX = 75;
         private double maxY = 100;
-
+      
+        public SandboxViewModel()
+        {
+            GraphSeries = new ObservableCollection<NestedSeries>();
+            GraphSeries.Add(new NestedSeries(new double[] { }, new double[] { }));
+            SandboxData = new List<Point>();
+            SandboxDataSet = new DataSet();
+            this.SandboxDataSet.RegressionData = new Dictionary<string, List<double>>();
+        }
         public void SetChartParameters(ChartParameters chartParams)
         {
             this.XFeatureName = chartParams.XFeatureName;
@@ -25,10 +34,32 @@ namespace MLP.Core.ViewModels
             this.MinY = chartParams.MinY;
             this.MaxX = chartParams.MaxX;
             this.MaxY = chartParams.MaxY;
+            this.SandboxDataSet.RegressionData.Add(XFeatureName, new List<double>());
+            this.SandboxDataSet.RegressionData.Add(YFeatureName, new List<double>());
         }
 
         public List<Point> SandboxData { get; set; }
-        public ObservableCollection<NestedSeries> GraphSeries { get; set; } = new ObservableCollection<NestedSeries>();
+        public DataSet SandboxDataSet { get; set; } 
+        public ObservableCollection<NestedSeries> GraphSeries { get; set; }
+
+        public DataSet CreateDataSet()
+        {
+            SandboxDataSet.DisplayName = "Sandbox Data Set";
+            SandboxDataSet.DefaultFeatureX = this.XFeatureName;
+            SandboxDataSet.DefaultFeatureY = this.YFeatureName;
+            SandboxDataSet.EnabledModels = new List<string>(new[] { "kmeans" });
+
+            return SandboxDataSet;
+        }
+
+        public void AddPointToGraph(double x, double y)
+        {
+            SandboxData.Add(new Point(x, y));
+            SandboxDataSet.RegressionData[XFeatureName].Add(x);
+            SandboxDataSet.RegressionData[YFeatureName].Add(y);
+            GraphSeries.Clear();
+            GraphSeries.Add(new NestedSeries(SandboxData));
+        }
         public string XFeatureName
         {
             get => xFeatureName;

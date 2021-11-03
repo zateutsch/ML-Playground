@@ -29,12 +29,17 @@ namespace MLP.UWP
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.ContentFrame.Navigate(typeof(SandboxPage));
+            this.ContentFrame.Navigate(typeof(ModelsPage));
         }
 
-        private void NavigationViewItem_PointerPressed_1(object sender, PointerRoutedEventArgs e)
+        private void NavigateToModels(object sender, PointerRoutedEventArgs e)
         {
             this.ContentFrame.Navigate(typeof(ModelsPage));
+        }
+
+        private void NavigateToSandbox(object sender, PointerRoutedEventArgs e)
+        {
+            this.ContentFrame.Navigate(typeof(SandboxPage));
         }
 
         private void NavigationView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
