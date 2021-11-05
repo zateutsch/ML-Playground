@@ -4,7 +4,7 @@ using System.Text;
 using MLP.Core.Models;
 using MLP.Core.Common;
 using MLP.Core.Interfaces;
-
+using System.Diagnostics;
 
 namespace MLP.Core.Services
 {
@@ -14,6 +14,9 @@ namespace MLP.Core.Services
         private readonly IDataSetService _dataSetService;
         private readonly IMathHelper _mathHelper;
 
+        private double _stdX;
+        private double _stdY;
+        private bool standardized;
         // Model Parameters //
         public int K { get; set; }
 
@@ -49,16 +52,18 @@ namespace MLP.Core.Services
             this.K = k;
             this._dataSetService.CurrentData = dataSet;
             this.RegressionFeatureNames = this._dataSetService.GetRegressionFeatureNames();
-            this.Train(dataSet.DefaultFeatureX, dataSet.DefaultFeatureY);
+            this.Train(dataSet.DefaultFeatureX, dataSet.DefaultFeatureY, true);
         }
 
-        public void Train(string featureX, string featureY)
+        public void Train(string featureX, string featureY, bool isStandardized)
         {
             this.CurrentFeatureX = featureX;
             this.CurrentFeatureY = featureY;
 
             this.CurrentDataX = _dataSetService.GetRegressionFeatureSeries(featureX);
             this.CurrentDataY = _dataSetService.GetRegressionFeatureSeries(featureY);
+            this.standardized = isStandardized;
+            this.StandardizeCurrentData();
             this.MaxX = _mathHelper.Max(CurrentDataX);
             this.MaxY = _mathHelper.Max(CurrentDataY);
             this.MinX = _mathHelper.Min(CurrentDataX);
@@ -68,6 +73,12 @@ namespace MLP.Core.Services
 
             this.DataSize = this.CurrentDataX.Count;
 
+        }
+
+        public void StandardizeCurrentData()
+        {
+            this._stdX = this._mathHelper.StandardDeviation(this.CurrentDataX.ToArray());
+            this._stdY = this._mathHelper.StandardDeviation(this.CurrentDataY.ToArray());
         }
 
         public void RandomizeCentroids()
@@ -99,8 +110,17 @@ namespace MLP.Core.Services
                 {
                     double centroidX = centroid.Item1;
                     double centroidY = centroid.Item2;
+                    double dist;
 
-                    double dist = this._mathHelper.EuclideanDistance(new[] { dataX, dataY }, new[] { centroidX, centroidY });
+                    if (standardized)
+                    {
+                        dist = this._mathHelper.EuclideanDistance(new[] { dataX/this._stdX, dataY/this._stdY }, new[] { centroidX/this._stdX, centroidY/this._stdY });
+                    }
+                    else
+                    {
+                        dist = this._mathHelper.EuclideanDistance(new[] { dataX, dataY }, new[] { centroidX, centroidY });
+                    }
+
                     if (dist < minDist)
                     {
                         minDist = dist;
@@ -111,27 +131,6 @@ namespace MLP.Core.Services
                 this.ClustersY[closestCentroid].Add(dataY);
             }
 
-            //this.CheckForEmptyClusters();
-
-        }
-
-        public void CheckForEmptyClusters()
-        {
-            List<Tuple<double, double>> centroids_to_delete = new List<Tuple<double, double>>();
-            foreach (Tuple<double, double> centroid in this.Centroids)
-            {
-                if (this.ClustersX[centroid].Count == 0)
-                {
-                    this.ClustersX.Remove(centroid);
-                    this.ClustersY.Remove(centroid);
-                    centroids_to_delete.Add(centroid);
-                }
-            }
-
-            foreach (Tuple<double, double> centroid in centroids_to_delete)
-            {
-                this.Centroids.Remove(centroid);
-            }
         }
 
         public bool RecalculateCentroids()
@@ -143,12 +142,11 @@ namespace MLP.Core.Services
             {
                 double centroidNewX = this._mathHelper.Mean(this.ClustersX[centroid]);
                 double centroidNewY = this._mathHelper.Mean(this.ClustersY[centroid]);
-
                 if(Double.IsNaN(centroidNewX) || Double.IsNaN(centroidNewY))
                 {
                     newCentroids.Add(centroid);
                 }
-                else if( (Math.Round(centroid.Item1) != Math.Round(centroidNewX) ) || (Math.Round(centroid.Item2) != Math.Round(centroidNewY)) )
+                else if((centroid.Item1 != centroidNewX)  || (centroid.Item2 != centroidNewY) )
                 {
                     centroidsUpdated = true;
                     List<double> valueX = this.ClustersX[centroid];

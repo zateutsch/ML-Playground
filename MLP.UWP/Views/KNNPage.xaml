@@ -83,8 +83,10 @@
                 <AppBarButton.Flyout>
                     <Flyout>
                         <StackPanel>
-                            <TextBlock HorizontalAlignment="Center" FontWeight="Light"> Update K parameter:</TextBlock>
+                            <TextBlock  FontWeight="Light"> Update K parameter:</TextBlock>
                             <Slider Minimum="1" Maximum="7" Value="{x:Bind KNNViewModel.K, Mode=TwoWay}" TickFrequency="1" TickPlacement="Inline" Width="150"/>
+                            <TextBlock HorizontalAlignment="Center" FontWeight="Light"> Distance standardization:</TextBlock>
+                            <ToggleSwitch IsOn="{x:Bind KNNViewModel.Standardized, Mode=TwoWay}" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </Flyout>
                 </AppBarButton.Flyout>
@@ -109,7 +111,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="16*"/>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="5*"/>
+                <RowDefinition Height="225"/>
             </Grid.RowDefinitions>
 
             <Border Grid.RowSpan="2" CornerRadius="5" Margin="5,0,5,0" Background="{ThemeResource SystemChromeLowColor}"/>
@@ -138,7 +140,7 @@
                     <toolkit:Case Value="True">
                         <StackPanel HorizontalAlignment="Center" >
                             <TextBlock HorizontalAlignment="Center" > Classification result for feature "Rain":</TextBlock>
-                            <TextBlock HorizontalAlignment="Center" FontSize="36" FontWeight="SemiLight" Margin="0,0,0,11" Foreground="{ThemeResource SystemAccentColor}" Text="{x:Bind KNNViewModel.PredictedLabelText, Mode=OneWay}"/>
+                            <TextBlock HorizontalAlignment="Center" FontSize="36" FontWeight="SemiLight" Foreground="{x:Bind KNNViewModel.WinningColor, Mode=OneWay}" Text="{x:Bind KNNViewModel.PredictedLabelText, Mode=OneWay}"/>
                             <TextBlock HorizontalAlignment="Center" FontWeight="Light" TextWrapping="Wrap" TextAlignment="Center" Text="{x:Bind KNNViewModel.ResultExplanationText, Mode=OneWay}"/>
                         </StackPanel>
                     </toolkit:Case>

@@ -16,9 +16,10 @@ namespace MLP.Core.Services
 
         public double EuclideanDistance(double[] p1, double[] p2)
         {
+
             double squared_differences = 0;
 
-            for(int i = 0; i < p1.Length; i++)
+            for (int i = 0; i < p1.Length; i++)
             {
                 squared_differences += ((p1[i] - p2[i]) * (p1[i] - p2[i]));
             }
@@ -47,7 +48,7 @@ namespace MLP.Core.Services
             double max = series[0];
             foreach (double num in series)
             {
-                if(num > max)
+                if (num > max)
                 {
                     max = num;
                 }
@@ -96,12 +97,25 @@ namespace MLP.Core.Services
             double sum = 0;
             int count = series.Count;
 
-            foreach(double num in series)
+            foreach (double num in series)
             {
                 sum += num;
             }
 
             return (sum / count);
+        }
+
+        public double StandardDeviation(double[] p1)
+        {
+            double mean_x = this.Mean(new List<double>(p1));
+            double n = p1.Length;
+            double sum = 0;
+            for(int i = 0; i < n; i++)
+            {
+                sum += ((mean_x - p1[i]) * (mean_x - p1[i]));
+            }
+
+            return Math.Sqrt(sum / n);
         }
     }
 }

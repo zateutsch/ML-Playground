@@ -32,6 +32,7 @@ namespace MLP.Core.ViewModels
         private string doneStatusText = "";
         private bool isAnimating = false;
         private bool isDrawingClusters = true;
+        private bool standardized = false;
 
 
         // Data Set Management
@@ -88,7 +89,7 @@ namespace MLP.Core.ViewModels
         public void UpdateGraph()
         {
             this.ClearGraph();
-            this._kMeansService.Train(this.CurrentFeatureX, this.CurrentFeatureY);
+            this._kMeansService.Train(this.CurrentFeatureX, this.CurrentFeatureY, this.Standardized);
             this.UpdateMinMaxes();
             this.InitializeGraph();
         }
@@ -172,14 +173,18 @@ namespace MLP.Core.ViewModels
                     this.ClusteringStatusText = this.GetClusteringStatusText();
                     this.ClearGraph();
                     this.AddClustersToGraph();
-                    await Task.Delay(TimeSpan.FromSeconds(.75));
+                    await Task.Delay(TimeSpan.FromSeconds(1.0));
                 }
             }
 
-            this.DoneStatusText = this.GetDoneStatusText();
-            this.ClusteringState = "Done";
-            this.ClearGraph();
-            this.AddClustersToGraph();
+            if(this.clusteringState == "Clustering")
+            {
+                this.DoneStatusText = this.GetDoneStatusText();
+                this.ClusteringState = "Done";
+                this.ClearGraph();
+                this.AddClustersToGraph();
+            }
+            
         }
 
         public string GetClusteringStatusText()
@@ -189,7 +194,7 @@ namespace MLP.Core.ViewModels
 
         public string GetDoneStatusText()
         {
-            return "The model has converged after " + this.Iterations + " iterations. All of the data points are now assigned to their final clusters.";
+            return "The model has converged after " + (this.Iterations - 1) + " iterations. All of the data points are now assigned to their final clusters.";
         }
 
         public void ResetButton()
@@ -301,6 +306,16 @@ namespace MLP.Core.ViewModels
         {
             get => maxY;
             set => SetProperty(ref maxY, value);
+        }
+
+        public bool Standardized
+        {
+            get => standardized;
+            set
+            {
+                SetProperty(ref standardized, value);
+                this.ResetButton();
+            }
         }
     }
 }

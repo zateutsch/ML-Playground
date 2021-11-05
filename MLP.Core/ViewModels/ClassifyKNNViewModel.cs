@@ -37,6 +37,7 @@ namespace MLP.Core.ViewModels
         private double minY;
         private double maxX;
         private double maxY;
+        private bool standardized;
 
         private double userTestX;
         private double userTestY;
@@ -48,6 +49,7 @@ namespace MLP.Core.ViewModels
         private string secondSeriesColor = "#FF7960";
         private string testSeriesColor = "White";
         private string visualizationColor = "White";
+        private string winningColor = "White";
 
         private string firstSeriesLabel = "";
         private string secondSeriesLabel= "";
@@ -154,7 +156,7 @@ namespace MLP.Core.ViewModels
             this.ClearGraph();
             this._isTesting = false;
             this.IsTesting = "False";
-            this._knn_service.Train(this.CurrentFeatureX, this.CurrentFeatureY, this.CurrentFeatureLabel);
+            this._knn_service.Train(this.CurrentFeatureX, this.CurrentFeatureY, this.CurrentFeatureLabel, this.Standardized);
             this.UpdateMinMaxes();
             this.InitializeGraph();
         }
@@ -227,6 +229,7 @@ namespace MLP.Core.ViewModels
         {
             string winningLabel = this._testResult;
             string losingLabel = winningLabel != this.FirstSeriesLabel ? this.FirstSeriesLabel : this.SecondSeriesLabel;
+            this.WinningColor = winningLabel == this.FirstSeriesLabel ? this.FirstSeriesColor : this.SecondSeriesColor;
             int winningCount = this._knn_service.Counts[winningLabel];
             int losingCount = this._knn_service.Counts.ContainsKey(losingLabel) ? this._knn_service.Counts[losingLabel] : 0;
 
@@ -430,6 +433,23 @@ namespace MLP.Core.ViewModels
         {
             get => maxY;
             set => SetProperty(ref maxY, value);
+        }
+
+        public bool Standardized
+        {
+            get => standardized;
+            set
+            {
+                SetProperty(ref standardized, value);
+                this.UpdateGraph();
+                this.TestPoint();
+            }
+        }
+
+        public string WinningColor
+        {
+            get => winningColor;
+            set => SetProperty(ref winningColor, value);
         }
     }
 }

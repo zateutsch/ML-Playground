@@ -22,7 +22,7 @@ namespace MLP.Core.Interfaces
         double MaxY { get; }
         double MinX { get; }
         double MinY { get; }
-        void Train(string x_feature, string y_feature, string target_feature);
+        void Train(string x_feature, string y_feature, string target_feature, bool isStandardized);
         string Classify(double x_data, double y_data);
         Tuple<string, Dictionary<int, double>> RobustClassify(double x, double y);
         void ConfigService(DataSet dataSet, int k = 3);

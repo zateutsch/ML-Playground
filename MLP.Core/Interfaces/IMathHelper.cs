@@ -13,6 +13,7 @@ namespace MLP.Core.Interfaces
         int RandomInt(int start, int end);
         double RandomDouble();
         double Max(List<double> series);
+        double StandardDeviation(double[] data);
         int Max(List<int> series);
         double Min(List<double> series);
         int Min(List<int> series);

@@ -25,7 +25,7 @@ namespace MLP.Core.Interfaces
         int Iteration { get; set; }
 
         void ConfigService(DataSet dataSet, int k = 2);
-        void Train(string featureX, string featureY);
+        void Train(string featureX, string featureY, bool standardized);
         bool Iterate();
         bool Iterate(int numIterations);
         List<Point> GetBaseSeries();

@@ -13,6 +13,10 @@ namespace MLP.Core.Services
         private readonly IDataSetService _dataSetService;
         private readonly IMathHelper _mathHelper;
 
+        private bool standardized;
+        private double _stdX;
+        private double _stdY;
+
         // Model parameters
         public int K { get; set; }
 
@@ -56,21 +60,28 @@ namespace MLP.Core.Services
             this.K = k;
             this._dataSetService.CurrentData = dataSet;
             this.RegressionFeatureNames = this._dataSetService.GetRegressionFeatureNames();
-            this.Train(dataSet.DefaultFeatureX, dataSet.DefaultFeatureY, dataSet.DefaultFeatureLabel);
+            this.Train(dataSet.DefaultFeatureX, dataSet.DefaultFeatureY, dataSet.DefaultFeatureLabel, false);
         }
 
-        public void Train(string featureX, string featureY, string targetFeature)
+        public void Train(string featureX, string featureY, string targetFeature, bool isStandardized)
         {
             this.CurrentFeatureX = featureX;
             this.CurrentFeatureY = featureY;
             this.CurrentFeatureLabel = targetFeature;
-
             this.CurrentDataX = _dataSetService.GetRegressionFeatureSeries(featureX);
             this.CurrentDataY = _dataSetService.GetRegressionFeatureSeries(featureY);
+            this.standardized = isStandardized;
+            this.StandardizeCurrentData();
             this.TargetData = _dataSetService.GetClassificationFeatureSeries(targetFeature);
 
             this.DataSize = this.TargetData.Count;
 
+        }
+
+        public void StandardizeCurrentData()
+        {
+            this._stdX = this._mathHelper.StandardDeviation(this.CurrentDataX.ToArray());
+            this._stdY = this._mathHelper.StandardDeviation(this.CurrentDataY.ToArray());
         }
 
 
@@ -78,11 +89,28 @@ namespace MLP.Core.Services
         {
 
             ConstMinSortedDLL min_list = new ConstMinSortedDLL(this.K);
-            double[] feature_arr = new[] { x, y };
+            double[] feature_arr;
+            if (standardized)
+            {
+                feature_arr = new[] { x/this._stdX, y/this._stdY };
+            }
+            else
+            {
+                feature_arr = new[] { x, y };
+            }
 
             for(int i = 0; i < this.TargetData.Count; i++)
             {
-                double distance = _mathHelper.EuclideanDistance(new[] { CurrentDataX[i], CurrentDataY[i] }, feature_arr);
+                double distance;
+                if (standardized)
+                {
+                    distance = _mathHelper.EuclideanDistance(new[] { CurrentDataX[i]/this._stdX, CurrentDataY[i]/this._stdY }, feature_arr);
+                }
+                else
+                {
+                    distance = _mathHelper.EuclideanDistance(new[] { CurrentDataX[i], CurrentDataY[i] }, feature_arr);
+                }
+                    
                 min_list.AddAndTrim(new Node(distance, i));
             }
 
@@ -95,11 +123,27 @@ namespace MLP.Core.Services
         public Tuple<string, Dictionary<int, double>> RobustClassify(double x, double y)
         {
             ConstMinSortedDLL min_list = new ConstMinSortedDLL(this.K);
-            double[] feature_arr = new[] { x, y };
+            double[] feature_arr;
+            if (standardized)
+            {
+                feature_arr = new[] { x / this._stdX, y / this._stdY };
+            }
+            else
+            {
+                feature_arr = new[] { x, y };
+            }
 
             for (int i = 0; i < this.TargetData.Count; i++)
             {
-                double distance = _mathHelper.EuclideanDistance(new[] { CurrentDataX[i], CurrentDataY[i] }, feature_arr);
+                double distance;
+                if (standardized)
+                {
+                    distance = _mathHelper.EuclideanDistance(new[] { CurrentDataX[i] / this._stdX, CurrentDataY[i] / this._stdY }, feature_arr);
+                }
+                else
+                {
+                    distance = _mathHelper.EuclideanDistance(new[] { CurrentDataX[i], CurrentDataY[i] }, feature_arr);
+                }
                 min_list.AddAndTrim(new Node(distance, i));
             }
 
