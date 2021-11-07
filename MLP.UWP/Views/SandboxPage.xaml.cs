@@ -50,11 +50,7 @@ namespace MLP.UWP
 
         protected async override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            DataSet dataSet = this.SBViewModel.CreateDataSet();
-            DataManagerService.DataSets.Remove(dataSet.DisplayName);
-            DataManagerService.DataSets.Add(dataSet.DisplayName, dataSet);
-            DataManagerService.InitDataModelMappings();
-            await DataFileService.WriteDataSetToJson(dataSet);
+            
         }
 
         private async void DisplaySandboxDialog()
@@ -86,6 +82,17 @@ namespace MLP.UWP
             Windows.Foundation.Point point = e.GetCurrentPoint(SandboxChart).Position;
             Tuple<object, object> coords = SandboxChart.ConvertPointToData(point);
             this.SBViewModel.AddPointToGraph((double)coords.Item1, (double)coords.Item2);
+        }
+
+        private async void Save_Button_Click(object sender, RoutedEventArgs e)
+        {
+            DataSet dataSet = this.SBViewModel.CreateDataSet();
+            DataManagerService.DataSets.Remove(dataSet.DisplayName);
+            DataManagerService.DataSets.Add(dataSet.DisplayName, dataSet);
+            DataManagerService.InitDataModelMappings();
+            await DataFileService.WriteDataSetToJson(dataSet);
+
+            Frame.Navigate(typeof(ModelsPage));
         }
     }
 }
