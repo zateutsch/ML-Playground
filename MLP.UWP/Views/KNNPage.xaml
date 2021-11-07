@@ -99,7 +99,7 @@
                 <AppBarButton.Flyout>
                     <Flyout>
                         <StackPanel>
-                            <TextBlock HorizontalAlignment="Center" FontWeight="Light">X</TextBlock>
+                            <TextBlock HorizontalAlignment="Center" FontWeight="Light" Text="Select a data set:"/>
                             <ListBox ItemsSource="{x:Bind KNNViewModel.AvailableDataSets}" SelectedItem="{x:Bind KNNViewModel.CurrentDataSetName, Mode=TwoWay}" SelectionChanged="ReloadPageWithNewData" Margin="2,2,2,2"/>
                         </StackPanel>
                     </Flyout>

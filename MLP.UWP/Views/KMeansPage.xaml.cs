@@ -32,7 +32,6 @@ namespace MLP.UWP
         public InfoPaneViewModel InfoViewModel;
         public GraphPaletteService PaletteService;
 
-
         public KMeansPage()
         {
             this.KMViewModel = App.Services.GetRequiredService<KMeansViewModel>();

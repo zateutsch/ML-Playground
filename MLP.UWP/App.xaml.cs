@@ -20,6 +20,7 @@ using MLP.Core.Services;
 using MLP.Core.ViewModels;
 using MLP.Core.Interfaces;
 using System.Threading.Tasks;
+using Windows.UI.ViewManagement;
 
 namespace MLP.UWP
 {
@@ -95,6 +96,11 @@ namespace MLP.UWP
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
+                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+                titleBar.BackgroundColor = Windows.UI.Colors.Black;
+                titleBar.InactiveBackgroundColor = Windows.UI.Colors.Black;
+                titleBar.ButtonBackgroundColor = Windows.UI.Colors.Black;
+                titleBar.ButtonInactiveBackgroundColor = Windows.UI.Colors.Black;
             }
         }
 
