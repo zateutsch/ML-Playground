@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource SystemChromeMediumColor}">
 
-    <muxc:NavigationView PaneDisplayMode="Top" IsPaneOpen="False" BackRequested="NavigationView_BackRequested" IsBackEnabled="True" IsBackButtonVisible="Collapsed">
+    <muxc:NavigationView PaneDisplayMode="Top" IsPaneOpen="False" BackRequested="NavigationView_BackRequested" IsBackEnabled="True" IsBackButtonVisible="Collapsed" ItemInvoked="NavigationView_ItemInvoked">
 
         <muxc:NavigationView.MenuItems>
 

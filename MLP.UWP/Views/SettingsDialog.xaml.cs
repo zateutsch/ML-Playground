@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MLP.Core.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,15 +17,18 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace MLP.UWP.Views
+namespace MLP.UWP
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class SettingsDialog : Page
     {
+
+        public SettingsViewModel ViewModel;
         public SettingsDialog()
         {
+            this.ViewModel = App.Services.GetRequiredService<SettingsViewModel>();
             this.InitializeComponent();
         }
     }

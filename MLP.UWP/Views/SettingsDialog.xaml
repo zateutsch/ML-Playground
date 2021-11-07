@@ -1,14 +1,18 @@
 ﻿<Page
-    x:Class="MLP.UWP.Views.SettingsDialog"
+    x:Class="MLP.UWP.SettingsDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MLP.UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="Transparent">
 
-    <StackPanel>
-        <TextBlock>Settings</TextBlock>
+    <StackPanel Width="250">
+        <Image Source="{x:Bind ViewModel.LogoPath}" Width="75" Height="75" HorizontalAlignment="Center" Margin="20"/>
+        <TextBlock Text="{x:Bind ViewModel.GithubText}" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+        <HyperlinkButton Content="Github" NavigateUri="{x:Bind ViewModel.GithubUri}" HorizontalAlignment="Center" Margin="0,30,0,0"/>
+        <HyperlinkButton Content="Data Sources" NavigateUri="{x:Bind ViewModel.DataSourcesUri}" HorizontalAlignment="Center"/>
+        <TextBlock Text="{x:Bind ViewModel.IconCredit}" FontSize="10" HorizontalAlignment="Center" Margin="0, 30,0,0"/>
     </StackPanel>
 </Page>

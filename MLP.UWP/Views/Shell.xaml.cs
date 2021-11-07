@@ -46,5 +46,25 @@ namespace MLP.UWP
         {
             this.ContentFrame.GoBack();
         }
+
+        private async void DisplaySettingsDialog()
+        {
+            ContentDialog settingsDialog = new ContentDialog()
+            {
+                Content = new SettingsDialog(),
+                CloseButtonText = "Close"
+            };
+
+
+            await settingsDialog.ShowAsync();
+        }
+
+        private void NavigationView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
+        {
+            if (args.IsSettingsInvoked)
+            {
+                this.DisplaySettingsDialog();
+            }
+        }
     }
 }
