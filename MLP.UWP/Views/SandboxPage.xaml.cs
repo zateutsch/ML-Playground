@@ -48,11 +48,6 @@ namespace MLP.UWP
             DisplaySandboxDialog();
         }
 
-        protected async override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            
-        }
-
         private async void DisplaySandboxDialog()
         {
             ContentDialog sandboxDialog = new ContentDialog()

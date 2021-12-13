@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="c20cd57c-f11b-4c09-a8da-52d099bd20ed"
-    Publisher="CN=zteutsch"
+    Name="46889ZachTeutsch.MLPlayground"
+    Publisher="CN=8C3D2A62-F92B-4649-960C-A1FD1289B856"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="c20cd57c-f11b-4c09-a8da-52d099bd20ed" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="841e9519-c103-4408-a62f-815aa84cd894" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>MLP.UWP</DisplayName>
-    <PublisherDisplayName>zteutsch</PublisherDisplayName>
+    <DisplayName>ML Playground</DisplayName>
+    <PublisherDisplayName>Zach Teutsch</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

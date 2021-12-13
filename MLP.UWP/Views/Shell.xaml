@@ -15,12 +15,12 @@
 
             <muxc:NavigationViewItem Content="Models" PointerPressed="NavigateToModels">
                 <muxc:NavigationViewItem.Icon>
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe9d2;"/>
+                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xe9d2;"/>
                 </muxc:NavigationViewItem.Icon>
             </muxc:NavigationViewItem>
             <muxc:NavigationViewItem Content="Data Sandbox" PointerPressed="NavigateToSandbox">
                 <muxc:NavigationViewItem.Icon>
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe80a;"/>
+                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xe80a;"/>
                 </muxc:NavigationViewItem.Icon>
             </muxc:NavigationViewItem>
             
